@@ -13,61 +13,65 @@ postalCode varchar(255),
 phoneNumber int,
 webAddress varchar(255),
 capacity int,
-PRIMARY KEY(facilityId, ministryId));
+FOREIGN KEY(ministryId) REFERENCES Ministries(ministryId),
+PRIMARY KEY(facilityId));
 
 CREATE TABLE Managment_facilities(
 facilityId int NOT NULL,
 ministryId int NOT NULL,
-presidentEmployeeId int ,
+presidentEmployeeId int,
 maFacilityType varchar(255),
-PRIMARY KEY(facilityId, ministryId));
+FOREIGN KEY(ministryId) REFERENCES Ministries(ministryId),
+FOREIGN KEY(presidentEmployeeId) REFERENCES Employees(employeeId),
+PRIMARY KEY(facilityId, ministryId, presidentEmployeeId));
 
 CREATE TABLE Educational_facilities(
 facilityId int NOT NULL,
 ministryId int NOT NULL,
 prinicipalEmployeeId int NOT NULL,
 eduFacilityType varchar(255),
-PRIMARY KEY(facilityId, ministryId));
+FOREIGN KEY(ministryId) REFERENCES Ministries(ministryId),
+FOREIGN KEY(prinicipalEmployeeId) REFERENCES Employees(employeeId),
+PRIMARY KEY(facilityId, ministryId, prinicipalEmployeeId));
 
 CREATE TABLE Employees(
 employeeId int NOT NULL,
 medicareNumber int NOT NULL,
 jobPosition varchar(255),
-PRIMARY KEY(employeeId, medicareNumber));
+PRIMARY KEY(employeeId),
+FOREIGN KEY(medicareNumber) REFERENCES People(medicareNumber));
 
 CREATE TABLE Teacher(
 employeeId int NOT NULL,
-medicareNumber int NOT NULL,
 teacherType varchar(255),
 subjectSpecialization varchar(255),
 additionalJobPosition varchar(255),
-PRIMARY KEY(employeeId, medicareNumber));
+PRIMARY KEY(employeeId,teacherType,subjectSpecialization,additionalJobPosition));
 
 CREATE TABLE Students(
 studentId int NOT NULL,
 medicareNumber int NOT NULL,
 gradeLevel varchar(255),
-PRIMARY KEY(studentId,medicareNumber));
+PRIMARY KEY(studentId),
+FOREIGN KEY(medicareNumber) REFERENCES People(medicareNumber));
 
 CREATE TABLE Works_at(
 facilityId int NOT NULL,
 employeeId int NOT NULL,
-medicareNumber int NOT NULL,
 startDate date NOT NULL,
 endDate date,
 FOREIGN KEY (facilityId) REFERENCES Facilities(facilityId),
-FOREIGN KEY (employeeId,medicareNumber) REFERENCES Employees(employeeId,medicareNumber),
-PRIMARY KEY(facilityId,ministryId,employeeId,medicareNumber,startDate,endDate));
+FOREIGN KEY (employeeId) REFERENCES Employees(employeeId),
+PRIMARY KEY(facilityId,employeeId,startDate,endDate));
 
 CREATE TABLE Registered_at(
 facilityId int NOT NULL,
 studentId int NOT NULL,
-medicareNumber int NOT NULL,
 startDate date NOT NULL,
 endDate date,
 FOREIGN KEY (facilityId) REFERENCES Facilities(facilityId),
-FOREIGN KEY (studentId,medicareNumber) REFERENCES Students(studentId,medicareNumber),
-PRIMARY KEY(facilityId,ministryId,studentId,medicareNumber,startDate,endDate));
+FOREIGN KEY (studentId) REFERENCES Students(studentId),
+PRIMARY KEY(facilityId,studentId,startDate,endDate));
 
 CREATE TABLE People(
 medicareNumber int NOT NULL,
@@ -88,7 +92,8 @@ infectionId int NOT NULL,
 personId int NOT NULL,
 `date` date,
 `type` varchar(255),
-PRIMARY KEY(infectionId, personId));
+FOREIGN KEY(personId) REFERENCES People(medicareNumber),
+PRIMARY KEY(infectionId));
 
 CREATE TABLE Vaccinations(
 vaccinationId int NOT NULL,
@@ -96,5 +101,6 @@ personId int NOT NULL,
 `date` date,
 `type` varchar(255),
 doseNumber int,
-PRIMARY KEY(vaccinationId, personId));
+FOREIGN KEY(personId) REFERENCES People(medicareNumber),
+PRIMARY KEY(vaccinationId));
 
