@@ -51,25 +51,21 @@ PRIMARY KEY(studentId,medicareNumber));
 
 CREATE TABLE Works_at(
 facilityId int NOT NULL,
-ministryId int NOT NULL,
 employeeId int NOT NULL,
 medicareNumber int NOT NULL,
 startDate date NOT NULL,
 endDate date,
 FOREIGN KEY (facilityId) REFERENCES Facilities(facilityId),
-FOREIGN KEY (ministryId) REFERENCES Ministries(ministryId),
 FOREIGN KEY (employeeId,medicareNumber) REFERENCES Employees(employeeId,medicareNumber),
 PRIMARY KEY(facilityId,ministryId,employeeId,medicareNumber,startDate,endDate));
 
 CREATE TABLE Registered_at(
 facilityId int NOT NULL,
-ministryId int NOT NULL,
 studentId int NOT NULL,
 medicareNumber int NOT NULL,
 startDate date NOT NULL,
 endDate date,
 FOREIGN KEY (facilityId) REFERENCES Facilities(facilityId),
-FOREIGN KEY (ministryId) REFERENCES Ministries(ministryId),
 FOREIGN KEY (studentId,medicareNumber) REFERENCES Students(studentId,medicareNumber),
 PRIMARY KEY(facilityId,ministryId,studentId,medicareNumber,startDate,endDate));
 
