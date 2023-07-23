@@ -1252,3 +1252,23 @@ insert into Vaccinations (MedicareCardNumber, Date, Type, DoseNumber) values ('e
 insert into Vaccinations (MedicareCardNumber, Date, Type, DoseNumber) values ('capc26072389', '2021-05-04', 'AstraZeneca', 2);
 insert into Vaccinations (MedicareCardNumber, Date, Type, DoseNumber) values ('ddrh96552495', '2021-02-19', 'Moderna', 1);
 insert into Vaccinations (MedicareCardNumber, Date, Type, DoseNumber) values ('dwsa97105984', '2022-08-15', 'Moderna', 1);
+
+--Updates to add rosement school and appropriate data for query 3
+
+UPDATE Facilities  
+SET Name='Rosemont elementary school'
+WHERE FacilityID = 7;
+
+SELECT * FROM Facilities ;
+
+insert into Persons (MedicareCardNumber, FirstName, LastName, MedicareExpiryDate, Province, DateOfBirth, TelephoneNumber, Address, Citizenship, PostalCode, EmailAddress) values ('chgb68073150', 'Halt', 'gorbe', '2021-09-30', 'Quebec', '2023-04-22', '268-706-1375', '861 Rutledge Avenue', 'Brazil', 'l1q7o2', 'sgorick0@pagesperso-orange.fr');
+insert into Persons (MedicareCardNumber, FirstName, LastName, MedicareExpiryDate, Province, DateOfBirth, TelephoneNumber, Address, Citizenship, PostalCode, EmailAddress) values ('cjyb68073107', 'weber', 'lowy', '2020-09-30', 'Quebec', '2023-04-22', '268-706-1375', '861 Rutledge Avenue', 'Brazil', 'l1q7o2', 'sgorick0@pagesperso-orange.fr');
+
+insert into Infections (MedicareCardNumber, Date, Type) values ('chgb68073150', '2021-05-10', 'COVID-19');
+insert into Infections (MedicareCardNumber, Date, Type) values ('cjyb68073107', '2021-05-10', 'COVID-19');
+
+insert into Students (MedicareCardNumber, CurrentLevel) values ('chgb68073150', 'elementary 3');
+insert into Students (MedicareCardNumber, CurrentLevel) values ('cjyb68073107', 'elementary 3');
+
+insert into Registered_at (MedicareCardNumber, FacilityID, StartDate, EndDate) values ('chgb68073150', 7, '2022-10-27', '2023-03-09');
+insert into Registered_at (MedicareCardNumber, FacilityID, StartDate, EndDate) values ('cjyb68073107', 7, '2022-10-27', '2023-03-09');
