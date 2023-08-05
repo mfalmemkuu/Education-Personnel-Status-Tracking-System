@@ -7,7 +7,7 @@ CREATE TABLE Persons(
   DateOfBirth date,
   TelephoneNumber char(12),
   Citizenship VARCHAR(255),
-  PostalCode char(6),
+  PostalCode char(7),
   EmailAddress VARCHAR(255),
   PRIMARY KEY (MedicareCardNumber)
 );
@@ -17,13 +17,13 @@ CREATE TABLE Facilities(
     Name VARCHAR(255),
     WebAddress VARCHAR(255),
     Capacity int,
-    PostalCode char(6),
+    PostalCode char(7),
     PhoneNumber char(12),
     PRIMARY KEY (FacilityID)
 );
 
 CREATE TABLE Addresses_persons(
-    PostalCode char(6) NOT NULL,
+    PostalCode char(7) NOT NULL,
     Province VARCHAR(255),
     Address VARCHAR(255),
     City VARCHAR(255),
@@ -31,7 +31,7 @@ CREATE TABLE Addresses_persons(
 );
 
 CREATE TABLE Addresses_facilities(
-    PostalCode char(6) NOT NULL,
+    PostalCode char(7) NOT NULL,
     Province VARCHAR(255),
     Address VARCHAR(255),
     City VARCHAR(255),
