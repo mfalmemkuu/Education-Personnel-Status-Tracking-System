@@ -4,14 +4,38 @@ CREATE TABLE Persons(
   FirstName VARCHAR(255),
   LastName VARCHAR(255),
   MedicareExpiryDate date NOT NULL,
-  Province VARCHAR(255),
   DateOfBirth date,
   TelephoneNumber char(12),
-  Address VARCHAR(255),
   Citizenship VARCHAR(255),
   PostalCode char(6),
   EmailAddress VARCHAR(255),
   PRIMARY KEY (MedicareCardNumber)
+);
+
+CREATE TABLE Facilities(
+    FacilityID int NOT NULL AUTO_INCREMENT,
+    Name VARCHAR(255),
+    WebAddress VARCHAR(255),
+    Capacity int,
+    PostalCode char(6),
+    PhoneNumber char(12),
+    PRIMARY KEY (FacilityID)
+);
+
+CREATE TABLE Addresses_persons(
+    PostalCode char(6) NOT NULL,
+    Province VARCHAR(255),
+    Address VARCHAR(255),
+    City VARCHAR(255),
+    CONSTRAINT PK_Addresses_persons PRIMARY KEY (PostalCode)
+);
+
+CREATE TABLE Addresses_facilities(
+    PostalCode char(6) NOT NULL,
+    Province VARCHAR(255),
+    Address VARCHAR(255),
+    City VARCHAR(255),
+    CONSTRAINT PK_Addresses_facilities PRIMARY KEY (PostalCode)
 );
 
 CREATE TABLE Students(
@@ -52,19 +76,6 @@ CREATE TABLE Ministries(
     MinistryID int NOT NULL,
     Name VARCHAR(255),
     PRIMARY KEY (MinistryID)
-);
-
-CREATE TABLE Facilities(
-    FacilityID int NOT NULL AUTO_INCREMENT,
-    Name VARCHAR(255),
-    Address VARCHAR(255),
-    WebAddress VARCHAR(255),
-    Capacity int,
-    City VARCHAR(255),
-    Province VARCHAR(255),
-    PostalCode char(6),
-    PhoneNumber char(12),
-    PRIMARY KEY (FacilityID)
 );
 
 CREATE TABLE Operates(
@@ -129,3 +140,37 @@ CREATE TABLE Registered_at(
     EndDate date,
     CONSTRAINT PK_Registered_at PRIMARY KEY (MedicareCardNumber, FacilityID, StartDate)
 );
+
+CREATE TABLE Schedule(
+    ScheduleID int NOT NULL AUTO_INCREMENT,
+    `Date` date,
+    isCancelled boolean,
+    startTime time,
+    endTime time,
+    PRIMARY KEY (ScheduleID)
+);
+
+CREATE TABLE Has_schedule(
+    ScheduleID int NOT NULL,
+    FacilityID int NOT NULL,
+    MedicareCardNumber int NOT NULL,
+    CONSTRAINT PK_Has_schedule PRIMARY KEY (ScheduleID,FacilityID, MedicareCardNumber)
+);
+
+CREATE TABLE Email_log(
+    LogID int NOT NULL AUTO_INCREMENT,
+    subject VARCHAR(255),
+    sender VARCHAR(255),
+    receiver VARCHAR(255),
+    `date` date,
+    body VARCHAR(255),
+    PRIMARY KEY(LogID)
+);
+
+CREATE TABLE Email_sent(
+    LogID int NOT NULL,
+    FacilityID int NOT NULL,
+    MedicareCardNumber int NOT NULL,
+    CONSTRAINT PK_Has_schedule PRIMARY KEY (LogID,FacilityID, MedicareCardNumber)
+);
+
