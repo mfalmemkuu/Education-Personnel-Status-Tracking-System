@@ -15,6 +15,45 @@ try {
 
 try {
   
+    $sql = "UPDATE Students s
+    SET S.CurrentLevel = :currentLevel
+    WHERE S.MedicareCardNumber = :MedicareCardNumber;";
+    
+    echo "SQL Query: <br>" . $sql;
+
+    // Prepare statement
+    $query = $conn->prepare($sql);
+
+    // Bind parameters to statement
+    $query->bindParam(':medicareCardNumber', $_REQUEST['medicareCardNumber']);
+      $query->bindParam(':currentLevel', $_REQUEST['currentLevel']);
+
+    $id = $_REQUEST['medicareCardNumber'];
+
+    if($id == null) {
+        echo "ID must be inputted.<br>";
+        goto break_free_of_try;
+    }
+    // Execute the prepared statement
+    $query->execute();
+
+    //echo $query->rowCount();
+            
+    if($query->rowCount() == 0 ) {
+        echo "Could not update data for: " . $id . "<br>";
+        //TODO: LIST CONSTRAINTS AND DATA TYPES HERE
+        goto break_free_of_try;
+    }
+  
+    echo "Student Record UPDATED successfully"; 
+
+
+} catch(PDOException $e) {
+  echo "ERROR: Could not execute " . $sql . "<br>" . $e->getMessage();
+}
+
+try {
+  
     $sql = "UPDATE Persons p
     SET p.FirstName =:FirstName,
     p.LastName =:LastName , p.DateOfBirth =:DateOfBirth,
@@ -55,7 +94,7 @@ try {
         goto break_free_of_try;
     }
   
-    echo "Record UPDATED successfully"; 
+    echo "Person Record UPDATED successfully"; 
 
 
 } catch(PDOException $e) {
