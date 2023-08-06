@@ -1,8 +1,8 @@
 <?php
-echo "<br><h3>Student Details:</h3>";
+echo "<br><h3>Counselors who have been infected 3 times:</h3>";
 
 echo "<table style='border: solid 1px black;'>";
-echo "<tr><th>MedicareCardNumber</th><th>CurrentGradeLevel</th><th>Firstname</th><th>Lastname</th><th>MedicareExpiryDate</th><th>DateOfBirth</th><th>TelephoneNumber</th><th>Citizenship</th><th>Address</th><th>City</th><th>PostalCode</th><th>Province</th><th>Email</th></tr>";
+echo "<tr><th>MedicareCardNumber</th><th>Role</th><th>Specialisation</th><th>FirstName</th><th>LastName</th><th>DateOfBirth</th><th>EmailAddress</th><th>TotalScheduledHours</th></tr>";
 
 class TableRows extends RecursiveIteratorIterator {
   function __construct($it) {
@@ -40,10 +40,25 @@ try {
 }
 
 try {
-    $sql = "SELECT s.medicareCardNumber, s.currentLevel, p.firstname, p.lastname, p.medicareexpirydate, p.dateofbirth, p.telephonenumber, p.citizenship, ap.address, ap.city, p.postalcode, ap.province, p.emailaddress
-    FROM students s, persons p, addresses_persons ap
-    WHERE s.medicareCardNumber = p.medicareCardNumber
-    AND p.postalcode = ap.postalcode;";
+    $sql = "SELECT t.MedicareCardNumber, t.Level, t.Specialisation, p.FirstName, p.LastName, p.DateOfBirth, p.EmailAddress,
+    COALESCE(ts.TotalScheduledHours, 0) AS TotalScheduledHours
+    FROM Teachers t
+    INNER JOIN Persons p ON t.MedicareCardNumber = p.MedicareCardNumber
+    LEFT JOIN (
+        SELECT 
+        w.MedicareCardNumber,
+        SUM(TIMESTAMPDIFF(HOUR, s.StartTime, s.EndTime)) AS TotalScheduledHours
+        FROM Works_at w
+        INNER JOIN Schedule s ON w.StartDate <= s.Date AND (w.EndDate IS NULL OR w.EndDate >= s.Date)
+        GROUP BY w.MedicareCardNumber
+      ) AS ts ON t.MedicareCardNumber = ts.MedicareCardNumber
+    WHERE t.MedicareCardNumber IN (
+        SELECT MedicareCardNumber
+        FROM Infections
+        GROUP BY MedicareCardNumber
+        HAVING COUNT(*) >= 3
+    )
+    ORDER BY t.Level ASC, p.FirstName ASC, p.LastName ASC;";
     
 
     $stmt = $conn->prepare($sql);  

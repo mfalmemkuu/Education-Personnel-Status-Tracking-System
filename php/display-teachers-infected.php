@@ -1,8 +1,8 @@
 <?php
-echo "<br><h3>Student Details:</h3>";
+echo "<br><h3>Infected Teachers in the past two weeks:</h3>";
 
 echo "<table style='border: solid 1px black;'>";
-echo "<tr><th>MedicareCardNumber</th><th>CurrentGradeLevel</th><th>Firstname</th><th>Lastname</th><th>MedicareExpiryDate</th><th>DateOfBirth</th><th>TelephoneNumber</th><th>Citizenship</th><th>Address</th><th>City</th><th>PostalCode</th><th>Province</th><th>Email</th></tr>";
+echo "<tr><th>FirstName</th><th>LastName</th><th>DateInfected</th><th>FacilityCurrentlyWorkingAt</th></tr>";
 
 class TableRows extends RecursiveIteratorIterator {
   function __construct($it) {
@@ -40,10 +40,15 @@ try {
 }
 
 try {
-    $sql = "SELECT s.medicareCardNumber, s.currentLevel, p.firstname, p.lastname, p.medicareexpirydate, p.dateofbirth, p.telephonenumber, p.citizenship, ap.address, ap.city, p.postalcode, ap.province, p.emailaddress
-    FROM students s, persons p, addresses_persons ap
-    WHERE s.medicareCardNumber = p.medicareCardNumber
-    AND p.postalcode = ap.postalcode;";
+    $sql = "SELECT p.firstname, p.lastname, i.date, f.name
+    FROM infections i, teachers t, persons p, employees e, works_at wa, facilities f
+    WHERE CURDATE() - 14 < i.date
+    AND i.medicareCardNumber = p.medicareCardNumber
+    AND p.medicareCardNumber = e.medicareCardNumber
+    AND e.medicareCardNumber = wa.medicareCardNumber
+    AND wa.facilityID = f.facilityID
+    AND i.type = 'COVID-19'
+    ORDER BY f.name, p.firstName;";
     
 
     $stmt = $conn->prepare($sql);  

@@ -1,8 +1,8 @@
 <?php
-echo "<br><h3>Student Details:</h3>";
+echo "<br><h3>Email Details for Specific Facility:</h3>";
 
 echo "<table style='border: solid 1px black;'>";
-echo "<tr><th>MedicareCardNumber</th><th>CurrentGradeLevel</th><th>Firstname</th><th>Lastname</th><th>MedicareExpiryDate</th><th>DateOfBirth</th><th>TelephoneNumber</th><th>Citizenship</th><th>Address</th><th>City</th><th>PostalCode</th><th>Province</th><th>Email</th></tr>";
+echo "<tr><th>EmailID</th><th>Subject</th><th>Sender</th><th>Receiver</th><th>Date</th><th>Body</th></tr>";
 
 class TableRows extends RecursiveIteratorIterator {
   function __construct($it) {
@@ -40,14 +40,23 @@ try {
 }
 
 try {
-    $sql = "SELECT s.medicareCardNumber, s.currentLevel, p.firstname, p.lastname, p.medicareexpirydate, p.dateofbirth, p.telephonenumber, p.citizenship, ap.address, ap.city, p.postalcode, ap.province, p.emailaddress
-    FROM students s, persons p, addresses_persons ap
-    WHERE s.medicareCardNumber = p.medicareCardNumber
-    AND p.postalcode = ap.postalcode;";
+    $sql = "SELECT el.LogID AS 'EmailID', el.subject AS 'Subject' ,
+    el.sender AS 'Sender' , el.receiver AS 'Receiver',
+    el.`date` AS 'Date', el.body AS 'Body'
+    FROM Email_log el, Facilities f , Email_sent es
+    WHERE el.LogID = es.LogID AND es.FacilityID = f.FacilityID AND f.Name =:fname;";
     
 
     $stmt = $conn->prepare($sql);  
     
+    $stmt->bindParam(':fname', $_REQUEST['fname']);
+
+    $name = $_REQUEST['fname'];
+    
+    if($name == NULL) {
+        echo "Facility name must be inputted.<br>";
+        goto break_free_of_try;
+    }
 
     $stmt->execute();
   
@@ -61,6 +70,7 @@ try {
 } catch(PDOException $e) {
   echo "ERROR: Could not execute " . $sql . "<br>" . $e->getMessage();
 }
+break_free_of_try:
 
 //close connection once done
 $conn = null;

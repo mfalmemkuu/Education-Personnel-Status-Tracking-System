@@ -1,8 +1,8 @@
 <?php
-echo "<br><h3>Student Details:</h3>";
+echo "<br><h3>Facility Details:</h3>";
 
 echo "<table style='border: solid 1px black;'>";
-echo "<tr><th>MedicareCardNumber</th><th>CurrentGradeLevel</th><th>Firstname</th><th>Lastname</th><th>MedicareExpiryDate</th><th>DateOfBirth</th><th>TelephoneNumber</th><th>Citizenship</th><th>Address</th><th>City</th><th>PostalCode</th><th>Province</th><th>Email</th></tr>";
+echo "<tr><th>Name</th><th>Address</th><th>City</th><th>PostalCode</th><th>WebAddress</th><th>Type</th><th>Capacity</th><th>President/PrincipalFirstName</th><th>President/PrincipalLastName</th><th>NumberOfEmployeesWorkingAtFacility</th></tr>";
 
 class TableRows extends RecursiveIteratorIterator {
   function __construct($it) {
@@ -40,10 +40,17 @@ try {
 }
 
 try {
-    $sql = "SELECT s.medicareCardNumber, s.currentLevel, p.firstname, p.lastname, p.medicareexpirydate, p.dateofbirth, p.telephonenumber, p.citizenship, ap.address, ap.city, p.postalcode, ap.province, p.emailaddress
-    FROM students s, persons p, addresses_persons ap
-    WHERE s.medicareCardNumber = p.medicareCardNumber
-    AND p.postalcode = ap.postalcode;";
+    $sql = "SELECT f.name, af.address, af.city, f.postalcode, f.phoneNumber, f.webaddress, IF(f.facilityid = mf.facilityid, 'Management Facility','Educational Facility') AS type, f.capacity, p.firstName AS presidentOrPrincipalFirstName, p.lastName AS presidentOrPrincipalLastName, COUNT(wa.medicareCardNumber) AS NumberOfEmployeesWorkingForFacility
+    FROM facilities f, addresses_facilities af, managementfacilities mf, educationalfacilities ef, works_at wa, employees e, persons p
+    WHERE f.postalCode = af.postalcode
+    AND (f.facilityid = mf.facilityid OR f.facilityid = ef.facilityid)
+    AND (mf.presidentMedicareNumber = wa.medicareCardNumber OR ef.principalMedicareNumber = wa.medicareCardNumber )
+    AND wa.facilityid = f.facilityid
+    AND wa.medicareCardNumber = e.medicareCardNumber 
+    AND e.medicareCardNumber = p.medicareCardNumber
+    AND wa.endDate IS NULL
+    GROUP BY f.facilityid
+    ORDER BY af.province, af.city, type, NumberOfEmployeesWorkingForFacility;";
     
 
     $stmt = $conn->prepare($sql);  

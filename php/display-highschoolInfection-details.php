@@ -1,8 +1,8 @@
 <?php
-echo "<br><h3>Student Details:</h3>";
+echo "<br><h3>Highschool Infection Details:</h3>";
 
 echo "<table style='border: solid 1px black;'>";
-echo "<tr><th>MedicareCardNumber</th><th>CurrentGradeLevel</th><th>Firstname</th><th>Lastname</th><th>MedicareExpiryDate</th><th>DateOfBirth</th><th>TelephoneNumber</th><th>Citizenship</th><th>Address</th><th>City</th><th>PostalCode</th><th>Province</th><th>Email</th></tr>";
+echo "<tr><th>Province</th><th>SchoolName</th><th>Capacity</th><th>TotalTeachersInfected</th><th>TotalStudentsInfected</th></tr>";
 
 class TableRows extends RecursiveIteratorIterator {
   function __construct($it) {
@@ -40,10 +40,17 @@ try {
 }
 
 try {
-    $sql = "SELECT s.medicareCardNumber, s.currentLevel, p.firstname, p.lastname, p.medicareexpirydate, p.dateofbirth, p.telephonenumber, p.citizenship, ap.address, ap.city, p.postalcode, ap.province, p.emailaddress
-    FROM students s, persons p, addresses_persons ap
-    WHERE s.medicareCardNumber = p.medicareCardNumber
-    AND p.postalcode = ap.postalcode;";
+    $sql = "SELECT af.Province, f.Name AS SchoolName, f.Capacity,
+    COUNT(DISTINCT CASE WHEN t.MedicareCardNumber IS NOT NULL AND i.`Date` BETWEEN DATE_SUB(CURDATE(), INTERVAL 2 WEEK) AND CURDATE() THEN i.MedicareCardNumber END) AS TotalTeachersInfected,
+    COUNT(DISTINCT CASE WHEN s.MedicareCardNumber IS NOT NULL AND i.`Date` BETWEEN DATE_SUB(CURDATE(), INTERVAL 2 WEEK) AND CURDATE() THEN i.MedicareCardNumber END) AS TotalStudentsInfected
+    FROM HighSchools h
+    INNER JOIN Facilities f ON h.FacilityID = f.FacilityID
+    INNER JOIN Addresses_facilities af ON f.PostalCode = af.PostalCode
+    LEFT JOIN Infections i ON f.FacilityID = i.MedicareCardNumber
+    LEFT JOIN Teachers t ON i.MedicareCardNumber = t.MedicareCardNumber
+    LEFT JOIN Students s ON i.MedicareCardNumber = s.MedicareCardNumber
+    GROUP BY af.Province, f.Name, f.Capacity
+    ORDER BY af.Province, TotalTeachersInfected;";
     
 
     $stmt = $conn->prepare($sql);  

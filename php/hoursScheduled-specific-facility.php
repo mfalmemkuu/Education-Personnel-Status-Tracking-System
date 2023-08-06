@@ -1,8 +1,8 @@
 <?php
-echo "<br><h3>Student Details:</h3>";
+echo "<br><h3>Total Hours Scheduled for Specific Teacher:</h3>";
 
 echo "<table style='border: solid 1px black;'>";
-echo "<tr><th>MedicareCardNumber</th><th>CurrentGradeLevel</th><th>Firstname</th><th>Lastname</th><th>MedicareExpiryDate</th><th>DateOfBirth</th><th>TelephoneNumber</th><th>Citizenship</th><th>Address</th><th>City</th><th>PostalCode</th><th>Province</th><th>Email</th></tr>";
+echo "<tr><th>FirstName</th><th>LastName</th><th>TotalScheduledHours</th></tr>";
 
 class TableRows extends RecursiveIteratorIterator {
   function __construct($it) {
@@ -40,14 +40,43 @@ try {
 }
 
 try {
-    $sql = "SELECT s.medicareCardNumber, s.currentLevel, p.firstname, p.lastname, p.medicareexpirydate, p.dateofbirth, p.telephonenumber, p.citizenship, ap.address, ap.city, p.postalcode, ap.province, p.emailaddress
-    FROM students s, persons p, addresses_persons ap
-    WHERE s.medicareCardNumber = p.medicareCardNumber
-    AND p.postalcode = ap.postalcode;";
+    $sql = "SELECT p.FirstName, p.LastName, SUM(TIMESTAMPDIFF(HOUR, s.StartTime, s.EndTime)) AS TotalScheduledHours
+FROM 
+    Teachers t
+INNER JOIN 
+    Has_schedule hs ON t.MedicareCardNumber = hs.MedicareCardNumber
+INNER JOIN 
+    Schedule s ON hs.ScheduleID = s.ScheduleID
+INNER JOIN 
+    Facilities f ON hs.FacilityID = f.FacilityID
+INNER JOIN 
+    Persons p ON t.MedicareCardNumber = p.MedicareCardNumber
+WHERE 
+    f.Name = :fname 
+    AND s.Date >= :startTime AND s.Date <= :endTime 
+GROUP BY 
+    p.FirstName,
+    p.LastName
+ORDER BY 
+    p.FirstName,
+    p.LastName;
+";
     
 
     $stmt = $conn->prepare($sql);  
     
+    $stmt->bindParam(':fname', $_REQUEST['fname']);
+    $stmt->bindParam(':startTime', $_REQUEST['startTime']);
+    $stmt->bindParam(':endTime', $_REQUEST['endTime']);
+
+    $name = $_REQUEST['fname'];
+    $startDate = $_REQUEST['startTime'];
+    $endDate = $_REQUEST['endTime'];
+    
+    if($name == null && $startDate == null && $endDate == null) {
+        echo "Facility name and dates must be inputted.<br>";
+        goto break_free_of_try;
+    }
 
     $stmt->execute();
   
@@ -61,6 +90,7 @@ try {
 } catch(PDOException $e) {
   echo "ERROR: Could not execute " . $sql . "<br>" . $e->getMessage();
 }
+break_free_of_try:
 
 //close connection once done
 $conn = null;

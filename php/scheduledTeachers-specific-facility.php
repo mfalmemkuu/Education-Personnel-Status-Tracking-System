@@ -1,8 +1,8 @@
 <?php
-echo "<br><h3>Student Details:</h3>";
+echo "<br><h3>Scheduled Teachers for the past two weeks:</h3>";
 
 echo "<table style='border: solid 1px black;'>";
-echo "<tr><th>MedicareCardNumber</th><th>CurrentGradeLevel</th><th>Firstname</th><th>Lastname</th><th>MedicareExpiryDate</th><th>DateOfBirth</th><th>TelephoneNumber</th><th>Citizenship</th><th>Address</th><th>City</th><th>PostalCode</th><th>Province</th><th>Email</th></tr>";
+echo "<tr><th>FirstName</th><th>LastName</th><th>Role</th></tr>";
 
 class TableRows extends RecursiveIteratorIterator {
   function __construct($it) {
@@ -40,14 +40,25 @@ try {
 }
 
 try {
-    $sql = "SELECT s.medicareCardNumber, s.currentLevel, p.firstname, p.lastname, p.medicareexpirydate, p.dateofbirth, p.telephonenumber, p.citizenship, ap.address, ap.city, p.postalcode, ap.province, p.emailaddress
-    FROM students s, persons p, addresses_persons ap
-    WHERE s.medicareCardNumber = p.medicareCardNumber
-    AND p.postalcode = ap.postalcode;";
+    $sql = "SELECT p.FirstName, p.LastName , t.`Level`
+    FROM Teachers t, Persons p, Facilities f, Has_schedule hs, Works_at wa, Schedule s
+    WHERE f.Name = :fname AND p.MedicareCardNumber = t.MedicareCardNumber
+    AND hs.MedicareCardNumber = t.MedicareCardNumber AND wa.MedicareCardNumber = t.MedicareCardNumber
+    AND wa.FacilityID = f.FacilityID AND hs.FacilityID = f.FacilityID
+    AND s.ScheduleID =hs.ScheduleID AND s.startTime >= DATE_SUB(NOW(), INTERVAL 2 WEEK)
+    AND s.isCancelled = false;";
     
 
     $stmt = $conn->prepare($sql);  
     
+    $stmt->bindParam(':fname', $_REQUEST['fname']);
+
+    $name = $_REQUEST['fname'];
+    
+    if($name == NULL) {
+        echo "Facility name must be inputted.<br>";
+        goto break_free_of_try;
+    }
 
     $stmt->execute();
   
@@ -61,6 +72,7 @@ try {
 } catch(PDOException $e) {
   echo "ERROR: Could not execute " . $sql . "<br>" . $e->getMessage();
 }
+break_free_of_try:
 
 //close connection once done
 $conn = null;

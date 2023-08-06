@@ -1,8 +1,8 @@
 <?php
-echo "<br><h3>Student Details:</h3>";
+echo "<br><h3>Ministry Details:</h3>";
 
 echo "<table style='border: solid 1px black;'>";
-echo "<tr><th>MedicareCardNumber</th><th>CurrentGradeLevel</th><th>Firstname</th><th>Lastname</th><th>MedicareExpiryDate</th><th>DateOfBirth</th><th>TelephoneNumber</th><th>Citizenship</th><th>Address</th><th>City</th><th>PostalCode</th><th>Province</th><th>Email</th></tr>";
+echo "<tr><th>MinisterFirstName</th><th>MinisterLastName</th><th>MinisterCity</th><th>TotalManagementFacilities</th><th>TotalEducationalFacilities</th></tr>";
 
 class TableRows extends RecursiveIteratorIterator {
   function __construct($it) {
@@ -40,10 +40,18 @@ try {
 }
 
 try {
-    $sql = "SELECT s.medicareCardNumber, s.currentLevel, p.firstname, p.lastname, p.medicareexpirydate, p.dateofbirth, p.telephonenumber, p.citizenship, ap.address, ap.city, p.postalcode, ap.province, p.emailaddress
-    FROM students s, persons p, addresses_persons ap
-    WHERE s.medicareCardNumber = p.medicareCardNumber
-    AND p.postalcode = ap.postalcode;";
+    $sql = "SELECT p.FirstName AS MinisterFirstName, p.LastName AS MinisterLastName,
+    ap.City AS MinisterCity,
+    COUNT(DISTINCT mf.FacilityID) AS TotalManagementFacilities,
+    COUNT(DISTINCT ef.FacilityID) AS TotalEducationalFacilities
+    FROM Ministries m
+    INNER JOIN Employees e ON m.MinistryID = e.MedicareCardNumber
+    INNER JOIN Persons p ON e.MedicareCardNumber = p.MedicareCardNumber
+    INNER JOIN Addresses_persons ap ON p.PostalCode = ap.PostalCode
+    LEFT JOIN ManagementFacilities mf ON m.MinistryID = mf.PresidentMedicareNumber
+    LEFT JOIN EducationalFacilities ef ON m.MinistryID = ef.PrincipalMedicareNumber
+    GROUP BY p.FirstName, p.LastName, ap.City
+    ORDER BY ap.City ASC, TotalManagementFacilities DESC;";
     
 
     $stmt = $conn->prepare($sql);  
