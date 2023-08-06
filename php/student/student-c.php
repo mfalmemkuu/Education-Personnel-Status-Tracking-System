@@ -38,6 +38,13 @@ VALUES(:medicareCardNumber,:firstName,:lastName,:medicareExpiryDate,:dateOfBirth
 
   // Execute the prepared statement
   $query->execute();
+
+  if($query->rowCount() == 0 ) {
+    echo "Could not update data <br>";
+    //TODO: LIST CONSTRAINTS AND DATA TYPES HERE
+    goto break_free_of_try;
+  } 
+
   echo "New Person record created successfully";
 
 
@@ -99,6 +106,4 @@ break_free_of_try:
 
 //close connection once done
 $conn = null;
-//call main php page
-require_once("index.php");
 ?>
