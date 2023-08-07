@@ -178,6 +178,9 @@ CREATE TABLE Email_sent(
 
 
 -- Triggers
+
+
+-- Prevents an employee that is not vaccinated in the last 6 months from being assigned a schedule
 delimiter //
 CREATE TRIGGER EmployeeHasVaccineTrigger
 BEFORE insert ON has_schedule 
@@ -188,5 +191,37 @@ begin
 		SIGNAL SQLSTATE '45000'
 		SET MESSAGE_TEXT = "Employee has not been vaccinated in the last 6 months.";
 	end if;
+end
+//
+
+
+-- When a teacher becomes infected, an email is sent to the principal and its assigned schedules are cancelled.
+delimiter //
+CREATE TRIGGER TeacherInfectionsTrigger
+AFTER insert ON infections 
+for each row
+begin 
+	declare facility_id int;
+	declare principal_email varchar(255);
+	declare teacher_name varchar(255);
+	
+	if 0<(select count(*) from teachers t where t.MedicareCardNumber = new.MedicareCardNumber)
+	then
+		update schedule 
+		set isCancelled = true 
+		where ScheduleID in (Select s.ScheduleID from Has_schedule hs join schedule s on hs.ScheduleID = s.ScheduleID
+		where hs.MedicareCardNumber = new.MedicareCardNumber and s.`Date` <= date_add(curdate(), interval 2 week)
+		and s.`Date` >= curdate() 
+		and hs.MedicareCardNumber in (select t.MedicareCardNumber from teachers t));
+
+	set @facility_id := (select wa.FacilityID from works_at wa where wa.MedicareCardNumber = new.MedicareCardNumber and wa.EndDate is null limit 1);
+	set @principal_email := (select p.EmailAddress from educationalfacilities e join persons p on e.PrincipalMedicareNumber = p.MedicareCardNumber where e.FacilityID = facility_id);	
+	set @teacher_name := (select concat(concat(p.FirstName ," "),p.LastName) from persons p where p.MedicareCardNumber=new.MedicareCardNumber);
+
+
+	insert into email_log(subject,sender,receiver,`date`,body) values("Warning",(select f.Name from facilities f where f.FacilityID=facility_id),(select @principal_email),current_date(),LEFT(concat((select @teacher_name), concat(" who teaches in your school has been infected with ",concat(new.`type`,concat(" on ",concat(dayofmonth(new.`Date`) ,concat(", ",concat(monthname(new.`Date`) ,concat(", ",year(new.`Date`))))))))),80));
+	
+	insert into email_sent(LogID, FacilityID, MedicareCardNumber) values((select LAST_INSERT_ID()), (select @facility_id), new.MedicareCardNumber);
+end if;
 end
 //
