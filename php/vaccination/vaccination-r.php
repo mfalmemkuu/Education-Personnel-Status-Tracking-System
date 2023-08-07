@@ -2,7 +2,7 @@
 
 
 echo "<table style='border: solid 1px black;'>";
-echo "<tr><th>MedicareCardNumber</th><th>CurrentGradeLevel</th><th>Firstname</th><th>Lastname</th><th>MedicareExpiryDate</th><th>DateOfBirth</th><th>TelephoneNumber</th><th>Citizenship</th><th>Address</th><th>City</th><th>PostalCode</th><th>Province</th><th>Email</th></tr>";
+echo "<tr><th>MedicareCardNumber</th><th>VaccineDate</th><th>VaccineType</th><th>DoseNumber</th></tr>";
 
 class TableRows extends RecursiveIteratorIterator {
   function __construct($it) {
@@ -19,7 +19,7 @@ class TableRows extends RecursiveIteratorIterator {
 
   function endChildren() {
     echo '<td><a href="./edit-view.php?medicareCardNumber='. parent::current() .'">Edit</a> ';
-    echo '<a href="./student-d.php?medicareCardNumber='. parent::current() .'">Delete</a></td>';
+    echo '<a href="./vaccination-d.php?medicareCardNumber='. parent::current() .'">Delete</a></td>';
     echo "</tr>" . "\n";
   }
 
@@ -42,10 +42,7 @@ try {
 }
 
 try {
-    $sql = "SELECT s.medicareCardNumber, s.currentLevel, p.firstname, p.lastname, p.medicareexpirydate, p.dateofbirth, p.telephonenumber, p.citizenship, ap.address, ap.city, p.postalcode, ap.province, p.emailaddress
-    FROM students s, persons p, addresses_persons ap
-    WHERE s.medicareCardNumber = p.medicareCardNumber
-    AND p.postalcode = ap.postalcode;";
+    $sql = "SELECT * FROM Vaccinations";
     
 
     $stmt = $conn->prepare($sql);  

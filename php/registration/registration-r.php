@@ -18,8 +18,8 @@ class TableRows extends RecursiveIteratorIterator {
   }
 
   function endChildren() {
-    echo '<td><a href="./edit-view.php?medicareCardNumber='. parent::current() .'">Edit</a> ';
-    echo '<a href="./student-d.php?medicareCardNumber='. parent::current() .'">Delete</a></td>';
+    echo '<td><a href="./edit-view.php?medicareCardNumber='. parent::current() .'&facilityID='. parent::current() .'">Edit</a> ';
+    echo '<a href="./student-d.php?medicareCardNumber='. parent::current() .'&facilityID='. parent::current() .'">Delete</a></td>';
     echo "</tr>" . "\n";
   }
 

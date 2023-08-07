@@ -9,23 +9,27 @@
 <br>
 <br>
 
-<h3>1-</h3>
+<h3>1- Create/Delete/Edit/Display a Facility</h3>
+<a href="/facility">CRUD Operations on Facilities</a><br><br>
 
-<h3>2-</h3>
+<h3>2- Create/Delete/Edit/Display a Student </h3>
 <a href="/student">CRUD Operations on Students</a><br><br>
-<form action="display-students.php">
-<input type="submit" value="Display All Students">
-</form>
-<div id="displayStudents"></div>
 
+<h3>3- Create/Delete/Edit/Display an Employee</h3>
+<a href="/employee">CRUD Operations on Employees</a><br><br>
 
-<h3>4-</h3>
+<h3>4- Create/Delete/Edit/Display a Vaccination</h3>
+<a href="/vaccination">CRUD Operations on Vaccinations</a><br><br>
 
-<h3>5-</h3>
+<h3>5- Create/Delete/Edit/Display an Infection</h3>
+<a href="/infection">CRUD Operations on Infections</a><br><br>
 
-<h3>6-</h3>
+<h3>6- Register/Modify registration/Cancel registration for a student in a school</h3>
+<a href="/registration">CRUD Operations on Registrations</a><br><br>
 
-<h3>7-</h3>
+<h3>7- Assign/Delete/Edit Schedule for an Employee</h3>
+<a href="/schedule">CRUD Operations on Schedules</a><br><br>
+
 
 <h3>8- Get details of all the facilities in the system. </h3>
 <form action="display-facilities-details.php">
