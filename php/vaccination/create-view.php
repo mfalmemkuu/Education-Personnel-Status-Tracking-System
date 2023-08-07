@@ -1,15 +1,17 @@
 <?php require_once '../database.php';
-if(isset($_POST["MedicareCardNumber"]) && isset($_POST["vaccineDate"]) && isset($_POST["vaccineType"]) &&
-isset($_POST["doseNumber"])){
+
+if(isset($_POST["MedicareCardNumber"]) && isset($_POST["VaccinationDate"]) && isset($_POST["VaccinationType"]) && isset($_POST["DoseNumber"])){
+    
     $query = $conn->prepare("INSERT INTO Vaccinations(MedicareCardNumber, `Date`, `Type`, DoseNumber)
-    VALUES(:MedicareCardNumber, :vaccineDate, :vaccineType ,:doseNumber);
-    ");
+    VALUES(:MedicareCardNumber, :VaccinationDate, :VaccinationType ,:DoseNumber); ");
     $query->bindParam(':MedicareCardNumber',$_POST["MedicareCardNumber"]);
-    $query->bindParam(':vaccineDate',$_POST["vaccineDate"]);
-    $query->bindParam(':vaccineType',$_POST["vaccineType"]);
-    $query->bindParam(':doseNumber',$_POST["doseNumber"]);
-    if($query->execute())
-    header("Location: .");
+    $query->bindParam(':VaccinationDate',$_POST["VaccinationDate"]);
+    $query->bindParam(':VaccinationType',$_POST["VaccinationType"]);
+    $query->bindParam(':DoseNumber',$_POST["DoseNumber"]);
+    if($query->execute()) {
+        header("Location: ./index.php");
+    }
+    
 }
 
 ?>
@@ -25,12 +27,12 @@ isset($_POST["doseNumber"])){
     <form action="./create-view.php" method="post">
         <label for="MedicareCardNumber">Medicare Number: </label>
         <input type="text" name="MedicareCardNumber" id="MedicareCardNumber"> <br>
-        <label for="vaccineDate">Vaccination Date: </label>
-        <input type="date" name="vaccineDate" id="vaccineDate"> <br>
-        <label for="vaccineType">Vaccination Type: </label>
-        <input type="text" name="vaccineType" id="vaccineType"> <br>
-        <label for="doseNumber">Dose Number: </label>
-        <input type="text" name="doseNumber" id="doseNumber"> <br>        
+        <label for="VaccinationDate">Vaccination Date: </label>
+        <input type="date" name="VaccinationDate" id="VaccinationDate"> <br>
+        <label for="VaccinationType">Vaccination Type: </label>
+        <input type="text" name="VaccinationType" id="VaccinationType"> <br>
+        <label for="DoseNumber">Dose Number: </label>
+        <input type="text" name="DoseNumber" id="DoseNumber"> <br>        
         <br>
         <button type="submit">Submit</button>
     </form><br>
