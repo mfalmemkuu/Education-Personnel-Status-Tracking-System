@@ -11,7 +11,7 @@
         Medicare Expiry Date: <input type="date" name="medicareExpiryDate"><br>
         Telephone Number: <input type="text" name="telephoneNumber"><br>
         Citizenship: <input type="text" name="citizenship"><br>
-        PostalCode: <input type="text" name="postalCode"><br>
+        PostalCode: <input type="text" name="PostalCode"><br>
         E-mail: <input type="text" name="email"><br>
         Grade Level: <input type="text" name="currentLevel"><br>
         <br>

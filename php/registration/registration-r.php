@@ -1,8 +1,49 @@
 <?php
+require_once '../database.php';
+
+$sql = 'SELECT *
+FROM registered_at r;';
+
+$stmt = $conn->prepare($sql);  
+    
+
+$stmt->execute();
+
+?>
+
+<table>
+  <thead>
+      <tr>
+        <th>MedicareCardNumber</th>
+        <th>FacilityID</th>
+        <th>StartDate</th>
+        <th>EndDate</th>
+  </thead>
+  <tbody>
+    <?php  while($row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT)) { ?>
+    <tr>
+      <td><?= $row["MedicareCardNumber"] ?></td>
+      <td><?= $row["FacilityID"] ?></td>
+      <td><?= $row["StartDate"] ?></td>
+      <td><?= $row["EndDate"] ?></td>
+      <td>
+        <a href="./registration-u.php?MedicareCardNumber=<?= $row["MedicareCardNumber"] ?>">Edit</a> 
+        <a href="./registration-d.php?MedicareCardNumber=<?= $row["MedicareCardNumber"] ?>">Delete</a>
+      </td>
+    </tr>
+    <?php  } ?>
+  </tbody>
+</table>
+    <br>
+    <a href="../registration/index.php">Back to Registrations</a>
 
 
+
+<?php
+
+/*
 echo "<table style='border: solid 1px black;'>";
-echo "<tr><th>MedicareCardNumber</th><th>CurrentGradeLevel</th><th>Firstname</th><th>Lastname</th><th>MedicareExpiryDate</th><th>DateOfBirth</th><th>TelephoneNumber</th><th>Citizenship</th><th>Address</th><th>City</th><th>PostalCode</th><th>Province</th><th>Email</th></tr>";
+echo "<tr><th>MedicareCardNumber</th><th>FacilityID</th><th>Firstname</th><th>Lastname</th><th>MedicareExpiryDate</th><th>DateOfBirth</th><th>TelephoneNumber</th><th>Citizenship</th><th>Address</th><th>City</th><th>PostalCode</th><th>Province</th><th>Email</th></tr>";
 
 class TableRows extends RecursiveIteratorIterator {
   function __construct($it) {
@@ -42,10 +83,8 @@ try {
 }
 
 try {
-    $sql = "SELECT s.medicareCardNumber, s.currentLevel, p.firstname, p.lastname, p.medicareexpirydate, p.dateofbirth, p.telephonenumber, p.citizenship, ap.address, ap.city, p.postalcode, ap.province, p.emailaddress
-    FROM students s, persons p, addresses_persons ap
-    WHERE s.medicareCardNumber = p.medicareCardNumber
-    AND p.postalcode = ap.postalcode;";
+    $sql = "SELECT *
+    FROM registered_at r;";
     
 
     $stmt = $conn->prepare($sql);  
@@ -67,4 +106,5 @@ try {
 //close connection once done
 $conn = null;
 echo "</table>";
+*/
 ?>
