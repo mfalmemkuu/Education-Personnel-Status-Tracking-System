@@ -6,19 +6,15 @@ require_once '../database.php';
 $sql = 'SELECT p.MedicareCardNumber, p.FirstName, p.LastName, s.CurrentLevel, p.MedicareExpiryDate
 , p.DateOfBirth, p.TelephoneNumber, p.Citizenship, p.PostalCode, p.EmailAddress
 FROM students s, persons p
-WHERE s.MedicareCardNumber = p.MedicareCardNumber ;';
+WHERE s.MedicareCardNumber = p.MedicareCardNumber AND s.MedicareCardNumber = :MedicareCardNumber;';
 
 $stmt = $conn->prepare($sql);  
+$stmt->bindParam(":MedicareCardNumber", $_GET["MedicareCardNumber"]);
     
-
 $stmt->execute();
-
 ?>
-<!-- search for student input - result makes us focus to the student in the list -->
-<form action="./student-r-one.php">
-  Search Student by MedicareCardNumber: <input type="text" name="MedicareCardNumber">
-  <input type="submit">
-</form>
+
+<h1>Displaying One Student</h1>
 
 <br>
 <table>
@@ -58,4 +54,5 @@ $stmt->execute();
   </tbody>
 </table>
     <br>
+    <a href="./index.php">Back to Students List</a>
     

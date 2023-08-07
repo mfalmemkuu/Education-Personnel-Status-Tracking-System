@@ -1,34 +1,26 @@
 <?php
-///include the current works at role & facility 
-?>
-<?php
 require_once '../database.php';
 
-$sql_better = "SELECT s.MedicareCardNumber, p.FirstName, p.LastName, p.MedicareExpiryDate, p.DateOfBirth, p.TelephoneNumber, p.Citizenship, ap.Address, ap.City, p.PostalCode, ap.Province, p.EmailAddress
-    FROM employees s, persons p, addresses_persons ap
-    WHERE s.MedicareCardNumber = p.MedicareCardNumber
-    AND p.PostalCode = ap.PostalCode;";
+//$sql_better = "SELECT s.MedicareCardNumber, s.CurrentLevel, p.FirstName, p.LastName, p.MedicareExpiryDate, p.DateOfBirth, p.TelephoneNumber, p.Citizenship, ap.Address, ap.City, p.PostalCode, ap.Province, p.EmailAddress     FROM students s, persons p, addresses_persons ap     WHERE s.medicareCardNumber = p.medicareCardNumber     AND p.PostalCode = ap.PostalCode;";
 
-$sql = "SELECT e.MedicareCardNumber, p.FirstName, p.LastName, p.MedicareExpiryDate, p.DateOfBirth, p.TelephoneNumber, p.Citizenship, p.PostalCode, p.EmailAddress
+$sql = 'SELECT e.MedicareCardNumber, p.FirstName, p.LastName, p.MedicareExpiryDate
+, p.DateOfBirth, p.TelephoneNumber, p.Citizenship, p.PostalCode, p.EmailAddress
 FROM employees e, persons p
-WHERE e.MedicareCardNumber = p.MedicareCardNumber;";
+WHERE e.MedicareCardNumber = p.MedicareCardNumber AND e.MedicareCardNumber = :MedicareCardNumber;';
 
 $stmt = $conn->prepare($sql);  
+$stmt->bindParam(":MedicareCardNumber", $_GET["MedicareCardNumber"]);
     
-
 $stmt->execute();
-
 ?>
-<!-- search for student input - result makes us focus to the student in the list -->
-<form action="./employee-r-one.php">
-  Search Employee by MedicareCardNumber: <input type="text" name="MedicareCardNumber">
-  <input type="submit">
-</form>
+
+<h1>Displaying One Employee</h1>
+
 <br>
 <table>
   <thead>
       <tr>
-        <th>MedicareCardNumber</th>
+        <th>MedicareCardNumber</th>        
         <th>Firstname</th>
         <th>Lastname</th>
         <th>MedicareExpiryDate</th>
@@ -42,7 +34,7 @@ $stmt->execute();
   <tbody>
     <?php  while($row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT)) { ?>
     <tr>
-      <td><?= $row["MedicareCardNumber"] ?></td>
+      <td><?= $row["MedicareCardNumber"] ?></td>      
       <td><?= $row["FirstName"] ?></td>
       <td><?= $row["LastName"] ?></td>
       <td><?= $row["MedicareExpiryDate"] ?></td>
@@ -60,3 +52,5 @@ $stmt->execute();
   </tbody>
 </table>
     <br>
+    <a href="./index.php">Back to Employees List</a>
+    

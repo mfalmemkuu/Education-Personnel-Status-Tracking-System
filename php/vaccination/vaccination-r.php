@@ -10,11 +10,11 @@ $stmt = $conn->prepare($sql);
 $stmt->execute();
 
 ?>
-<!-- search for vaccination input 
-<form action="NEW FILE">
-  Search: <input type="text" >
+<!-- search for vaccination input -->
+<form action="./vaccination-r-one.php">
+  Search Vaccination by MedicareCardNumber: <input type="text" name="MedicareCardNumber">
+  <input type="submit">
 </form>
--->
 <br>
 <table>
   <thead>

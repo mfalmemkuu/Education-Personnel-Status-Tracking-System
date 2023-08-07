@@ -1,20 +1,16 @@
 <?php
 require_once '../database.php';
 
-
-$sql = 'SELECT i.MedicareCardNumber, i.Date, i.Type  FROM Infections i;';
+$sql = 'SELECT i.MedicareCardNumber, i.Date, i.Type  FROM Infections i WHERE i.MedicareCardNumber = :MedicareCardNumber;';
 
 $stmt = $conn->prepare($sql);  
+$stmt->bindParam(":MedicareCardNumber", $_GET["MedicareCardNumber"]);
     
-
 $stmt->execute();
-
 ?>
-<!-- search for input -->
-<form action="./infection-r-one.php">
-  Search Infection by MedicareCardNumber: <input type="text" name="MedicareCardNumber">
-  <input type="submit">
-</form>
+
+<h1>Displaying One Infection</h1>
+
 <br>
 <table>
   <thead>
@@ -39,6 +35,5 @@ $stmt->execute();
   </tbody>
 </table>
     <br>
+    <a href="./index.php">Back to Infections List</a>
     
-
-<?php
