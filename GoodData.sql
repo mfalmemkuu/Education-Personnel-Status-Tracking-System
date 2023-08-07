@@ -10,6 +10,38 @@ INSERT INTO Ministries (MinistryID, Name) VALUES
 (9, 'Ministry of Education - Quebec'),
 (10, 'Ministry of Education - Saskatchewan');
 
+insert into Addresses_facilities (PostalCode, Province, Address, City) values 
+('b3o-7w7', 'Quebec', '39220 Weeping Birch Road', 'Quebec'),
+('k3x-5f4', 'Quebec', '7 Judy Plaza', 'Montreal'),
+('p6w-2h6', 'Quebec', '8 Swallow Place', 'Laval'),
+('g7r-6f9', 'Quebec', '937 Derek Road', 'Montreal'),
+('c0t-4s0', 'Quebec', '3518 Swallow Place', 'Quebec'),
+('z7c-8l9', 'Quebec', '9368 Algoma Drive', 'Montreal'),
+('m1g-9k1', 'Quebec', '46103 Claremont Road', 'Laval'),
+('i1m-8t5', 'Quebec', '07 Goodland Point', 'Montreal'),
+('c1y-1q6', 'Quebec', '0220 Center Road', 'Laval'),
+('h2y-4t4', 'Quebec', '31 Dakota Avenue', 'Laval'),
+('r4g-1e4', 'Quebec', '22049 Rowland Circle', 'Quebec'),
+('a6y-9a5', 'Quebec', '043 David Pass', 'Quebec'),
+('s8i-5w3', 'Quebec', '313 Helena Pass', 'Montreal'),
+('a8e-0u4', 'Quebec', '5562 Debs Trail', 'Montreal'),
+('d5j-7u8', 'Quebec', '4 Paget Drive', 'Laval'),
+('i9i-2g6', 'Quebec', '3721 Menomonie Trail', 'Quebec'),
+('f8l-2w5', 'Quebec', '6759 Florence Parkway', 'Montreal'),
+('w1q-6p5', 'Quebec', '3 Graceland Park', 'Laval'),
+('y7e-3a7', 'Quebec', '9703 Dottie Drive', 'Laval'),
+('s1p-3n2', 'Quebec', '91555 Independence Parkway', 'Laval'),
+('h7q-6l4', 'Quebec', '56186 Jana Avenue', 'Montreal'),
+('u6y-3h0', 'Quebec', '30178 Graceland Road', 'Quebec'),
+('a5w-8p4', 'Quebec', '65 Grim Hill', 'Laval'),
+('n3i-7q5', 'Quebec', '7 Westend Point', 'Quebec'),
+('s1e-7c9', 'Quebec', '335 Katie Center', 'Laval'),
+('r5o-5a2', 'Quebec', '41 Arkansas Alley', 'Quebec'),
+('p8b-7h2', 'Quebec', '7341 Schmedeman Alley', 'Quebec'),
+('f4t-1n8', 'Quebec', '6 Anzinger Hill', 'Quebec'),
+('l5u-1l9', 'Quebec', '6 American Place', 'Laval'),
+('p8q-0z7', 'Quebec', '1 Memorial Crossing', 'Laval');
+
 
 insert into Addresses_persons (PostalCode, Province, Address, City) values 
 ('b3o-7w7', 'Quebec', '39220 Weeping Birch Road', 'Quebec'),
