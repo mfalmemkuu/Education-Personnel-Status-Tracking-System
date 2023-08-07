@@ -37,6 +37,7 @@ $stmt->execute();
         <th>PostalCode</th>
         <th>Province</th>
         <th>Email</th>
+        <th>Actions</th>
   </thead>
   <tbody>
     <?php  while($row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT)) { ?>
@@ -54,7 +55,7 @@ $stmt->execute();
       <td><?= $row["Province"] ?></td>
       <td><?= $row["EmailAddress"] ?></td>
       <td>
-        <a href="./employee-u.php?MedicareCardNumber=<?= $row["MedicareCardNumber"] ?>">Edit</a>
+        <a href="./employee-u.php?MedicareCardNumber=<?= $row["MedicareCardNumber"] ?>">Edit </a>
         <a href="./employee-d.php?MedicareCardNumber=<?= $row["MedicareCardNumber"] ?>">Delete</a>
       </td>
     </tr>

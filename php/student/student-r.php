@@ -1,14 +1,14 @@
 <?php
 require_once '../database.php';
 
-$sql_better = "SELECT s.medicareCardNumber, s.currentLevel, p.firstname, p.lastname, p.medicareexpirydate, p.dateofbirth, p.telephonenumber, p.citizenship, ap.address, ap.city, p.PostalCode, ap.province, p.emailaddress
+$sql_better = "SELECT s.MedicareCardNumber, s.CurrentLevel, p.FirstName, p.LastName, p.MedicareExpiryDate, p.DateOfBirth, p.TelephoneNumber, p.Citizenship, ap.Address, ap.City, p.PostalCode, ap.Province, p.EmailAddress
     FROM students s, persons p, addresses_persons ap
     WHERE s.medicareCardNumber = p.medicareCardNumber
     AND p.PostalCode = ap.PostalCode;";
 
 $sql = 'SELECT * FROM Persons;';
 
-$stmt = $conn->prepare($sql);  
+$stmt = $conn->prepare($sql_better);  
     
 
 $stmt->execute();
@@ -31,13 +31,15 @@ $stmt->execute();
         <th>PostalCode</th>
         <th>Province</th>
         <th>Email</th>
+        <th>Actions</th>
   </thead>
   <tbody>
     <?php  while($row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT)) { ?>
     <tr>
       <td><?= $row["MedicareCardNumber"] ?></td>
       <td><?= $row["CurrentLevel"] ?></td>
-      <td><?= $row["Firstname"] ?></td>
+      <td><?= $row["FirstName"] ?></td>
+      <td><?= $row["LastName"] ?></td>
       <td><?= $row["MedicareExpiryDate"] ?></td>
       <td><?= $row["DateOfBirth"] ?></td>
       <td><?= $row["TelephoneNumber"] ?></td>
@@ -46,7 +48,7 @@ $stmt->execute();
       <td><?= $row["City"] ?></td>
       <td><?= $row["PostalCode"] ?></td>
       <td><?= $row["Province"] ?></td>
-      <td><?= $row["Email"] ?></td>
+      <td><?= $row["EmailAddress"] ?></td>
       <td>
         <a href="./student-u.php?MedicareCardNumber=<?= $row["MedicareCardNumber"] ?>">Edit</a>
         <a href="./student-d.php?MedicareCardNumber=<?= $row["MedicareCardNumber"] ?>">Delete</a>
