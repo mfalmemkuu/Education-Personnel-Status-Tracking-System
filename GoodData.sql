@@ -425,7 +425,7 @@ insert into Employees (MedicareCardNumber) values
 
 
 
-insert into Teachers (MedicareCardNumber, Level, Specialization) values 
+insert into Teachers (MedicareCardNumber, Level, Specialisation) values 
 ('bvmf04864173', 'elementary', null),
 ('capc26072389', 'secondary', 'french'),
 ('eelc32041277', 'elementary', null),
