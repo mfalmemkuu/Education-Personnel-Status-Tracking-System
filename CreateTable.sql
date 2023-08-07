@@ -147,7 +147,8 @@ CREATE TABLE Schedule(
     isCancelled boolean,
     startTime time,
     endTime time,
-    PRIMARY KEY (ScheduleID)
+    PRIMARY KEY (ScheduleID),
+	CONSTRAINT check_time CHECK(startTime<endTime)
 );
 
 CREATE TABLE Has_schedule(
