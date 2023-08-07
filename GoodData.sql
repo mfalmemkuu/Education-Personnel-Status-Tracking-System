@@ -24,7 +24,7 @@ INSERT INTO Facilities (Name, WebAddress, Capacity, PostalCode, PhoneNumber) VAL
 ('Quebec East High School - Quebec', 'www.quebeceasthigh-quebec.ca', 800, 'H3A 1Y1', '514-555-3030');
 INSERT INTO EducationalFacilities (FacilityID) VALUES 
 (LAST_INSERT_ID() - 9), (LAST_INSERT_ID() - 8), (LAST_INSERT_ID() - 7), (LAST_INSERT_ID() - 6), (LAST_INSERT_ID() - 5),
-(LAST_INSERT_ID() - 4), (LAST_INSERT_ID() - 3), (LAST_INSERT_ID() - 2), (LAST_INSERT_ID() - 1), LAST_INSERT_ID();
+(LAST_INSERT_ID() - 4), (LAST_INSERT_ID() - 3), (LAST_INSERT_ID() - 2), (LAST_INSERT_ID() - 1), LAST_INSERT_ID());
 
 -- Ministry of Education - Quebec Postal Codes
 INSERT INTO Addresses_facilities (PostalCode, Province, Address, City) VALUES
