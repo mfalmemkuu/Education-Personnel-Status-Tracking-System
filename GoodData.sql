@@ -478,3 +478,181 @@ insert into Teachers (MedicareCardNumber, Level, Specialisation) values
 ('jnei34873512', 'high school 1', 'chemistry');
 
 
+
+
+
+insert into Facilities (FacilityID, Name, WebAddress, capacity, PostalCode, PhoneNumber) values 
+(1, 'Alberta School', 'www.alberta.education.ca', 496, 'b3o-7w7', '697-967-0163'),
+(2, 'British Columbia School', 'www.britishcolumbia.education.ca', 352, 'k3x-5f4', '643-829-4782'),
+(3, 'Manitoba School', 'www.manitoba.education.ca', 318, 'p6w-2h6', '975-510-1679'),
+(4, 'New Brunswick School', 'www.newbrunswick.education.ca', 350, 'g7r-6f9', '769-206-8657'),
+(5, 'Newfoundland and Labrador School', 'www.newfoundlandandeducation.ca', 351, 'c0t-4s0', '235-497-8608'),
+(6, 'Nova Scotia School', 'www.novascotia.education.ca', 495, 'z7c-8l9', '311-753-3173'),
+(7, 'Ontario School', 'www.ontario.education.ca', 207, 'm1g-9k1', '176-513-9395'),
+(8, 'Prince Edward Island School', 'www.princeedwardisland.education.ca', 384, 'i1m-8t5', '122-235-7141'),
+(9, 'Quebec School', 'www.quebec.education.ca', 215, 'c1y-1q6', '973-533-8543'),
+(10, 'Saskatchewan School', 'www.saskatchewan.education.ca', 296, 'h2y-4t4', '687-427-2452'),
+(11, 'Alberta Educational Management', 'www.alberta.education.ca', 235, 'r4g-1e4', '290-628-0370'),
+(12, 'British Columbia Educational Management', 'www.britishcolumbia.education.ca', 426, 'a6y-9a5', '181-666-7390'),
+(13, 'Manitoba Educational Management', 'www.manitoba.education.ca', 467, 's8i-5w3', '202-294-1189'),
+(14, 'New Brunswick Educational Management', 'www.newbrunswick.education.ca', 304, 'a8e-0u4', '387-929-5939'),
+(15, 'Newfoundland and Labrador Educational Management', 'www.newfoundlandandeducation.ca', 366, 'd5j-7u8', '621-744-3124'),
+(16, 'Nova Scotia Educational Management', 'www.novascotia.education.ca', 385, 'i9i-2g6', '325-824-3318'),
+(17, 'Ontario Educational Management', 'www.ontario.education.ca', 409, 'f8l-2w5', '853-887-4025'),
+(18, 'Prince Edward Island Educational Management', 'www.princeedwardisland.education.ca', 247, 'w1q-6p5', '491-207-4329'),
+(19, 'Quebec Educational Management', 'www.quebec.education.ca', 252, 'y7e-3a7', '247-614-9637'),
+(20, 'Saskatchewan Educational Management', 'www.saskatchewan.education.ca', 316, 's1p-3n2', '706-424-5101'),
+(21, 'Alberta Educational Headquarter', 'www.alberta.education.ca', 335, 'h7q-6l4', '128-701-8910'),
+(22, 'British Columbia Educational Headquarter', 'www.britishcolumbia.education.ca', 390, 'u6y-3h0', '180-237-5323'),
+(23, 'Manitoba Educational Headquarter', 'www.manitoba.education.ca', 394, 'a5w-8p4', '583-358-2403'),
+(24, 'New Brunswick Educational Headquarter', 'www.newbrunswick.education.ca', 395, 'n3i-7q5', '816-268-6155'),
+(25, 'Newfoundland and Labrador Educational Headquarter', 'www.newfoundlandandeducation.ca', 440, 's1e-7c9', '719-981-6859'),
+(26, 'Nova Scotia Educational Headquarter', 'www.novascotia.education.ca', 461, 'r5o-5a2', '426-425-7109'),
+(27, 'Ontario Educational Headquarter', 'www.ontario.education.ca', 270, 'p8b-7h2', '807-314-9523'),
+(28, 'Prince Edward Island Educational Headquarter', 'www.princeedwardisland.education.ca', 314, 'f4t-1n8', '631-120-7129'),
+(29, 'Quebec Educational Headquarter', 'www.quebec.education.ca', 330, 'l5u-1l9', '311-971-7837'),
+(30, 'Saskatchewan Educational Headquarter', 'www.saskatchewan.education.ca', 453, 'p8q-0z7', '233-637-1500');
+
+
+insert into Operates (FacilityID, MinistryID) values 
+(1, 1),
+(2, 2),
+(3, 3),
+(4, 4),
+(5, 5),
+(6, 6),
+(7, 7),
+(8, 8),
+(9, 9),
+(10, 10),
+(11, 1),
+(12, 2),
+(13, 3),
+(14, 4),
+(15, 5),
+(16, 6),
+(17, 7),
+(18, 8),
+(19, 9),
+(20, 10),
+(21, 1),
+(22, 2),
+(23, 3),
+(24, 4),
+(25, 5),
+(26, 6),
+(27, 7),
+(28, 8),
+(29, 9),
+(30, 10);
+
+
+
+
+insert into ManagementFacilities (FacilityID, PresidentMedicareNumber) values 
+(11, 'chnb68073157'),
+(12, 'ddrh96552495'),
+(13, 'sonr94506633'),
+(14, 'socq52922660'),
+(15, 'tscn83047436'),
+(16, 'pzih79804641'),
+(17, 'udzr21294375'),
+(18, 'cwmx16384442'),
+(19, 'zeqg99658583'),
+(20, 'atks99812156'),
+(21, 'qclf54693559'),
+(22, 'tjpb75240802'),
+(23, 'mufn13946729'),
+(24, 'jcqj36587505'),
+(25, 'eldl00129280'),
+(26, 'mlus32550800'),
+(27, 'qsep60324290'),
+(28, 'eiax15101277'),
+(29, 'fmft30539826'),
+(30, 'zdek42000873');
+
+
+
+insert into EducationalFacilities (FacilityID, PrincipalMedicareNumber ) values 
+(1, 'bzbk46547836'),
+(2, 'nyxu85611817'),
+(3, 'pczm46837052'),
+(4, 'enny56422592'),
+(5, 'ywsc02075548'),
+(6, 'dpzw63877238'),
+(7, 'fdlo28652111'),
+(8, 'megp37616198'),
+(9, 'owae00457175'),
+(10, 'vyzn02541021');
+
+
+
+
+insert into PrimarySchools (FacilityID) values 
+(1),
+(2),
+(3),
+(4),
+(5),
+(6),
+(7),
+(8),
+(9),
+(10);
+
+
+insert into HighSchools (FacilityID) values 
+(1),
+(2),
+(3),
+(4),
+(5),
+(6),
+(7),
+(8),
+(9),
+(10);
+
+
+insert into MiddleSchools (FacilityID) values 
+(1),
+(2),
+(3),
+(4),
+(5),
+(6),
+(7),
+(8),
+(9),
+(10);
+
+
+insert into HeadOfficeFacilities (FacilityID) values 
+(21),
+(22),
+(23),
+(24),
+(25),
+(26),
+(27),
+(28),
+(29),
+(30);
+
+
+insert into GeneralManagementFacilities (FacilityID) values 
+(11),
+(12),
+(13),
+(14),
+(15),
+(16),
+(17),
+(18),
+(19),
+(20);
+
+
+
+
+
