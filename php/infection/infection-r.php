@@ -1,5 +1,48 @@
 <?php
+require_once '../database.php';
 
+
+$sql = 'SELECT i.MedicareCardNumber, i.Date, i.Type  FROM Infections i;';
+
+$stmt = $conn->prepare($sql);  
+    
+
+$stmt->execute();
+
+?>
+<!-- search for input 
+<form action="NEW FILE">
+  Search: <input type="text" >
+</form>
+-->
+<br>
+<table>
+  <thead>
+      <tr>
+        <th>MedicareCardNumber</th>        
+        <th>Vaccination Date</th>
+        <th>Vaccination Type</th>
+        <th>Actions</th>
+  </thead>
+  <tbody>
+    <?php  while($row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT)) { ?>
+    <tr>
+      <td><?= $row["MedicareCardNumber"] ?></td>      
+      <td><?= $row["Date"] ?></td>
+      <td><?= $row["Type"] ?></td>
+      <td>
+        <a href="./edit-view.php?MedicareCardNumber=<?= $row["MedicareCardNumber"] ?>">Edit</a>&nbsp;
+        <a href="./infection-d.php?MedicareCardNumber=<?= $row["MedicareCardNumber"] ?>">Delete</a>
+      </td>
+    </tr>
+    <?php  } ?>
+  </tbody>
+</table>
+    <br>
+    
+
+<?php
+/*
 
 echo "<table style='border: solid 1px black;'>";
 echo "<tr><th>MedicareCardNumber</th><th>InfectionDate</th><th>InfectionType</th></tr>";
@@ -64,4 +107,5 @@ try {
 //close connection once done
 $conn = null;
 echo "</table>";
+*/
 ?>

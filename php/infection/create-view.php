@@ -1,13 +1,17 @@
 <?php require_once '../database.php';
-if(isset($_POST["MedicareCardNumber"]) && isset($_POST["infectionDate"]) && isset($_POST["infectionType"])){
-    $query = $conn->prepare("INSERT INTO Infections(MedicareCardNumber, `DATE`, `Type`)
-    VALUES (:MedicareCardNumber, :infectionDate, :infectionType);
+
+
+if(isset($_POST["MedicareCardNumber"]) && isset($_POST["Date"]) && isset($_POST["Type"])){
+    $query = $conn->prepare("INSERT INTO Infections(MedicareCardNumber, `Date`, `Type`)
+    VALUES (:MedicareCardNumber, :Date, :Type);
     ");
     $query->bindParam(':MedicareCardNumber',$_POST["MedicareCardNumber"]);
-    $query->bindParam(':infectionDate',$_POST["infectionDate"]);
-    $query->bindParam(':infectionType',$_POST["infectionType"]);
-    if($query->execute())
-    header("Location: .");
+    $query->bindParam(':Date',$_POST["Date"]);
+    $query->bindParam(':Type',$_POST["Type"]);
+    if($query->execute()) {
+        header("Location: ./index.php");
+    }
+    
 }
 
 ?>
@@ -21,12 +25,9 @@ if(isset($_POST["MedicareCardNumber"]) && isset($_POST["infectionDate"]) && isse
 <body>
     <h1>Add an Infection</h1>
     <form action="./create-view.php" method="post">
-        <label for="MedicareCardNumber">Medicare number: </label>
-        <input type="text" name="MedicareCardNumber" id="MedicareCardNumber"> <br>
-        <label for="infectionDate">Infection Date: </label>
-        <input type="date" name="infectionDate" id="infectionDate"> <br>
-        <label for="infectionType">Infection Type: </label>
-        <input type="text" name="infectionType" id="infectionType"> <br>
+        <label for="MedicareCardNumber">Medicare number: </label> <input type="text" name="MedicareCardNumber" id="MedicareCardNumber"> <br>
+        <label for="Date">Infection Date: </label> <input type="date" name="Date" id="Date"> <br>
+        <label for="Type">Infection Type: </label> <input type="text" name="Type" id="Type"> <br>
         <br>
         <button type="submit">Submit</button>
     </form><br>
