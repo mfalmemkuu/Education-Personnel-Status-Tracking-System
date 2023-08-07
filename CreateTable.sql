@@ -225,3 +225,33 @@ begin
 end if;
 end
 //
+
+-- When an employee is given a schedule that causes a conflict (less than one hour between schedules), it will be denied.
+delimiter //
+CREATE TRIGGER ScheduleConflictTrigger
+BEFORE insert ON has_schedule 
+FOR EACH row
+begin 
+	declare start_time time;
+	declare end_time time;
+	declare new_date date;	
+
+	set @start_time := (select s.startTime from schedule s where s.ScheduleID = new.ScheduleID);
+	set @end_time := (select s.endTime from schedule s where s.ScheduleID = new.ScheduleID);
+	set @new_date := (select s.`Date`  from schedule s where s.ScheduleID = new.ScheduleID);
+	
+	if (select count(*) from schedule s join has_schedule hs on hs.ScheduleID =s.ScheduleID 
+where hs.MedicareCardNumber = new.MedicareCardNumber
+and s.`Date` = (select @new_date)) 
+<> 
+(select count(*) from schedule s join has_schedule hs on hs.ScheduleID =s.ScheduleID 
+where hs.MedicareCardNumber = new.MedicareCardNumber
+and s.`Date` = (select @new_date)
+and ((timediff((select @start_time),s.endTime)>='01:00:00') or (timediff(s.startTime,(select @end_time))>='01:00:00')))
+	then
+		SIGNAL SQLSTATE '45000'
+		SET MESSAGE_TEXT = "Not enough time allowed between Schedules. A minimum of 1 hour is needed.";
+	end if;
+	
+end
+//
