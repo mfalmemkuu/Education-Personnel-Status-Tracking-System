@@ -174,3 +174,19 @@ CREATE TABLE Email_sent(
     CONSTRAINT PK_Has_schedule PRIMARY KEY (LogID,FacilityID, MedicareCardNumber)
 );
 
+
+
+
+-- Triggers
+delimiter //
+CREATE TRIGGER EmployeeHasVaccineTrigger
+BEFORE insert ON has_schedule 
+FOR EACH ROW
+begin 
+	if 0 = (select count(*) from Vaccinations v where v.MedicareCardNumber = new.MedicareCardNumber and v.`Date` >= date_sub((select s.`Date` from schedule s where s.ScheduleID = new.ScheduleID), interval  6 month))
+	then 
+		SIGNAL SQLSTATE '45000'
+		SET MESSAGE_TEXT = "Employee has not been vaccinated in the last 6 months.";
+	end if;
+end
+//
