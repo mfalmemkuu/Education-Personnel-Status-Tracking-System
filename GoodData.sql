@@ -30,17 +30,17 @@ INSERT INTO EducationalFacilities (FacilityID) VALUES
 INSERT INTO Addresses_facilities (PostalCode, Province, Address, City) VALUES
 ('H2Y 1T1', 'Quebec', '1234 St-Laurent Blvd', 'Montreal'),
 ('H2Y 2S1', 'Quebec', '5678 Sherbrooke St', 'Montreal'),
-('H2Y 3T1', 'Quebec', '9101 St-Catherine St', 'Montreal'),
-('H3A 1T1', 'Quebec', '2222 University St', 'Montreal'),
-('H3B 2T2', 'Quebec', '3333 Drummond St', 'Montreal'),
-('H3C 1T3', 'Quebec', '4444 Peel St', 'Montreal'),
-('H3A 1W1', 'Quebec', '5555 Park Ave', 'Montreal'),
-('H3B 2W2', 'Quebec', '6666 Bishop St', 'Montreal'),
-('H3C 1W3', 'Quebec', '7777 Guy St', 'Montreal'),
-('H3A 1X1', 'Quebec', '8888 Mont-Royal Ave', 'Montreal'),
-('H3B 2X2', 'Quebec', '9999 St-Denis St', 'Montreal'),
-('H3C 1X3', 'Quebec', '1010 Maisonneuve St', 'Montreal'),
-('H3A 1Y1', 'Quebec', '1212 Peel St', 'Montreal');
+('H2Y 3T1', 'Quebec', '9101 St-Catherine St', 'Laval'),
+('H3A 1T1', 'Quebec', '2222 University St', 'Laval'),
+('H3B 2T2', 'Quebec', '3333 Drummond St', 'Quebec City'),
+('H3C 1T3', 'Quebec', '4444 Peel St', 'Quebec City'),
+('H3A 1W1', 'Quebec', '5555 Park Ave', 'Quebec City'),
+('H3B 2W2', 'Quebec', '6666 Bishop St', 'Quebec City'),
+('H3C 1W3', 'Quebec', '7777 Guy St', 'Gatineau'),
+('H3A 1X1', 'Quebec', '8888 Mont-Royal Ave', 'Gatineau'),
+('H3B 2X2', 'Quebec', '9999 St-Denis St', 'Sherbrooke'),
+('H3C 1X3', 'Quebec', '1010 Maisonneuve St', 'Sherbrooke'),
+('H3A 1Y1', 'Quebec', '1212 Peel St', 'Trois-Rivières');
 
 -- Ministry of Education - Quebec Operates
 INSERT INTO Operates (FacilityID, MinistryID) VALUES
