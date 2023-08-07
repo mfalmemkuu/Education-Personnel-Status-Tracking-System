@@ -9,9 +9,9 @@ $sql_better = "SELECT s.MedicareCardNumber, p.FirstName, p.LastName, p.MedicareE
     WHERE s.MedicareCardNumber = p.MedicareCardNumber
     AND p.PostalCode = ap.PostalCode;";
 
-$sql = "SELECT e.MedicareCardNumber, p.FirstName, p.LastName, p.MedicareExpiryDate, p.DateOfBirth, p.TelephoneNumber, p.Citizenship, p.PostalCode, p.EmailAddress
-FROM employees e, persons p
-WHERE e.MedicareCardNumber = p.MedicareCardNumber;";
+$sql = "SELECT e.MedicareCardNumber, p.FirstName, p.LastName, p.MedicareExpiryDate, p.DateOfBirth, p.TelephoneNumber, p.Citizenship, p.PostalCode, p.EmailAddress, w.Role
+FROM employees e, persons p, works_at w
+WHERE e.MedicareCardNumber = p.MedicareCardNumber AND e.MedicareCardNumber = w.MedicareCardNumber;";
 
 $stmt = $conn->prepare($sql);  
     
@@ -37,6 +37,7 @@ $stmt->execute();
         <th>Citizenship</th>
         <th>PostalCode</th>
         <th>Email</th>
+        <th>CurrentRole</th>
         <th>Actions</th>
   </thead>
   <tbody>
@@ -51,6 +52,7 @@ $stmt->execute();
       <td><?= $row["Citizenship"] ?></td>
       <td><?= $row["PostalCode"] ?></td>
       <td><?= $row["EmailAddress"] ?></td>
+      <td><?= $row["Role"] ?></td>
       <td>
         <a href="./edit-view.php?MedicareCardNumber=<?= $row["MedicareCardNumber"] ?>">Edit</a>&nbsp;
         <a href="./employee-d.php?MedicareCardNumber=<?= $row["MedicareCardNumber"] ?>">Delete</a>
