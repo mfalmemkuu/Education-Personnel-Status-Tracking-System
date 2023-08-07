@@ -153,7 +153,7 @@ CREATE TABLE Schedule(
 CREATE TABLE Has_schedule(
     ScheduleID int NOT NULL,
     FacilityID int NOT NULL,
-    MedicareCardNumber int NOT NULL,
+    MedicareCardNumber char(12) NOT NULL,
     CONSTRAINT PK_Has_schedule PRIMARY KEY (ScheduleID,FacilityID, MedicareCardNumber)
 );
 
@@ -170,7 +170,7 @@ CREATE TABLE Email_log(
 CREATE TABLE Email_sent(
     LogID int NOT NULL,
     FacilityID int NOT NULL,
-    MedicareCardNumber int NOT NULL,
+    MedicareCardNumber char(12) NOT NULL,
     CONSTRAINT PK_Has_schedule PRIMARY KEY (LogID,FacilityID, MedicareCardNumber)
 );
 
