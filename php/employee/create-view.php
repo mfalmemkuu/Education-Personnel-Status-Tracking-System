@@ -8,7 +8,7 @@ if (isset($_POST["MedicareCardNumber"]) && isset($_POST["FirstName"]) && isset($
     $person = $conn->prepare("INSERT INTO Persons (MedicareCardNumber, FirstName, LastName, MedicareExpiryDate, 
         DateOfBirth, TelephoneNumber, Citizenship, PostalCode, EmailAddress)
         VALUES(:MedicareCardNumber, :FirstName, :LastName, :MedicareExpiryDate, :DateOfBirth, :TelephoneNumber, 
-        :Citizenship, :Postalcode, :EmailAddress);");
+        :Citizenship, :PostalCode, :EmailAddress);");
 
     $person->bindParam(':MedicareCardNumber', $_POST["MedicareCardNumber"]);
     $person->bindParam(':FirstName', $_POST["FirstName"]);
@@ -22,7 +22,7 @@ if (isset($_POST["MedicareCardNumber"]) && isset($_POST["FirstName"]) && isset($
 
     if ($person->execute()) {
         
-        $employee = $conn->prepare("INSERT INTO Employee (MedicareCardNumber)
+        $employee = $conn->prepare("INSERT INTO Employees (MedicareCardNumber)
             VALUES(:MedicareCardNumber);");
 
         $employee->bindParam(':MedicareCardNumber', $_POST["MedicareCardNumber"]);
@@ -31,7 +31,7 @@ if (isset($_POST["MedicareCardNumber"]) && isset($_POST["FirstName"]) && isset($
             header("Location: ./index.php"); // Redirect after successful insertion
             exit; // Terminate the script after the redirection
         } else {
-            echo "Error adding student.";
+            echo "Error adding employee.";
         }
     } else {
         echo "Error adding person.";

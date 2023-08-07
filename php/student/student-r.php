@@ -49,7 +49,7 @@ $stmt->execute();
       <td><?= $row["PostalCode"] ?></td>
       <td><?= $row["EmailAddress"] ?></td>
       <td>
-        <a href="./edit-view.php?MedicareCardNumber=<?= $row["MedicareCardNumber"] ?>">Edit</a>
+        <a href="./edit-view.php?MedicareCardNumber=<?= $row["MedicareCardNumber"] ?>">Edit</a>&nbsp;
         <a href="./student-d.php?MedicareCardNumber=<?= $row["MedicareCardNumber"] ?>">Delete</a>
       </td>
     </tr>

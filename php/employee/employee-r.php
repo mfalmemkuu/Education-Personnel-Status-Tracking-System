@@ -9,13 +9,11 @@ $sql_better = "SELECT s.MedicareCardNumber, p.FirstName, p.LastName, p.MedicareE
     WHERE s.MedicareCardNumber = p.MedicareCardNumber
     AND p.PostalCode = ap.PostalCode;";
 
-$sql_decent = "SELECT e.MedicareCardNumber, p.FirstName, p.LastName, p.MedicareExpiryDate, p.DateOfBirth, p.TelephoneNumber, p.Citizenship, p.PostalCode, p.EmailAddress
+$sql = "SELECT e.MedicareCardNumber, p.FirstName, p.LastName, p.MedicareExpiryDate, p.DateOfBirth, p.TelephoneNumber, p.Citizenship, p.PostalCode, p.EmailAddress
 FROM employees e, persons p
 WHERE e.MedicareCardNumber = p.MedicareCardNumber;";
 
-$sql = 'SELECT * FROM employees;'; //or persons
-
-$stmt = $conn->prepare($sql_decent);  
+$stmt = $conn->prepare($sql);  
     
 
 $stmt->execute();
@@ -32,10 +30,7 @@ $stmt->execute();
         <th>DateOfBirth</th>
         <th>TelephoneNumber</th>
         <th>Citizenship</th>
-        <th>Address</th>
-        <th>City</th>
         <th>PostalCode</th>
-        <th>Province</th>
         <th>Email</th>
         <th>Actions</th>
   </thead>
@@ -49,13 +44,10 @@ $stmt->execute();
       <td><?= $row["DateOfBirth"] ?></td>
       <td><?= $row["TelephoneNumber"] ?></td>
       <td><?= $row["Citizenship"] ?></td>
-      <td><?= $row["Address"] ?></td>
-      <td><?= $row["City"] ?></td>
       <td><?= $row["PostalCode"] ?></td>
-      <td><?= $row["Province"] ?></td>
       <td><?= $row["EmailAddress"] ?></td>
       <td>
-        <a href="./employee-u.php?MedicareCardNumber=<?= $row["MedicareCardNumber"] ?>">Edit </a>
+        <a href="./edit-view.php?MedicareCardNumber=<?= $row["MedicareCardNumber"] ?>">Edit</a>&nbsp;
         <a href="./employee-d.php?MedicareCardNumber=<?= $row["MedicareCardNumber"] ?>">Delete</a>
       </td>
     </tr>
@@ -63,4 +55,3 @@ $stmt->execute();
   </tbody>
 </table>
     <br>
-    <a href="../employee/index.php">Back to Employees</a>
