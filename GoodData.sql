@@ -1147,16 +1147,16 @@ insert into Employees (MedicareCardNumber) values
 
 
 insert into Teachers (MedicareCardNumber, Level, Specialisation) values 
-('chnb68073100','highschool', 'french')),
-('ddrh96552400','highschool', 'history')),
-('sonr94506600','highschool', 'history')),
-('socq52922600','highschool', 'economics')),
-('tscn83047400','highschool', 'economics')),
-('pzih79804600','highschool', 'chemistry')),
-('udzr21294300','highschool', 'chemistry')),
-('cwmx16384400','highschool', 'physical education')),
-('zeqg99658500','highschool', 'physical education')),
-('atks99812100','highschool', 'french'));
+('chnb68073100','highschool', 'french'),
+('ddrh96552400','highschool', 'history'),
+('sonr94506600','highschool', 'history'),
+('socq52922600','highschool', 'economics'),
+('tscn83047400','highschool', 'economics'),
+('pzih79804600','highschool', 'chemistry'),
+('udzr21294300','highschool', 'chemistry'),
+('cwmx16384400','highschool', 'physical education'),
+('zeqg99658500','highschool', 'physical education'),
+('atks99812100','highschool', 'french');
 
 
 
