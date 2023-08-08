@@ -1173,7 +1173,7 @@ insert into Works_at (MedicareCardNumber, FacilityID, StartDate, EndDate, Role) 
 ('atks99812100',1, '2020-10-04', null, 'teacher');
 
 INSERT INTO `infections` (`MedicareCardNumber`, `Date`, `Type`) VALUES
-('chnb68073100', '2023-08-02', 'covid-19'),
+('chnb68073100', '2023-07-02', 'covid-19'),
 ('ddrh96552400', '2023-08-02', 'covid-19'),
 ('sonr94506600', '2023-08-02', 'covid-19'),
 ('socq52922600', '2023-08-02', 'covid-19'),
