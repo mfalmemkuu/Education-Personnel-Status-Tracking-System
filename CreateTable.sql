@@ -216,11 +216,11 @@ begin
 		and hs.MedicareCardNumber in (select t.MedicareCardNumber from teachers t));
 
 	set @facility_id := (select wa.FacilityID from works_at wa where wa.MedicareCardNumber = new.MedicareCardNumber and wa.EndDate is null limit 1);
-	set @principal_email := (select p.EmailAddress from educationalfacilities e join persons p on e.PrincipalMedicareNumber = p.MedicareCardNumber where e.FacilityID = facility_id);	
+	set @principal_email := (select p.EmailAddress from educationalfacilities e join persons p on e.PrincipalMedicareNumber = p.MedicareCardNumber where e.FacilityID = (select @facility_id));	
 	set @teacher_name := (select concat(concat(p.FirstName ," "),p.LastName) from persons p where p.MedicareCardNumber=new.MedicareCardNumber);
 
 
-	insert into email_log(subject,sender,receiver,`date`,body) values("Warning",(select f.Name from facilities f where f.FacilityID=facility_id),(select @principal_email),current_date(),LEFT(concat((select @teacher_name), concat(" who teaches in your school has been infected with ",concat(new.`type`,concat(" on ",concat(dayofmonth(new.`Date`) ,concat(", ",concat(monthname(new.`Date`) ,concat(", ",year(new.`Date`))))))))),80));
+	insert into email_log(subject,sender,receiver,`date`,body) values("Warning",(select f.Name from facilities f where f.FacilityID=(select @facility_id)),(select @principal_email),current_date(),LEFT(concat((select @teacher_name), concat(" who teaches in your school has been infected with ",concat(new.`type`,concat(" on ",concat(dayofmonth(new.`Date`) ,concat(", ",concat(monthname(new.`Date`) ,concat(", ",year(new.`Date`))))))))),80));
 	
 	insert into email_sent(LogID, FacilityID, MedicareCardNumber) values((select LAST_INSERT_ID()), (select @facility_id), new.MedicareCardNumber);
 end if;
