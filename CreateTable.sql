@@ -375,3 +375,21 @@ EVERY 1 WEEK
   do call send_schedules_proc();
 //
 
+-- Trigger that prevents a teacher from being scheduled 2 weeks after being infected
+delimiter //
+create trigger TeacherInfectionScheduleTrigger
+before insert on has_schedule
+for each row 
+begin 
+	if 0<(select count(*)
+from teachers t join infections i on t.MedicareCardNumber =i.MedicareCardNumber 
+where i.`Date` >= (curdate()-interval 2 week) and t.MedicareCardNumber=new.MedicareCardNumber)
+then 
+
+	SIGNAL SQLSTATE '45000'
+	SET MESSAGE_TEXT = "Teacher has been infected within the past 2 weeks and cannot be scheduled.";
+
+end if;
+end
+//
+
