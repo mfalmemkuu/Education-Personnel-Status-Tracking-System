@@ -1147,30 +1147,30 @@ insert into Employees (MedicareCardNumber) values
 
 
 insert into Teachers (MedicareCardNumber, Level, Specialisation) values 
-('chnb68073100','highschool', 'french'),
-('ddrh96552400','highschool', 'history'),
-('sonr94506600','highschool', 'history'),
-('socq52922600','highschool', 'economics'),
-('tscn83047400','highschool', 'economics'),
-('pzih79804600','highschool', 'chemistry'),
-('udzr21294300','highschool', 'chemistry'),
-('cwmx16384400','highschool', 'physical education'),
-('zeqg99658500','highschool', 'physical education'),
-('atks99812100','highschool', 'french');
+('chnb68073100','highschool', 'counselor'),
+('ddrh96552400','highschool', 'counselor'),
+('sonr94506600','highschool', 'counselor'),
+('socq52922600','highschool', 'counselor'),
+('tscn83047400','highschool', 'counselor'),
+('pzih79804600','highschool', 'counselor'),
+('udzr21294300','highschool', 'counselor'),
+('cwmx16384400','highschool', 'counselor'),
+('zeqg99658500','highschool', 'counselor'),
+('atks99812100','highschool', 'counselor');
 
 
 
 insert into Works_at (MedicareCardNumber, FacilityID, StartDate, EndDate, Role) values 
-('chnb68073100',1, '2020-10-04', null, 'counselor'),
-('ddrh96552400',1, '2020-10-04', null, 'counselor'),
-('sonr94506600',1, '2020-10-04', null, 'counselor'),
-('socq52922600',1, '2020-10-04', null, 'counselor'),
-('tscn83047400',1, '2020-10-04', null, 'counselor'),
-('pzih79804600',1, '2020-10-04', null, 'counselor'),
-('udzr21294300',1, '2020-10-04', null, 'counselor'),
-('cwmx16384400',1, '2020-10-04', null, 'counselor'),
-('zeqg99658500',1, '2020-10-04', null, 'counselor'),
-('atks99812100',1, '2020-10-04', null, 'counselor');
+('chnb68073100',1, '2020-10-04', null, 'teacher'),
+('ddrh96552400',1, '2020-10-04', null, 'teacher'),
+('sonr94506600',1, '2020-10-04', null, 'teacher'),
+('socq52922600',1, '2020-10-04', null, 'teacher'),
+('tscn83047400',1, '2020-10-04', null, 'teacher'),
+('pzih79804600',1, '2020-10-04', null, 'teacher'),
+('udzr21294300',1, '2020-10-04', null, 'teacher'),
+('cwmx16384400',1, '2020-10-04', null, 'teacher'),
+('zeqg99658500',1, '2020-10-04', null, 'teacher'),
+('atks99812100',1, '2020-10-04', null, 'teacher');
 
 INSERT INTO `infections` (`MedicareCardNumber`, `Date`, `Type`) VALUES
 ('chnb68073100', '2023-08-02', 'covid-19'),
