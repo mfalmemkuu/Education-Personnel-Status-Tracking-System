@@ -14,15 +14,15 @@ FROM Teachers t
 JOIN Infections i ON t.MedicareCardNumber=i.MedicareCardNumber 
 JOIN Works_At wa ON wa.MedicareCardNumber=t.MedicareCardNumber 
 WHERE wa.FacilityID=h.FacilityID 
-AND i.`Date`>= (SELECT CURDATE()-INTERVAL 14 DAY) 
-AND UPPER(i.`Type`) = 'COVID-19') AS Number_Of_Teachers_Infected_In_Past_2_Weeks,
+AND i.Date>= (SELECT CURDATE()-INTERVAL 14 DAY) 
+AND UPPER(i.Type) = 'COVID-19') AS Number_Of_Teachers_Infected_In_Past_2_Weeks,
 (SELECT COUNT(DISTINCT s.MedicareCardNumber) 
 FROM Students s 
 JOIN Infections i ON s.MedicareCardNumber=i.MedicareCardNumber 
 JOIN Registered_At ra  ON ra.MedicareCardNumber=s.MedicareCardNumber 
 WHERE ra.FacilityID=h.FacilityID 
-AND i.`Date`>= (SELECT CURDATE()-INTERVAL 14 DAY) 
-AND UPPER(i.`Type`) = 'COVID-19') AS Number_Of_Students_Infected_In_Past_2_Weeks
+AND i.Date>= (SELECT CURDATE()-INTERVAL 14 DAY) 
+AND UPPER(i.Type) = 'COVID-19') AS Number_Of_Students_Infected_In_Past_2_Weeks
 FROM highschools h 
 JOIN Facilities f ON h.FacilityID =f.FacilityID 
 JOIN Addresses_Facilities af ON af.PostalCode =f.PostalCode 
