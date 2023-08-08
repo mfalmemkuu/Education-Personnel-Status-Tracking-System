@@ -365,10 +365,13 @@ end
 -- Turn on the event scheduler
 SET GLOBAL event_scheduler = ON;
 
+
 -- Create the event so that schedules are sent by email on every sunday
+delimiter //
 create event if not exists ScheduleEmailsEvent
 on schedule
 EVERY 1 WEEK
   STARTS CURRENT_DATE + INTERVAL (6 - WEEKDAY(CURRENT_DATE)) day
   do call send_schedules_proc();
+//
 
