@@ -3,8 +3,7 @@ require_once '../database.php';
 
 //$sql_better = "SELECT s.MedicareCardNumber, s.CurrentLevel, p.FirstName, p.LastName, p.MedicareExpiryDate, p.DateOfBirth, p.TelephoneNumber, p.Citizenship, ap.Address, ap.City, p.PostalCode, ap.Province, p.EmailAddress     FROM students s, persons p, addresses_persons ap     WHERE s.medicareCardNumber = p.medicareCardNumber     AND p.PostalCode = ap.PostalCode;";
 
-$sql = 'SELECT p.MedicareCardNumber, p.FirstName, p.LastName, s.CurrentLevel, p.MedicareExpiryDate
-, p.DateOfBirth, p.TelephoneNumber, p.Citizenship, p.PostalCode, p.EmailAddress
+$sql = 'SELECT p.MedicareCardNumber, p.FirstName, p.LastName, s.CurrentLevel, p.MedicareExpiryDate, p.DateOfBirth, p.TelephoneNumber, p.Citizenship, p.PostalCode, p.EmailAddress
 FROM Students s, Persons p
 WHERE s.MedicareCardNumber = p.MedicareCardNumber ;';
 

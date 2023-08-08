@@ -5,10 +5,8 @@ if (isset($_POST["MedicareCardNumber"]) && isset($_POST["FirstName"]) && isset($
     isset($_POST["Citizenship"]) && isset($_POST["PostalCode"]) && isset($_POST["EmailAddress"])) {
 
     // First, add the person details to the Persons table
-    $person = $conn->prepare("INSERT INTO Persons (MedicareCardNumber, FirstName, LastName, MedicareExpiryDate, 
-        DateOfBirth, TelephoneNumber, Citizenship, PostalCode, EmailAddress)
-        VALUES(:MedicareCardNumber, :FirstName, :LastName, :MedicareExpiryDate, :DateOfBirth, :TelephoneNumber, 
-        :Citizenship, :PostalCode, :EmailAddress);");
+    $person = $conn->prepare("INSERT INTO Persons (MedicareCardNumber, FirstName, LastName, MedicareExpiryDate, DateOfBirth, TelephoneNumber, Citizenship, PostalCode, EmailAddress)
+        VALUES(:MedicareCardNumber, :FirstName, :LastName, :MedicareExpiryDate, :DateOfBirth, :TelephoneNumber, :Citizenship, :PostalCode, :EmailAddress);");
 
     $person->bindParam(':MedicareCardNumber', $_POST["MedicareCardNumber"]);
     $person->bindParam(':FirstName', $_POST["FirstName"]);

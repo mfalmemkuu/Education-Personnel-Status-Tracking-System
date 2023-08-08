@@ -2,47 +2,54 @@
 <?php
 require_once '../database.php';
 
-    $sql7 = "DELETE FROM Infections WHERE MedicareCardNumber =:MedicareCardNumber ;";
+    $sql7 = "DELETE FROM Infections 
+    WHERE MedicareCardNumber =':MedicareCardNumber' ;";
 
     $infection = $conn->prepare($sql7);
     $infection->bindParam(':MedicareCardNumber', $_GET['MedicareCardNumber']);
 
     if($infection->execute()) {
 
-        $sql6 = "DELETE FROM Vaccinations WHERE MedicareCardNumber =:MedicareCardNumber ;";
+        $sql6 = "DELETE FROM Vaccinations 
+        WHERE MedicareCardNumber =':MedicareCardNumber' ;";
 
         $vaccine = $conn->prepare($sql6);
         $vaccine->bindParam(':MedicareCardNumber', $_GET['MedicareCardNumber']);
 
         if($vaccine->execute()) {
 
-            $sql5 = "DELETE FROM Has_Schedule WHERE MedicareCardNumber =:MedicareCardNumber ;";
+            $sql5 = "DELETE FROM Has_Schedule 
+            WHERE MedicareCardNumber =':MedicareCardNumber' ;";
 
             $haschedule = $conn->prepare($sql5);
             $haschedule->bindParam(':MedicareCardNumber', $_GET['MedicareCardNumber']);
 
             if($haschedule->execute()) {
 
-                $sql3 = "DELETE FROM Works_At WHERE MedicareCardNumber =:MedicareCardNumber ;";
+                $sql3 = "DELETE FROM Works_At 
+                WHERE MedicareCardNumber =':MedicareCardNumber' ;";
 
                 $worksat = $conn->prepare($sql3);
                 $worksat->bindParam(':MedicareCardNumber', $_GET['MedicareCardNumber']);
 
                 if($worksat->execute()) {
 
-                    $sql4 = "DELETE FROM Teachers WHERE MedicareCardNumber =:MedicareCardNumber ;";
+                    $sql4 = "DELETE FROM Teachers 
+                    WHERE MedicareCardNumber =':MedicareCardNumber' ;";
                     $teachers = $conn->prepare($sql4);
                     $teachers->bindParam(':MedicareCardNumber', $_GET['MedicareCardNumber']);
 
                     if($teachers->execute()) {
 
-                        $sql = "DELETE FROM Employees WHERE MedicareCardNumber =:MedicareCardNumber ; ";
+                        $sql = "DELETE FROM Employees 
+                        WHERE MedicareCardNumber =':MedicareCardNumber' ; ";
 
                         $employee = $conn->prepare($sql);
                         $employee->bindParam(':MedicareCardNumber', $_GET['MedicareCardNumber']);
 
                         if($employee->execute()) {
-                            $sql2 = "DELETE FROM Persons WHERE MedicareCardNumber =:MedicareCardNumber;";
+                            $sql2 = "DELETE FROM Persons 
+                            WHERE MedicareCardNumber =':MedicareCardNumber';";
                             $person = $conn->prepare($sql2);
                             $person->bindParam(':MedicareCardNumber', $_GET['MedicareCardNumber']);
                             if ($person->execute()) {

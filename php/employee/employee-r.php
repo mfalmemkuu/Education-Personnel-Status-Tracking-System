@@ -3,15 +3,17 @@
 ?>
 <?php
 require_once '../database.php';
-
+/*
 $sql_better = "SELECT s.MedicareCardNumber, p.FirstName, p.LastName, p.MedicareExpiryDate, p.DateOfBirth, p.TelephoneNumber, p.Citizenship, ap.Address, ap.City, p.PostalCode, ap.Province, p.EmailAddress
     FROM Employees s, Persons p, Addresses_Persons ap
     WHERE s.MedicareCardNumber = p.MedicareCardNumber
     AND p.PostalCode = ap.PostalCode;";
-
+*/
 $sql = "SELECT e.MedicareCardNumber, p.FirstName, p.LastName, p.MedicareExpiryDate, p.DateOfBirth, p.TelephoneNumber, p.Citizenship, p.PostalCode, p.EmailAddress, w.Role
 FROM Employees e, Persons p, Works_At w
-WHERE e.MedicareCardNumber = p.MedicareCardNumber AND e.MedicareCardNumber = w.MedicareCardNumber;";
+WHERE e.MedicareCardNumber = p.MedicareCardNumber 
+AND e.MedicareCardNumber = w.MedicareCardNumber
+AND w.EndDate IS NULL;";
 
 $stmt = $conn->prepare($sql);  
     

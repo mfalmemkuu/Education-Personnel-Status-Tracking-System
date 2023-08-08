@@ -32,7 +32,7 @@
 
 
 <h3>8- Get details of all the facilities in the system. </h3>
-<form action="display-facilities-details.php">
+<form action="display-facilities-details.php" method ="get">
 <input type="submit" value="Display Facility Details">
 </form>
 
@@ -51,7 +51,7 @@ End Date: <input type="date" name="EndTime"><br>
 </form>
 
 <h3>11- Get details of all the teachers who have been infected by COVID-19 in the past two weeks.</h3>
-<form action="display-teachers-infected.php">
+<form action="display-teachers-infected.php" method ="get">
 <input type="submit" value="Display Infected Teachers Details">
 </form>
 
@@ -68,7 +68,7 @@ Facility Name: <input type="text" name="Name"><br>
 </form>
 
 <h3>14- For a given facility, give the total hours scheduled for every teacher during a specific period.</h3>
-<form action="hoursScheduled-specific-facility.php">
+<form action="hoursScheduled-specific-facility.php" method ="post">
 Facility Name: <input type="text" name="Name"><br>
 Starting Date: <input type="date" name="StartTime"><br>
 End Date: <input type="date" name="EndTime"><br>
@@ -80,7 +80,7 @@ school's name, the capacity of the school, and the total number of teachers in
 the school who have been infected by COVID-19 in the past two weeks, and
 the number of students in the school who have been infected by COVID-19 in
 the past two weeks. </h3>
-<form action="display-highschoolInfection-details.php"> 
+<form action="display-highschoolInfection-details.php" method ="get"> 
 <input type="submit" value="Display Highschool Infection Details">
 </form>
 
@@ -88,12 +88,12 @@ the past two weeks. </h3>
 the city of residence of the minister, and the total number of management
 facilities, and the total number of educational facilities that the minister is
 currently administering.</h3>
-<form action="display-ministry-details.php"> 
+<form action="display-ministry-details.php" method ="get"> 
 <input type="submit" value="Display Ministry Details">
 </form>
 
 <h3>17- Get details of the counselor(s) who are currently working and has been infected by COVID-19 at least three times.</h3>
-<form action="display-infectedCounselors-details.php"> 
+<form action="display-infectedCounselors-details.php" method ="get"> 
 <input type="submit" value="Display Counselors">
 </form>
 

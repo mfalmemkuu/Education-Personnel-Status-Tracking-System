@@ -5,7 +5,8 @@ require_once './database.php';
 
 $sql = "SELECT s.ScheduleID, f.Name, s.Date, s.StartTime, s.EndTime
 FROM Employees e, Has_Schedule hs, Facilities f, Schedule s
-WHERE s.Date >= ':StartTime' AND s.Date <= ':EndTime' 
+WHERE s.Date >= ':StartTime' 
+AND s.Date <= ':EndTime' 
 AND s.IsCancelled = false
 AND e.MedicareCardNumber = ':MedicareCardNumber'
 AND hs.FacilityID = f.FacilityID

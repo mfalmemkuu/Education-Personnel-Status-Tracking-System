@@ -3,10 +3,12 @@ require_once '../database.php';
 
 //$sql_better = "SELECT s.MedicareCardNumber, s.CurrentLevel, p.FirstName, p.LastName, p.MedicareExpiryDate, p.DateOfBirth, p.TelephoneNumber, p.Citizenship, ap.Address, ap.City, p.PostalCode, ap.Province, p.EmailAddress     FROM students s, persons p, addresses_persons ap     WHERE s.medicareCardNumber = p.medicareCardNumber     AND p.PostalCode = ap.PostalCode;";
 
-$sql = 'SELECT e.MedicareCardNumber, p.FirstName, p.LastName, p.MedicareExpiryDate
+$sql = "SELECT e.MedicareCardNumber, p.FirstName, p.LastName, p.MedicareExpiryDate
 , p.DateOfBirth, p.TelephoneNumber, p.Citizenship, p.PostalCode, p.EmailAddress, w.Role
 FROM Employees e, Persons p, Works_At w
-WHERE e.MedicareCardNumber = p.MedicareCardNumber AND e.MedicareCardNumber = w.MedicareCardNumber AND e.MedicareCardNumber = :MedicareCardNumber;';
+WHERE e.MedicareCardNumber = p.MedicareCardNumber 
+AND e.MedicareCardNumber = w.MedicareCardNumber 
+AND e.MedicareCardNumber = ':MedicareCardNumber;'";
 
 $stmt = $conn->prepare($sql);  
 $stmt->bindParam(":MedicareCardNumber", $_GET["MedicareCardNumber"]);
