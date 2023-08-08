@@ -1245,3 +1245,33 @@ insert into has_schedule (ScheduleID, FacilityID,MedicareCardNumber) values
 (LAST_INSERT_ID()-8,1,'zeqg99658500'),
 (LAST_INSERT_ID()-9,1,'atks99812100');
 
+
+
+
+insert into schedule (`Date`,isCancelled,startTime,endTime) values
+('2023-09-08',false,'08:00:00','12:00:00'),
+('2023-09-09',false,'08:00:00','12:00:00'),
+('2023-09-10',false,'08:00:00','12:00:00'),
+('2023-09-11',false,'08:00:00','12:00:00'),
+('2023-09-12',false,'08:00:00','12:00:00'),
+('2023-09-13',false,'08:00:00','12:00:00'),
+('2023-09-14',false,'08:00:00','12:00:00'),
+('2023-09-15',false,'08:00:00','12:00:00'),
+('2023-09-16',false,'08:00:00','12:00:00'),
+('2023-09-17',false,'08:00:00','12:00:00');
+
+
+insert into has_schedule (ScheduleID, FacilityID,MedicareCardNumber) values
+(LAST_INSERT_ID(),1,'chnb68073100'),
+(LAST_INSERT_ID()-1,1,'chnb68073100'),
+(LAST_INSERT_ID()-2,1,'chnb68073100'),
+(LAST_INSERT_ID()-3,1,'chnb68073100'),
+(LAST_INSERT_ID()-4,1,'chnb68073100'),
+(LAST_INSERT_ID()-5,1,'chnb68073100'),
+(LAST_INSERT_ID()-6,1,'chnb68073100'),
+(LAST_INSERT_ID()-7,1,'chnb68073100'),
+(LAST_INSERT_ID()-8,1,'chnb68073100'),
+(LAST_INSERT_ID()-9,1,'chnb68073100');
+
+
+
