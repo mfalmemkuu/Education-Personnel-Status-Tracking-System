@@ -10,7 +10,7 @@ INSERT INTO Ministries (MinistryID, Name) VALUES
 (9, 'Ministry of Education - Quebec'),
 (10, 'Ministry of Education - Saskatchewan');
 
-insert into Addresses_facilities (PostalCode, Province, Address, City) values 
+insert into Addresses_Facilities (PostalCode, Province, Address, City) values 
 ('b3o-7w7', 'Quebec', '39220 Weeping Birch Road', 'Quebec'),
 ('k3x-5f4', 'Quebec', '7 Judy Plaza', 'Montreal'),
 ('p6w-2h6', 'Quebec', '8 Swallow Place', 'Laval'),
@@ -43,7 +43,7 @@ insert into Addresses_facilities (PostalCode, Province, Address, City) values
 ('p8q-0z7', 'Quebec', '1 Memorial Crossing', 'Laval');
 
 
-insert into Addresses_persons (PostalCode, Province, Address, City) values 
+insert into Addresses_Persons (PostalCode, Province, Address, City) values 
 ('b3o-7w7', 'Quebec', '39220 Weeping Birch Road', 'Quebec'),
 ('k3x-5f4', 'Quebec', '7 Judy Plaza', 'Montreal'),
 ('p6w-2h6', 'Quebec', '8 Swallow Place', 'Laval'),
@@ -783,7 +783,7 @@ insert into Operates (FacilityID, MinistryID) values
 (29, 9),
 (30, 10);
 
-insert into Works_at (MedicareCardNumber, FacilityID, StartDate, EndDate, Role) values 
+insert into Works_At (MedicareCardNumber, FacilityID, StartDate, EndDate, Role) values 
 ('chnb68073157', 1, '2017-06-10', null, 'Principal'),
 ('ddrh96552495', 2, '2017-06-10', null, 'Principal'),
 ('sonr94506633', 3, '2017-06-10', null, 'Principal'),
@@ -836,7 +836,7 @@ insert into Works_at (MedicareCardNumber, FacilityID, StartDate, EndDate, Role) 
 ('wruy16143565', 20, '2017-06-10', null, 'Specialized Personnel');
 
 
-insert into Works_at (MedicareCardNumber, FacilityID, StartDate, EndDate, Role) values 
+insert into Works_At (MedicareCardNumber, FacilityID, StartDate, EndDate, Role) values 
 ('bvmf04864173', 1, '2020-10-04', null, 'elementary'),
 ('capc26072389', 2, '2023-02-20', null, 'secondary'),
 ('eelc32041277', 3, '2016-02-15', null, 'elementary'),
@@ -888,7 +888,7 @@ insert into Works_at (MedicareCardNumber, FacilityID, StartDate, EndDate, Role) 
 ('oiga45430748', 9, '2022-01-05', null, 'elementary'),
 ('jnei34873512', 10, '2016-06-04', null, 'secondary');
 
-insert into Registered_at (MedicareCardNumber, FacilityID, StartDate, EndDate) values 
+insert into Registered_At (MedicareCardNumber, FacilityID, StartDate, EndDate) values 
 ('inbi07848043', 1, '2016-07-21', null),
 ('xldj37998130', 2, '2016-10-16', null),
 ('alji19160144', 3, '2021-03-15', null),
@@ -1096,7 +1096,7 @@ insert into GeneralManagementFacilities (FacilityID) values
 
 
 
-INSERT INTO `infections` (`MedicareCardNumber`, `Date`, `Type`) VALUES
+INSERT INTO `Infections` (`MedicareCardNumber`, `Date`, `Type`) VALUES
 ('bvmf04864173', '2020-05-08', 'covid-19'),
 ('bwki36088579', '2023-08-02', 'covid-19'),
 ('cjmv60245894', '2023-07-31', 'covid-19'),
@@ -1163,7 +1163,7 @@ insert into Teachers (MedicareCardNumber, Level, Specialisation) values
 
 
 
-insert into Works_at (MedicareCardNumber, FacilityID, StartDate, EndDate, Role) values 
+insert into Works_At (MedicareCardNumber, FacilityID, StartDate, EndDate, Role) values 
 ('chnb68073100',1, '2020-10-04', null, 'secondary'),
 ('ddrh96552400',1, '2020-10-04', null, 'secondary'),
 ('sonr94506600',1, '2020-10-04', null, 'secondary'),
@@ -1176,7 +1176,7 @@ insert into Works_at (MedicareCardNumber, FacilityID, StartDate, EndDate, Role) 
 ('atks99812100',1, '2020-10-04', null, 'secondary'),
 ('atks99812111',1, '2020-10-04', null, 'secondary');
 
-INSERT INTO `infections` (`MedicareCardNumber`, `Date`, `Type`) VALUES
+INSERT INTO `Infections` (`MedicareCardNumber`, `Date`, `Type`) VALUES
 ('chnb68073100', '2023-07-02', 'covid-19'),
 ('ddrh96552400', '2023-08-02', 'covid-19'),
 ('sonr94506600', '2023-08-02', 'covid-19'),
@@ -1215,7 +1215,7 @@ INSERT INTO `infections` (`MedicareCardNumber`, `Date`, `Type`) VALUES
 
 
 
-insert into vaccinations (MedicareCardNumber,`Date`,`Type`,DoseNumber) values
+insert into Vaccinations (MedicareCardNumber,`Date`,`Type`,DoseNumber) values
 ('chnb68073100','2023-06-01','Pfizer',1),
 ('ddrh96552400','2023-06-01','Pfizer',1),
 ('sonr94506600','2023-06-01','Pfizer',1),
@@ -1228,7 +1228,7 @@ insert into vaccinations (MedicareCardNumber,`Date`,`Type`,DoseNumber) values
 ('atks99812100','2023-06-01','Pfizer',1),
 ('atks99812111','2023-06-01','Pfizer',1);
 
-insert into schedule (`Date`,isCancelled,startTime,endTime) values
+insert into Schedule (`Date`,isCancelled,startTime,endTime) values
 ('2023-08-08',true,'08:00:00','12:00:00'),
 ('2023-08-09',true,'08:00:00','12:00:00'),
 ('2023-08-08',true,'08:00:00','12:00:00'),
@@ -1241,7 +1241,7 @@ insert into schedule (`Date`,isCancelled,startTime,endTime) values
 ('2023-08-09',true,'08:00:00','12:00:00');
 
 
-insert into has_schedule (ScheduleID, FacilityID,MedicareCardNumber) values
+insert into Has_Schedule (ScheduleID, FacilityID,MedicareCardNumber) values
 (LAST_INSERT_ID(),1,'chnb68073100'),
 (LAST_INSERT_ID()-1,1,'ddrh96552400'),
 (LAST_INSERT_ID()-2,1,'sonr94506600'),
@@ -1256,7 +1256,7 @@ insert into has_schedule (ScheduleID, FacilityID,MedicareCardNumber) values
 
 
 
-insert into schedule (`Date`,isCancelled,startTime,endTime) values
+insert into Schedule (`Date`,isCancelled,startTime,endTime) values
 ('2023-09-08',false,'08:00:00','12:00:00'),
 ('2023-09-09',false,'08:00:00','12:00:00'),
 ('2023-09-10',false,'08:00:00','12:00:00'),
@@ -1269,7 +1269,7 @@ insert into schedule (`Date`,isCancelled,startTime,endTime) values
 ('2023-09-17',false,'08:00:00','12:00:00');
 
 
-insert into has_schedule (ScheduleID, FacilityID,MedicareCardNumber) values
+insert into Has_Schedule (ScheduleID, FacilityID,MedicareCardNumber) values
 (LAST_INSERT_ID(),1,'chnb68073100'),
 (LAST_INSERT_ID()-1,1,'chnb68073100'),
 (LAST_INSERT_ID()-2,1,'chnb68073100'),
