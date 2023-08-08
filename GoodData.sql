@@ -1204,3 +1204,44 @@ INSERT INTO `infections` (`MedicareCardNumber`, `Date`, `Type`) VALUES
 ('zeqg99658500', '2021-08-02', 'covid-19'),
 ('atks99812100', '2021-08-02', 'covid-19');
 
+
+
+
+
+insert into vaccinations (MedicareCardNumber,`Date`,`Type`,DoseNumber) values
+('chnb68073100','2023-06-01','Pfizer',1),
+('ddrh96552400','2023-06-01','Pfizer',1),
+('sonr94506600','2023-06-01','Pfizer',1),
+('socq52922600','2023-06-01','Pfizer',1),
+('tscn83047400','2023-06-01','Pfizer',1),
+('pzih79804600','2023-06-01','Pfizer',1),
+('udzr21294300','2023-06-01','Pfizer',1),
+('cwmx16384400','2023-06-01','Pfizer',1),
+('zeqg99658500','2023-06-01','Pfizer',1),
+('atks99812100','2023-06-01','Pfizer',1);
+
+insert into schedule (`Date`,isCancelled,startTime,endTime) values
+('2023-08-08',true,'08:00:00','12:00:00'),
+('2023-08-09',true,'08:00:00','12:00:00'),
+('2023-08-08',true,'08:00:00','12:00:00'),
+('2023-08-09',true,'08:00:00','12:00:00'),
+('2023-08-08',true,'08:00:00','12:00:00'),
+('2023-08-09',true,'08:00:00','12:00:00'),
+('2023-08-08',true,'08:00:00','12:00:00'),
+('2023-08-09',true,'08:00:00','12:00:00'),
+('2023-08-08',true,'08:00:00','12:00:00'),
+('2023-08-09',true,'08:00:00','12:00:00');
+
+
+insert into has_schedule (ScheduleID, FacilityID,MedicareCardNumber) values
+(LAST_INSERT_ID(),1,'chnb68073100'),
+(LAST_INSERT_ID()-1,1,'ddrh96552400'),
+(LAST_INSERT_ID()-2,1,'sonr94506600'),
+(LAST_INSERT_ID()-3,1,'socq52922600'),
+(LAST_INSERT_ID()-4,1,'tscn83047400'),
+(LAST_INSERT_ID()-5,1,'pzih79804600'),
+(LAST_INSERT_ID()-6,1,'udzr21294300'),
+(LAST_INSERT_ID()-7,1,'cwmx16384400'),
+(LAST_INSERT_ID()-8,1,'zeqg99658500'),
+(LAST_INSERT_ID()-9,1,'atks99812100');
+
