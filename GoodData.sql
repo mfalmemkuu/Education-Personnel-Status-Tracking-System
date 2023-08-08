@@ -1096,5 +1096,14 @@ insert into GeneralManagementFacilities (FacilityID) values
 
 
 
-
+INSERT INTO `infections` (`MedicareCardNumber`, `Date`, `Type`) VALUES
+('bvmf04864173', '2020-05-08', 'covid-19'),
+('bwki36088579', '2023-08-02', 'covid-19'),
+('cjmv60245894', '2023-07-31', 'covid-19'),
+('cqro21400322', '2023-08-03', 'covid-19'),
+('bxpy53909250', '2023-07-30', 'covid-19'),
+('hkos08195390', '2023-08-05', 'covid-19'),
+('cmhu48223732', '2023-08-01', 'covid-19'),
+('cuwj03025855', '2023-07-28', 'covid-19'),
+('eewd09862766', '2023-07-30', 'covid-19');
 
