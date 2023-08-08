@@ -22,7 +22,7 @@ CREATE TABLE Facilities(
     PRIMARY KEY (FacilityID)
 );
 
-CREATE TABLE Addresses_persons(
+CREATE TABLE Addresses_Persons(
     PostalCode char(7) NOT NULL,
     Province VARCHAR(255),
     Address VARCHAR(255),
@@ -30,7 +30,7 @@ CREATE TABLE Addresses_persons(
     CONSTRAINT PK_Addresses_persons PRIMARY KEY (PostalCode)
 );
 
-CREATE TABLE Addresses_facilities(
+CREATE TABLE Addresses_Facilities(
     PostalCode char(7) NOT NULL,
     Province VARCHAR(255),
     Address VARCHAR(255),
@@ -124,7 +124,7 @@ CREATE TABLE HighSchools(
     PRIMARY KEY (FacilityID)
 );
 
-CREATE TABLE Works_at(
+CREATE TABLE Works_At(
     MedicareCardNumber char(12) NOT NULL,
     FacilityID int NOT NULL,
     StartDate date,
@@ -133,7 +133,7 @@ CREATE TABLE Works_at(
     CONSTRAINT PK_Works_at PRIMARY KEY (MedicareCardNumber, FacilityID, StartDate)
 );
 
-CREATE TABLE Registered_at(
+CREATE TABLE Registered_At(
     MedicareCardNumber char(12) NOT NULL,
     FacilityID int NOT NULL,
     StartDate date,
@@ -151,14 +151,14 @@ CREATE TABLE Schedule(
 	CONSTRAINT check_time CHECK(startTime<endTime)
 );
 
-CREATE TABLE Has_schedule(
+CREATE TABLE Has_Schedule(
     ScheduleID int NOT NULL,
     FacilityID int NOT NULL,
     MedicareCardNumber char(12) NOT NULL,
     CONSTRAINT PK_Has_schedule PRIMARY KEY (ScheduleID,FacilityID, MedicareCardNumber)
 );
 
-CREATE TABLE Email_log(
+CREATE TABLE Email_Log(
     LogID int NOT NULL AUTO_INCREMENT,
     subject VARCHAR(255),
     sender VARCHAR(255),
@@ -168,7 +168,7 @@ CREATE TABLE Email_log(
     PRIMARY KEY(LogID)
 );
 
-CREATE TABLE Email_sent(
+CREATE TABLE Email_Sent(
     LogID int NOT NULL,
     FacilityID int NOT NULL,
     MedicareCardNumber char(12) NOT NULL,
