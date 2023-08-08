@@ -3,9 +3,10 @@
 <?php
 require_once './database.php';
 
-$sql = "SELECT el.LogID AS 'EmailID', el.Subject ,
-el.Sender , el.Receiver, el.Date, el.Body
-FROM Email_log el, Facilities f , Email_sent es
+$sql = "SELECT el.LogID AS EmailID, el.Subject AS `Subject` ,
+el.Sender AS Sender , el.Receiver AS Receiver,
+el.Date AS `Date`, el.Body AS Body
+FROM Email_log el, Facilities f , Email_Sent es
 WHERE el.LogID = es.LogID AND es.FacilityID = f.FacilityID AND f.Name =:Name;";
 
 $stmt = $conn->prepare($sql);  

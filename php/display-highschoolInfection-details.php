@@ -3,122 +3,33 @@
 
 <?php
 require_once './database.php';
-/*
-$sql = "SELECT af.Province, f.Name AS SchoolName, f.Capacity,
-(SELECT COUNT(t.MedicareCardNumber) 
-    FROM HighSchools h, Facilities f, Infections i, Teachers t,Persons p, Works_at w, Employees e, EducationalFacilities ef
-    WHERE h.FacilityID = ef.FacilityID
-    AND ef.FacilityID = f.FacilityID
-    AND w.FacilityID = f.FacilityID
-    AND p.MedicareCardNumber = i.MedicareCardNumber
-    AND p.MedicareCardNumber = t.MedicareCardNumber
-    AND w.MedicareCardNumber = e.MedicareCardNumber
-    AND e.MedicareCardNumber = t.MedicareCardNumber
-    AND w.EndDate IS NULL
-    AND i.Date BETWEEN DATE_SUB(CURDATE(), INTERVAL 2 WEEK) AND CURDATE()) AS TotalTeachersInfected,
-(SELECT COUNT(s.MedicareCardNumber) 
-    FROM HighSchools h, Facilities f, Infections i,Students s, Persons p,Registered_at r,EducationalFacilities ef
-    WHERE p.MedicareCardNumber = i.MedicareCardNumber
-    AND p.MedicareCardNumber = s.MedicareCardNumber
-    AND r.MedicareCardNumber = s.MedicareCardNumber
-    AND h.FacilityID = ef.FacilityID
-    AND ef.FacilityID = f.FacilityID
-    AND r.FacilityID = ef.FacilityID
-    AND r.EndDate IS NULL
-    AND i.Date BETWEEN DATE_SUB(CURDATE(), INTERVAL 2 WEEK) AND CURDATE()) AS TotalStudentsInfected
-FROM HighSchools h, Facilities f, Addresses_facilities af, EducationalFacilities ef
-WHERE h.FacilityID = ef.FacilityID
-AND ef.FacilityID = f.FacilityID
-AND f.PostalCode = af.PostalCode
-GROUP BY h.FacilityID
-ORDER BY af.Province, TotalTeachersInfected;";
-*/
 
-$sql = "SELECT af.Province, f.Name AS SchoolName, f.Capacity 
-FROM HighSchools h, Facilities f, Addresses_facilities af, EducationalFacilities ef
-WHERE h.FacilityID = ef.FacilityID
-AND ef.FacilityID = f.FacilityID
-AND f.PostalCode = af.PostalCode
-GROUP BY h.FacilityID
-ORDER BY af.Province, TotalTeachersInfected
-UNION 
-SELECT af.Province, f.Name AS SchoolName, f.Capacity, COUNT(t.MedicareCardNumber) AS TotalTeachersInfected
-    FROM HighSchools h, Facilities f, Infections i, Teachers t,Persons p, Works_at w, Employees e, EducationalFacilities ef
-    WHERE h.FacilityID = ef.FacilityID
-    AND ef.FacilityID = f.FacilityID
-    AND w.FacilityID = f.FacilityID
-    AND p.MedicareCardNumber = i.MedicareCardNumber
-    AND p.MedicareCardNumber = t.MedicareCardNumber
-    AND w.MedicareCardNumber = e.MedicareCardNumber
-    AND e.MedicareCardNumber = t.MedicareCardNumber
-    AND w.EndDate IS NULL
-    AND i.Date BETWEEN DATE_SUB(CURDATE(), INTERVAL 2 WEEK) AND CURDATE()
-    GROUP BY h.FacilityID
-ORDER BY af.Province, TotalTeachersInfected
-UNION
-SELECT af.Province, f.Name AS SchoolName, f.Capacity, COUNT(s.MedicareCardNumber) TotalStudentsInfected
-    FROM HighSchools h, Facilities f, Infections i,Students s, Persons p,Registered_at r,EducationalFacilities ef
-    WHERE p.MedicareCardNumber = i.MedicareCardNumber
-    AND p.MedicareCardNumber = s.MedicareCardNumber
-    AND r.MedicareCardNumber = s.MedicareCardNumber
-    AND h.FacilityID = ef.FacilityID
-    AND ef.FacilityID = f.FacilityID
-    AND r.FacilityID = ef.FacilityID
-    AND r.EndDate IS NULL
-    AND i.Date BETWEEN DATE_SUB(CURDATE(), INTERVAL 2 WEEK) AND CURDATE()
-    GROUP BY h.FacilityID
-ORDER BY af.Province, TotalTeachersInfected;";
-
-
-/*
-SELECT af.Province, f.Name AS SchoolName, f.Capacity,
-(SELECT COUNT(t.MedicareCardNumber) 
-    FROM HighSchools h, Facilities f, Infections i, Teachers t,Persons p, Works_at w, Employees e, EducationalFacilities ef
-    WHERE h.FacilityID = ef.FacilityID
-    AND ef.FacilityID = f.FacilityID
-    AND w.FacilityID = f.FacilityID
-    AND p.MedicareCardNumber = i.MedicareCardNumber
-    AND p.MedicareCardNumber = t.MedicareCardNumber
-    AND w.MedicareCardNumber = e.MedicareCardNumber
-    AND e.MedicareCardNumber = t.MedicareCardNumber
-    AND w.EndDate IS NULL
-    AND i.Date BETWEEN DATE_SUB(CURDATE(), INTERVAL 2 WEEK) AND CURDATE()) AS TotalTeachersInfected,
-(SELECT COUNT(s.MedicareCardNumber) 
-    FROM HighSchools h, Facilities f, Infections i,Students s, Persons p,Registered_at r,EducationalFacilities ef
-    WHERE p.MedicareCardNumber = i.MedicareCardNumber
-    AND p.MedicareCardNumber = s.MedicareCardNumber
-    AND r.MedicareCardNumber = s.MedicareCardNumber
-    AND h.FacilityID = ef.FacilityID
-    AND ef.FacilityID = f.FacilityID
-    AND r.FacilityID = ef.FacilityID
-    AND r.EndDate IS NULL
-    AND i.Date BETWEEN DATE_SUB(CURDATE(), INTERVAL 2 WEEK) AND CURDATE()) AS TotalStudentsInfected
-FROM HighSchools h, Facilities f, Addresses_facilities af, EducationalFacilities ef
-WHERE h.FacilityID = ef.FacilityID
-AND ef.FacilityID = f.FacilityID
-AND f.PostalCode = af.PostalCode
-GROUP BY h.FacilityID
-ORDER BY af.Province, TotalTeachersInfected;
-*/
-
-/*
-$sql = "SELECT 
-COUNT(DISTINCT CASE WHEN t.MedicareCardNumber IS NOT NULL AND i.Date BETWEEN DATE_SUB(CURDATE(), INTERVAL 2 WEEK) AND CURDATE() THEN i.MedicareCardNumber END) AS TotalTeachersInfected,
-COUNT(DISTINCT CASE WHEN s.MedicareCardNumber IS NOT NULL AND i.Date BETWEEN DATE_SUB(CURDATE(), INTERVAL 2 WEEK) AND CURDATE() THEN i.MedicareCardNumber END) AS TotalStudentsInfected
-FROM Infections i, Teachers t, Students s, Persons p, Employees e
-WHERE p.MedicareCardNumber = i.MedicareCardNumber
-AND p.MedicareCardNumber = s.MedicareCardNumber
-AND p.MedicareCardNumber = t.MedicareCardNumber
-AND e.MedicareCardNumber = t.MedicareCardNumber
-ORDER BY TotalTeachersInfected;";
 
 $sql = "SELECT 
-COUNT(DISTINCT  s.MedicareCardNumber ) AS TotalStudentsInfected
-FROM Infections i, Persons p, Students s
-WHERE p.MedicareCardNumber = i.MedicareCardNumber
-AND i.Date BETWEEN DATE_SUB(CURDATE(), INTERVAL 2 WEEK) AND CURDATE()
-AND p.MedicareCardNumber = s.MedicareCardNumber;";
-*/
+af.Province AS HighSchoolProvince,
+f.Name AS HighSchoolName,
+f.Capacity AS HighSchoolCapacity,
+(SELECT COUNT(DISTINCT t.MedicareCardNumber) 
+FROM Teachers t 
+JOIN Infections i ON t.MedicareCardNumber=i.MedicareCardNumber 
+JOIN Works_At wa ON wa.MedicareCardNumber=t.MedicareCardNumber 
+WHERE wa.FacilityID=h.FacilityID 
+AND i.`Date`>= (SELECT CURDATE()-INTERVAL 14 DAY) 
+AND UPPER(i.`Type`) = 'COVID-19') AS Number_Of_Teachers_Infected_In_Past_2_Weeks,
+(SELECT COUNT(DISTINCT s.MedicareCardNumber) 
+FROM Students s 
+JOIN Infections i ON s.MedicareCardNumber=i.MedicareCardNumber 
+JOIN Registered_At ra  ON ra.MedicareCardNumber=s.MedicareCardNumber 
+WHERE ra.FacilityID=h.FacilityID 
+AND i.`Date`>= (SELECT CURDATE()-INTERVAL 14 DAY) 
+AND UPPER(i.`Type`) = 'COVID-19') AS Number_Of_Students_Infected_In_Past_2_Weeks
+FROM highschools h 
+JOIN Facilities f ON h.FacilityID =f.FacilityID 
+JOIN Addresses_Facilities af ON af.PostalCode =f.PostalCode 
+ORDER BY af.Province ASC, Number_Of_Teachers_Infected_In_Past_2_Weeks ASC;
+";
+
+
 $stmt = $conn->prepare($sql);  
    
 
@@ -130,20 +41,20 @@ $stmt->execute();
 <table>
   <thead>
       <tr>
-        <th>Province</th>        
-        <th>SchoolName</th>
+        <th>HighSchoolProvince</th>        
+        <th>HighSchoolName</th>
         <th>Capacity</th>
-        <th>TotalTeachersInfected</th>
-        <th>TotalStudentsInfected</th>
+        <th>Number_Of_Teachers_Infected_In_Past_2_Weeks</th>
+        <th>Number_Of_Students_Infected_In_Past_2_Weeks</th>
   </thead>
   <tbody>
     <?php  while($row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT)) { ?>
     <tr>
-      <td><?= $row["Province"] ?></td>      
-      <td><?= $row["SchoolName"] ?></td>
-      <td><?= $row["Capacity"] ?></td>
-      <td><?= $row["TotalTeachersInfected"] ?></td>
-      <td><?= $row["TotalStudentsInfected"] ?></td>
+      <td><?= $row["HighSchoolProvince"] ?></td>      
+      <td><?= $row["HighSchoolName"] ?></td>
+      <td><?= $row["HighSchoolCapacity"] ?></td>
+      <td><?= $row["Number_Of_Teachers_Infected_In_Past_2_Weeks"] ?></td>
+      <td><?= $row["Number_Of_Students_Infected_In_Past_2_Weeks"] ?></td>
     </tr>
     <?php  } ?>
   </tbody>

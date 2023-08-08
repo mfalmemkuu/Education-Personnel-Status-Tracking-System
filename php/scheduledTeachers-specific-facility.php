@@ -4,13 +4,19 @@
 <?php
 require_once './database.php';
 
-$sql = "SELECT p.FirstName, p.LastName , t.Level 
-FROM Teachers t, Persons p, Facilities f, Has_schedule hs, Works_at wa, Schedule s
-WHERE f.Name = :Name AND p.MedicareCardNumber = t.MedicareCardNumber
-AND hs.MedicareCardNumber = t.MedicareCardNumber AND wa.MedicareCardNumber = t.MedicareCardNumber
-AND wa.FacilityID = f.FacilityID AND hs.FacilityID = f.FacilityID
-AND s.ScheduleID =hs.ScheduleID AND s.StartTime >= DATE_SUB(NOW(), INTERVAL 2 WEEK)
-AND s.IsCancelled = false;";
+$sql = "SELECT p.FirstName, p.LastName, wa.`Role` 
+FROM Facilities f 
+JOIN Works_At wa ON wa.FacilityID =f.FacilityID 
+JOIN Has_Schedule hs ON hs.MedicareCardNumber =wa.MedicareCardNumber 
+JOIN Schedule s on s.ScheduleID =hs.ScheduleID 
+JOIN Persons p on p.MedicareCardNumber =wa.MedicareCardNumber 
+WHERE wa.MedicareCardNumber IN 
+	(SELECT t.MedicareCardNumber  FROM Teachers t)
+AND s.`Date` <= CURDATE()
+AND s.`Date` >= (CURDATE()-INTERVAL 2 WEEK)
+AND f.Name = :Name
+ORDER BY wa.`Role` ASC, p.FirstName ASC;
+";
 
 $stmt = $conn->prepare($sql);  
 

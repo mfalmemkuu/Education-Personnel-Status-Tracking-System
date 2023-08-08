@@ -3,18 +3,23 @@
 <?php
 require_once './database.php';
 
-$sql = "SELECT p.FirstName AS MinisterFirstName, p.LastName AS MinisterLastName,
-ap.City AS MinisterCity,
-COUNT(DISTINCT mf.FacilityID) AS TotalManagementFacilities,
-COUNT(DISTINCT ef.FacilityID) AS TotalEducationalFacilities
-FROM Ministries m
-INNER JOIN Employees e ON m.MinistryID = e.MedicareCardNumber
-INNER JOIN Persons p ON e.MedicareCardNumber = p.MedicareCardNumber
-INNER JOIN Addresses_persons ap ON p.PostalCode = ap.PostalCode
-LEFT JOIN ManagementFacilities mf ON m.MinistryID = mf.PresidentMedicareNumber
-LEFT JOIN EducationalFacilities ef ON m.MinistryID = ef.PrincipalMedicareNumber
-GROUP BY MinisterFirstName, MinisterLastName, MinisterCity
-ORDER BY ap.City ASC, TotalManagementFacilities DESC;";
+$sql = "SELECT 
+p.FirstName AS MinisterFirstName,
+p.LastName AS MinisterLastName,
+ap.City AS MinisterCityOfResidence,
+(SELECT COUNT(*) FROM Operates o1 JOIN ManagementFacilities m3 ON m3.FacilityID =o1.FacilityID WHERE o1.MinistryID=m.MinistryID) AS NumberOfManagementFacilities,
+(SELECT COUNT(*) FROM Operates o1 JOIN EducationalFacilities e  ON e.FacilityID =o1.FacilityID WHERE o1.MinistryID=m.MinistryID) AS NumberOfEducationalFacilities
+FROM Ministries m 
+JOIN Operates o ON o.MinistryID =m.MinistryID 
+JOIN HeadOfficeFacilities h on h.FacilityID = o.FacilityID 
+JOIN ManagementFacilities m2 on m2.FacilityID = h.FacilityID 
+JOIN Persons p on p.MedicareCardNumber = m2.PresidentMedicareNumber 
+JOIN Addresses_Persons ap ON ap.PostalCode =p.PostalCode
+GROUP BY m.MinistryID 
+ORDER BY ap.City ASC, 
+((SELECT COUNT(*) FROM Operates o1 JOIN ManagementFacilities m3 ON m3.FacilityID =o1.FacilityID WHERE o1.MinistryID=m.MinistryID)
++
+(SELECT COUNT(*) FROM Operates o1 JOIN EducationalFacilities e  ON e.FacilityID =o1.FacilityID WHERE o1.MinistryID=m.MinistryID)) DESC;";
 
 $stmt = $conn->prepare($sql);  
    
@@ -29,18 +34,18 @@ $stmt->execute();
       <tr>
         <th>MinisterFirstName</th>        
         <th>MinisterLastName</th>
-        <th>MinisterCity</th>
-        <th>TotalManagementFacilities</th>
-        <th>TotalEducationalFacilities</th>
+        <th>MinisterCityOfResidence</th>
+        <th>NumberOfManagementFacilities</th>
+        <th>NumberOfEducationalFacilities</th>
   </thead>
   <tbody>
     <?php  while($row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT)) { ?>
     <tr>
       <td><?= $row["MinisterFirstName"] ?></td>      
       <td><?= $row["MinisterLastName"] ?></td>
-      <td><?= $row["MinisterCity"] ?></td>
-      <td><?= $row["TotalManagementFacilities"] ?></td>
-      <td><?= $row["TotalEducationalFacilities"] ?></td>
+      <td><?= $row["MinisterCityOfResidence"] ?></td>
+      <td><?= $row["NumberOfManagementFacilities"] ?></td>
+      <td><?= $row["NumberOfEducationalFacilities"] ?></td>
     </tr>
     <?php  } ?>
   </tbody>

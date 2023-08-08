@@ -4,7 +4,7 @@
 require_once './database.php';
 
 $sql = "SELECT p.FirstName, p.LastName, i.Date, f.Name
-FROM infections i, teachers t, persons p, employees e, works_at wa, facilities f
+FROM Infections i, Teachers t, Persons p, Employees e, Works_At wa, Facilities f
 WHERE (i.Date BETWEEN (NOW() - INTERVAL 14 DAY) AND NOW())
 AND i.MedicareCardNumber = p.MedicareCardNumber
 AND p.MedicareCardNumber = e.MedicareCardNumber

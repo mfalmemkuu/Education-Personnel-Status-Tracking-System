@@ -3,25 +3,42 @@
 <?php
 require_once './database.php';
 
-$sql = "SELECT t.MedicareCardNumber, t.Level, t.Specialisation, p.FirstName, p.LastName, p.DateOfBirth, p.EmailAddress,
+$sql = "SELECT 
+t.MedicareCardNumber,
+t.Level,
+t.Specialisation,
+p.FirstName,
+p.LastName,
+p.DateOfBirth,
+p.EmailAddress,
 COALESCE(ts.TotalScheduledHours, 0) AS TotalScheduledHours
-FROM Teachers t
-INNER JOIN Persons p ON t.MedicareCardNumber = p.MedicareCardNumber
+FROM 
+Teachers t
+INNER JOIN 
+Persons p ON t.MedicareCardNumber = p.MedicareCardNumber
 LEFT JOIN (
-    SELECT 
+SELECT 
     w.MedicareCardNumber,
     SUM(TIMESTAMPDIFF(HOUR, s.StartTime, s.EndTime)) AS TotalScheduledHours
-    FROM Works_at w
-    INNER JOIN Schedule s ON w.StartDate <= s.Date AND (w.EndDate IS NULL OR w.EndDate >= s.Date)
-    GROUP BY w.MedicareCardNumber
-  ) AS ts ON t.MedicareCardNumber = ts.MedicareCardNumber
-WHERE t.MedicareCardNumber IN (
+FROM 
+    Works_At w
+INNER JOIN 
+    Schedule s ON w.StartDate <= s.Date AND (w.EndDate IS NULL OR w.EndDate >= s.Date)
+GROUP BY 
+    w.MedicareCardNumber
+) AS ts ON t.MedicareCardNumber = ts.MedicareCardNumber
+WHERE 
+t.MedicareCardNumber IN (
     SELECT MedicareCardNumber
     FROM Infections
     GROUP BY MedicareCardNumber
     HAVING COUNT(*) >= 3
 )
-ORDER BY t.Level ASC, p.FirstName ASC, p.LastName ASC;";
+AND t.Specialisation = 'counselor'
+ORDER BY 
+t.Level ASC,
+p.FirstName ASC,
+p.LastName ASC;";
 
 $stmt = $conn->prepare($sql);  
   
