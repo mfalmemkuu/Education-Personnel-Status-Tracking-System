@@ -992,40 +992,40 @@ insert into Registered_at (MedicareCardNumber, FacilityID, StartDate, EndDate) v
 
 
 insert into ManagementFacilities (FacilityID, PresidentMedicareNumber) values 
-(11, 'emge34254207'),
-(12, 'tcnf16204183'),
-(13, 'hjye68751628'),
-(14, 'jhkf86218417'),
-(15, 'xhxy87004970'),
-(16, 'rwjh24116649'),
-(17, 'qusm42314138'),
-(18, 'jjfq23871528'),
-(19, 'psbf68888047'),
-(20, 'lryt26472999'),
-(21, 'pylw96019050'),
-(22, 'fmvc80218553'),
-(23, 'wtpf09744672'),
-(24, 'swdq22036839'),
-(25, 'ptym02499681'),
-(26, 'zazb04625227'),
-(27, 'gnvw66226509'),
-(28, 'qwyp40848888'),
-(29, 'mmbj21491450'),
-(30, 'dxkf79246024');
+(11, 'qclf54693559'),
+(12, 'tjpb75240802'),
+(13, 'mufn13946729'),
+(14, 'jcqj36587505'),
+(15, 'eldl00129280'),
+(16, 'mlus32550800'),
+(17, 'qsep60324290'),
+(18, 'eiax15101277'),
+(19, 'fmft30539826'),
+(20, 'zdek42000873'),
+(21, 'bzbk46547836'),
+(22, 'nyxu85611817'),
+(23, 'pczm46837052'),
+(24, 'enny56422592'),
+(25, 'ywsc02075548'),
+(26, 'dpzw63877238'),
+(27, 'fdlo28652111'),
+(28, 'megp37616198'),
+(29, 'owae00457175'),
+(30, 'vyzn02541021');
 
 
 
 insert into EducationalFacilities (FacilityID, PrincipalMedicareNumber ) values 
-(1, 'bvmf04864173'),
-(2, 'capc26072389'),
-(3, 'eelc32041277'),
-(4, 'qfuh36449429'),
-(5, 'egek80853382'),
-(6, 'vhrd09594403'),
-(7, 'lxht00591052'),
-(8, 'mqul29848145'),
-(9, 'hkos08195390'),
-(10, 'gizc27512732');
+(1, 'chnb68073157'),
+(2, 'ddrh96552495'),
+(3, 'sonr94506633'),
+(4, 'socq52922660'),
+(5, 'tscn83047436'),
+(6, 'pzih79804641'),
+(7, 'udzr21294375'),
+(8, 'cwmx16384442'),
+(9, 'zeqg99658583'),
+(10, 'atks99812156');
 
 
 
