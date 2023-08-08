@@ -256,3 +256,119 @@ and ((timediff((select @start_time),s.endTime)>='01:00:00') or (timediff(s.start
 	
 end
 //
+
+
+
+
+
+delimiter //
+create procedure send_schedules_proc()
+begin
+	DECLARE done int default 0;
+	declare medicare_num char(12) default '';
+	
+	-- Get all medicare Numbers for each employee
+	declare cur cursor for select ra.MedicareCardNumber from registered_at ra where ra.EndDate is null group by ra.MedicareCardNumber;
+	DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = 1;
+
+	OPEN cur;
+
+  read_loop: LOOP
+    FETCH cur INTO medicare_num;
+   
+    IF done = 1 THEN
+      LEAVE read_loop;
+    END IF;
+   
+   -- Send the employee its schedule for the following week
+   call send_schedule_proc(medicare_num);
+   
+   END LOOP;
+
+  CLOSE cur;
+	
+end
+//
+
+
+delimiter //
+create procedure send_schedule_proc(in medicare_num char(12))
+begin
+	declare subject VARCHAR(255);
+	declare sender VARCHAR(255);
+	declare sender_id int;
+	declare receiver VARCHAR(255);
+	declare body VARCHAR(255);
+	declare start_date date;
+	declare end_date date;
+	
+	
+	DECLARE done int default 0;
+	declare schedule_id int;
+
+	declare cur cursor for select s.ScheduleID from schedule s natural join has_schedule hs where hs.MedicareCardNumber = medicare_num and s.`Date` >= (select curdate()+interval 1 day) and s.`Date` <= (select curdate()+interval 6 day) order by s.`Date` desc, s.startTime asc;
+	DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = 1;
+
+	-- Get dates
+	set @start_date := (select curdate()+interval 1 day);
+	set @end_date := (select curdate()+interval 6 day);
+
+	-- Get sender name
+   	set @sender := (select f.Name  from registered_at ra join facilities f on f.FacilityID = ra.FacilityID  where ra.EndDate is null and ra.MedicareCardNumber = medicare_num);
+		
+  	-- Get sender id (facilityID)
+   set @sender_id := (select ra.FacilityID  from registered_at ra where ra.EndDate is null and ra.MedicareCardNumber = medicare_num);
+   
+    -- Get receiver email
+   	set @receiver := (select p.EmailAddress  from persons p where p.MedicareCardNumber = medicare_num);
+	
+   -- Get Subject
+   	set @subject := concat((select @sender)," Schedule for ",dayname((select @start_date))," ",dayofmonth((select @start_date)),"-",monthname((select @start_date)),"-",year((select @start_date)),
+   " to ",dayname((select @end_date))," ",dayofmonth((select @end_date)),"-",monthname((select @end_date)),"-",year((select @end_date)));
+		
+  
+  	set @body := concat((select concat("Facility: ",f.Name," located at ",af.Address,", ",af.City,", ",af.Province,".") from registered_at ra natural join facilities f natural join addresses_facilities af where ra.MedicareCardNumber = medicare_num),(select concat(" Employee: ",p.FirstName," ",p.LastName," | ",p.EmailAddress,".") from persons p where p.MedicareCardNumber = medicare_num)," Schedule Status: ");
+  
+  	-- Employee is scheduled next week
+  	if  0 < (select count(*) from schedule s natural join has_schedule hs where hs.MedicareCardNumber = medicare_num and s.`Date` >= (select curdate()+interval 1 day) and s.`Date` <= (select curdate()+interval 6 day))
+  	then
+   	OPEN cur;
+
+  	read_loop: LOOP
+    	FETCH cur INTO schedule_id;
+   
+    IF done = 1 THEN
+      LEAVE read_loop;
+    END IF;
+  
+   		set @body := concat((select @body)," - ",(select concat(dayname(s.`Date`)," from ",s.startTime," to ",s.endTime," ") from schedule s where s.ScheduleID =schedule_id));
+   
+   	END LOOP;
+
+  	CLOSE cur;
+  
+  	else
+  		set @body := concat((select @body)," No Assignment.");
+  	end if;
+	
+  	-- Limit log body to 80 characters
+  	set @body := left((select @body),80);
+  
+  	-- Create Email Log Record
+ 	insert into email_log (subject,sender,receiver,`date`,body) values ((select @subject),(select @sender),(select @receiver),curdate(),(select @body));
+
+ 	-- Create Email Sent Record
+ 	insert into email_sent (LogID,FacilityID,MedicareCardNumber) values (LAST_INSERT_ID(),(select @sender_id),medicare_num);
+end
+//
+
+-- Turn on the event scheduler
+SET GLOBAL event_scheduler = ON;
+
+-- Create the event so that schedules are sent by email on every sunday
+create event if not exists ScheduleEmailsEvent
+on schedule
+EVERY 1 WEEK
+  STARTS CURRENT_DATE + INTERVAL (6 - WEEKDAY(CURRENT_DATE)) day
+  do call send_schedules_proc();
+
