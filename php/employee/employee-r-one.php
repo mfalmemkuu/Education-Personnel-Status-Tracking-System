@@ -5,7 +5,7 @@ require_once '../database.php';
 
 $sql = 'SELECT e.MedicareCardNumber, p.FirstName, p.LastName, p.MedicareExpiryDate
 , p.DateOfBirth, p.TelephoneNumber, p.Citizenship, p.PostalCode, p.EmailAddress, w.Role
-FROM employees e, persons p, works_at w
+FROM Employees e, Persons p, Works_At w
 WHERE e.MedicareCardNumber = p.MedicareCardNumber AND e.MedicareCardNumber = w.MedicareCardNumber AND e.MedicareCardNumber = :MedicareCardNumber;';
 
 $stmt = $conn->prepare($sql);  

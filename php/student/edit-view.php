@@ -3,7 +3,7 @@ require_once '../database.php';
 
 $statement = $conn->prepare('SELECT p.MedicareCardNumber, p.FirstName, p.LastName, s.CurrentLevel, p.MedicareExpiryDate
 , p.DateOfBirth, p.TelephoneNumber, p.Citizenship, p.PostalCode, p.EmailAddress
-FROM students s, persons p
+FROM Students s, Persons p
 WHERE s.MedicareCardNumber = p.MedicareCardNumber AND s.MedicareCardNumber = :MedicareCardNumber;');
 $statement->bindParam(":MedicareCardNumber", $_GET["MedicareCardNumber"]);
 $statement->execute();

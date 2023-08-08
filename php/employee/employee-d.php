@@ -1,17 +1,7 @@
 
 <?php
 require_once '../database.php';
-/*
-$sql8 = "UPDATE ManagementFacilities mf
-SET mf.PresidentMedicareNumber = NULL
-WHERE mf.PresidentMedicareNumber = :MedicareCardNumber;"; //xhxy87004970
 
-$mgf = $conn->prepare($sql8);
-$id = $_GET['MedicareCardNumber'];
-$mgf->bindParam(':PresidentMedicareNumber', $_GET['MedicareNumber']);
-
-if($mgf->execute()) {
-*/
     $sql7 = "DELETE FROM Infections WHERE MedicareCardNumber =:MedicareCardNumber ;";
 
     $infection = $conn->prepare($sql7);

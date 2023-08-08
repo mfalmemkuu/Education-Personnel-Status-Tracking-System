@@ -5,7 +5,7 @@ require_once '../database.php';
 
 $sql = 'SELECT p.MedicareCardNumber, p.FirstName, p.LastName, s.CurrentLevel, p.MedicareExpiryDate
 , p.DateOfBirth, p.TelephoneNumber, p.Citizenship, p.PostalCode, p.EmailAddress
-FROM students s, persons p
+FROM Students s, Persons p
 WHERE s.MedicareCardNumber = p.MedicareCardNumber ;';
 
 $stmt = $conn->prepare($sql);  
