@@ -1242,16 +1242,16 @@ insert into Schedule (`Date`,isCancelled,startTime,endTime) values
 
 
 insert into Has_Schedule (ScheduleID, FacilityID,MedicareCardNumber) values
-(LAST_INSERT_ID(),1,'chnb68073100'),
-(LAST_INSERT_ID()-1,1,'ddrh96552400'),
-(LAST_INSERT_ID()-2,1,'sonr94506600'),
-(LAST_INSERT_ID()-3,1,'socq52922600'),
-(LAST_INSERT_ID()-4,1,'tscn83047400'),
-(LAST_INSERT_ID()-5,1,'pzih79804600'),
-(LAST_INSERT_ID()-6,1,'udzr21294300'),
-(LAST_INSERT_ID()-7,1,'cwmx16384400'),
-(LAST_INSERT_ID()-8,1,'zeqg99658500'),
-(LAST_INSERT_ID()-9,1,'atks99812100');
+(10,1,'chnb68073100'),
+(10-1,1,'ddrh96552400'),
+(10-2,1,'sonr94506600'),
+(10-3,1,'socq52922600'),
+(10-4,1,'tscn83047400'),
+(10-5,1,'pzih79804600'),
+(10-6,1,'udzr21294300'),
+(10-7,1,'cwmx16384400'),
+(10-8,1,'zeqg99658500'),
+(10-9,1,'atks99812100');
 
 
 
@@ -1270,16 +1270,16 @@ insert into Schedule (`Date`,isCancelled,startTime,endTime) values
 
 
 insert into Has_Schedule (ScheduleID, FacilityID,MedicareCardNumber) values
-(LAST_INSERT_ID(),1,'chnb68073100'),
-(LAST_INSERT_ID()-1,1,'chnb68073100'),
-(LAST_INSERT_ID()-2,1,'chnb68073100'),
-(LAST_INSERT_ID()-3,1,'chnb68073100'),
-(LAST_INSERT_ID()-4,1,'chnb68073100'),
-(LAST_INSERT_ID()-5,1,'chnb68073100'),
-(LAST_INSERT_ID()-6,1,'chnb68073100'),
-(LAST_INSERT_ID()-7,1,'chnb68073100'),
-(LAST_INSERT_ID()-8,1,'chnb68073100'),
-(LAST_INSERT_ID()-9,1,'chnb68073100');
+(20,1,'chnb68073100'),
+(20-1,1,'chnb68073100'),
+(20-2,1,'chnb68073100'),
+(20-3,1,'chnb68073100'),
+(20-4,1,'chnb68073100'),
+(20-5,1,'chnb68073100'),
+(20-6,1,'chnb68073100'),
+(20-7,1,'chnb68073100'),
+(20-8,1,'chnb68073100'),
+(20-9,1,'chnb68073100');
 
 
 
