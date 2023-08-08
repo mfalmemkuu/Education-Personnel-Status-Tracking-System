@@ -1117,3 +1117,90 @@ INSERT INTO `infections` (`MedicareCardNumber`, `Date`, `Type`) VALUES
 ('cqro21400322', '2021-08-03', 'covid-19'),
 ('bxpy53909250', '2021-07-30', 'covid-19');
 
+
+
+
+
+insert into Persons (MedicareCardNumber, FirstName, LastName, MedicareExpiryDate, DateOfBirth, TelephoneNumber, Citizenship, PostalCode, EmailAddress) values 
+('chnb68073157', 'Elita', 'Jefford', '2033-03-23', '2006-02-16', '477-682-5353', 'Canadian', 'b3o-7w7', 'ejefford0@prweb.com'),
+('ddrh96552495', 'Vernon', 'Osbaldstone', '2027-08-31', '1979-04-28', '687-859-9983', 'Canadian', 'k3x-5f4', 'vosbaldstone1@examiner.com'),
+('sonr94506633', 'Elna', 'Woollaston', '2030-02-14', '1980-11-30', '456-743-8458', 'Canadian', 'p6w-2h6', 'ewoollaston2@constantcontact.com'),
+('socq52922660', 'Hervey', 'Kohrt', '2025-01-18', '2001-04-03', '658-328-0141', 'Canadian', 'g7r-6f9', 'hkohrt3@e-recht24.de'),
+('tscn83047436', 'Alexandros', 'Meatcher', '2032-09-25', '1980-11-26', '357-675-0317', 'Canadian', 'c0t-4s0', 'ameatcher4@hibu.com'),
+('pzih79804641', 'Nonah', 'Kitcatt', '2030-06-17', '1991-10-06', '999-660-3988', 'Canadian', 'z7c-8l9', 'nkitcatt5@europa.eu'),
+('udzr21294375', 'Richmound', 'Cunniffe', '2027-08-08', '1996-06-16', '684-739-3038', 'Canadian', 'm1g-9k1', 'rcunniffe6@vistaprint.com'),
+('cwmx16384442', 'Janaya', 'Favelle', '2031-03-02', '2002-10-19', '711-254-0760', 'Canadian', 'i1m-8t5', 'jfavelle7@linkedin.com'),
+('zeqg99658583', 'Jenelle', 'Beinke', '2028-05-08', '1980-11-29', '418-700-1920', 'Canadian', 'c1y-1q6', 'jbeinke8@xrea.com'),
+('atks99812156', 'Gonzalo', 'Swin', '2032-02-27', '1987-12-27', '557-729-9702', 'Canadian', 'h2y-4t4', 'gswin9@time.com');
+
+
+insert into Employees (MedicareCardNumber) values 
+('chnb68073157'),
+('ddrh96552495'),
+('sonr94506633'),
+('socq52922660'),
+('tscn83047436'),
+('pzih79804641'),
+('udzr21294375'),
+('cwmx16384442'),
+('zeqg99658583'),
+('atks99812156');
+
+
+insert into Teachers (MedicareCardNumber, Level, Specialisation) values 
+('chnb68073157','highschool', 'french')),
+('ddrh96552495','highschool', 'history')),
+('sonr94506633','highschool', 'history')),
+('socq52922660','highschool', 'economics')),
+('tscn83047436','highschool', 'economics')),
+('pzih79804641','highschool', 'chemistry')),
+('udzr21294375','highschool', 'chemistry')),
+('cwmx16384442','highschool', 'physical education')),
+('zeqg99658583','highschool', 'physical education')),
+('atks99812156','highschool', 'french'));
+
+
+
+insert into Works_at (MedicareCardNumber, FacilityID, StartDate, EndDate, Role) values 
+('chnb68073157',1, '2020-10-04', null, 'counselor'),
+('ddrh96552495',1, '2020-10-04', null, 'counselor'),
+('sonr94506633',1, '2020-10-04', null, 'counselor'),
+('socq52922660',1, '2020-10-04', null, 'counselor'),
+('tscn83047436',1, '2020-10-04', null, 'counselor'),
+('pzih79804641',1, '2020-10-04', null, 'counselor'),
+('udzr21294375',1, '2020-10-04', null, 'counselor'),
+('cwmx16384442',1, '2020-10-04', null, 'counselor'),
+('zeqg99658583',1, '2020-10-04', null, 'counselor'),
+('atks99812156',1, '2020-10-04', null, 'counselor');
+
+INSERT INTO `infections` (`MedicareCardNumber`, `Date`, `Type`) VALUES
+('chnb68073157', '2023-08-02', 'covid-19'),
+('ddrh96552495', '2023-08-02', 'covid-19'),
+('sonr94506633', '2023-08-02', 'covid-19'),
+('socq52922660', '2023-08-02', 'covid-19'),
+('tscn83047436', '2023-08-02', 'covid-19'),
+('pzih79804641', '2023-08-02', 'covid-19'),
+('udzr21294375', '2023-08-02', 'covid-19'),
+('cwmx16384442', '2023-08-02', 'covid-19'),
+('zeqg99658583', '2023-08-02', 'covid-19'),
+('atks99812156', '2023-08-02', 'covid-19'),
+('chnb68073157', '2022-08-02', 'covid-19'),
+('ddrh96552495', '2022-08-02', 'covid-19'),
+('sonr94506633', '2022-08-02', 'covid-19'),
+('socq52922660', '2022-08-02', 'covid-19'),
+('tscn83047436', '2022-08-02', 'covid-19'),
+('pzih79804641', '2022-08-02', 'covid-19'),
+('udzr21294375', '2022-08-02', 'covid-19'),
+('cwmx16384442', '2022-08-02', 'covid-19'),
+('zeqg99658583', '2022-08-02', 'covid-19'),
+('atks99812156', '2022-08-02', 'covid-19'),
+('chnb68073157', '2021-08-02', 'covid-19'),
+('ddrh96552495', '2021-08-02', 'covid-19'),
+('sonr94506633', '2021-08-02', 'covid-19'),
+('socq52922660', '2021-08-02', 'covid-19'),
+('tscn83047436', '2021-08-02', 'covid-19'),
+('pzih79804641', '2021-08-02', 'covid-19'),
+('udzr21294375', '2021-08-02', 'covid-19'),
+('cwmx16384442', '2021-08-02', 'covid-19'),
+('zeqg99658583', '2021-08-02', 'covid-19'),
+('atks99812156', '2021-08-02', 'covid-19');
