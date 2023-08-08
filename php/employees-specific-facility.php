@@ -1,4 +1,71 @@
+<br><h2>Employee Details for Facility "<?= $_POST['Name'] ?>":</h2>
+
 <?php
+require_once './database.php';
+
+$sql = "SELECT p.FirstName, p.LastName, wa.StartDate AS StartDateOfWork, p.DateOfBirth, p.MedicareCardNumber, p.TelephoneNumber, ap.Address, ap.City, ap.Province, p.PostalCode, p.Citizenship, p.EmailAddress
+    FROM employees e, facilities f, works_at wa, persons p, addresses_persons ap
+    WHERE (f.Name = :Name)
+    AND f.FacilityID = wa.FacilityID
+    AND wa.MedicareCardNumber = e.MedicareCardNumber 
+    AND e.MedicareCardNumber = p.MedicareCardNumber
+    AND p.PostalCode = ap.PostalCode
+    AND wa.EndDate IS NULL
+    ORDER BY wa.Role, p.FirstName, p.LastName;";
+
+$stmt = $conn->prepare($sql);  
+
+$stmt->bindParam(':Name', $_POST['Name']);
+    
+
+$stmt->execute();
+
+?>
+
+<br>
+<table>
+  <thead>
+      <tr>
+        <th>FirstName</th>        
+        <th>LastName</th>
+        <th>StartDateOfWork</th>
+        <th>DateOfBirth</th>
+        <th>MedicareCardNumber</th>
+        <th>TelephoneNumber</th>
+        <th>Address</th>
+        <th>City</th>
+        <th>Province</th>
+        <th>PostalCode</th>
+        <th>Citizenship</th>
+        <th>Email</th>
+  </thead>
+  <tbody>
+    <?php  while($row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT)) { ?>
+    <tr>
+      <td><?= $row["FirstName"] ?></td>      
+      <td><?= $row["LastName"] ?></td>
+      <td><?= $row["StartDateOfWork"] ?></td>
+      <td><?= $row["DateOfBirth"] ?></td>
+      <td><?= $row["MedicareCardNumber"] ?></td>
+      <td><?= $row["TelephoneNumber"] ?></td>
+      <td><?= $row["Address"] ?></td>
+      <td><?= $row["City"] ?></td>
+      <td><?= $row["Province"] ?></td>      
+      <td><?= $row["PostalCode"] ?></td>
+      <td><?= $row["Citizenship"] ?></td>
+      <td><?= $row["EmailAddress"] ?></td>
+    </tr>
+    <?php  } ?>
+  </tbody>
+</table>
+    <br>
+    
+
+
+
+<?php
+
+/*
 echo "<br><h3>Employee Details for Specific Facility:</h3>";
 
 echo "<table style='border: solid 1px black;'>";
@@ -81,5 +148,10 @@ break_free_of_try:
 //close connection once done
 $conn = null;
 echo "</table>";
+*/
+
 require_once("index.php");
+
+
+
 ?>

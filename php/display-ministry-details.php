@@ -1,4 +1,55 @@
+<br><h2>Ministry Details:</h2>
+
 <?php
+require_once './database.php';
+
+$sql = "SELECT p.FirstName AS MinisterFirstName, p.LastName AS MinisterLastName,
+ap.City AS MinisterCity,
+COUNT(DISTINCT mf.FacilityID) AS TotalManagementFacilities,
+COUNT(DISTINCT ef.FacilityID) AS TotalEducationalFacilities
+FROM Ministries m
+INNER JOIN Employees e ON m.MinistryID = e.MedicareCardNumber
+INNER JOIN Persons p ON e.MedicareCardNumber = p.MedicareCardNumber
+INNER JOIN Addresses_persons ap ON p.PostalCode = ap.PostalCode
+LEFT JOIN ManagementFacilities mf ON m.MinistryID = mf.PresidentMedicareNumber
+LEFT JOIN EducationalFacilities ef ON m.MinistryID = ef.PrincipalMedicareNumber
+GROUP BY MinisterFirstName, MinisterLastName, MinisterCity
+ORDER BY ap.City ASC, TotalManagementFacilities DESC;";
+
+$stmt = $conn->prepare($sql);  
+   
+
+$stmt->execute();
+
+?>
+
+<br>
+<table>
+  <thead>
+      <tr>
+        <th>MinisterFirstName</th>        
+        <th>MinisterLastName</th>
+        <th>MinisterCity</th>
+        <th>TotalManagementFacilities</th>
+        <th>TotalEducationalFacilities</th>
+  </thead>
+  <tbody>
+    <?php  while($row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT)) { ?>
+    <tr>
+      <td><?= $row["MinisterFirstName"] ?></td>      
+      <td><?= $row["MinisterLastName"] ?></td>
+      <td><?= $row["MinisterCity"] ?></td>
+      <td><?= $row["TotalManagementFacilities"] ?></td>
+      <td><?= $row["TotalEducationalFacilities"] ?></td>
+    </tr>
+    <?php  } ?>
+  </tbody>
+</table>
+    <br>
+    
+
+<?php
+/*
 echo "<br><h3>Ministry Details:</h3>";
 
 echo "<table style='border: solid 1px black;'>";
@@ -73,5 +124,6 @@ try {
 //close connection once done
 $conn = null;
 echo "</table>";
+*/
 require_once("index.php");
 ?>

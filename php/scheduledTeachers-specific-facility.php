@@ -1,4 +1,52 @@
+
+<br><h2>Scheduled Teachers for the last two weeks for "<?= $_POST['Name'] ?>": </h2>
+
 <?php
+require_once './database.php';
+
+$sql = "SELECT p.FirstName, p.LastName , t.Level 
+FROM Teachers t, Persons p, Facilities f, Has_schedule hs, Works_at wa, Schedule s
+WHERE f.Name = :Name AND p.MedicareCardNumber = t.MedicareCardNumber
+AND hs.MedicareCardNumber = t.MedicareCardNumber AND wa.MedicareCardNumber = t.MedicareCardNumber
+AND wa.FacilityID = f.FacilityID AND hs.FacilityID = f.FacilityID
+AND s.ScheduleID =hs.ScheduleID AND s.StartTime >= DATE_SUB(NOW(), INTERVAL 2 WEEK)
+AND s.IsCancelled = false;";
+
+$stmt = $conn->prepare($sql);  
+
+$stmt->bindParam(':Name', $_POST['Name']);
+    
+
+$stmt->execute();
+
+?>
+
+<br>
+<table>
+  <thead>
+      <tr>
+        <th>FirstName</th>        
+        <th>LastName</th>
+        <th>Teaching Level</th>
+  </thead>
+  <tbody>
+    <?php  while($row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT)) { ?>
+    <tr>
+      <td><?= $row["FirstName"] ?></td>      
+      <td><?= $row["LastName"] ?></td>
+      <td><?= $row["Level"] ?></td>
+    </tr>
+    <?php  } ?>
+  </tbody>
+</table>
+    <br>
+    
+
+
+
+<?php
+
+/*
 echo "<br><h3>Scheduled Teachers for the past two weeks:</h3>";
 
 echo "<table style='border: solid 1px black;'>";
@@ -77,5 +125,7 @@ break_free_of_try:
 //close connection once done
 $conn = null;
 echo "</table>";
+
+*/
 require_once("index.php");
 ?>
