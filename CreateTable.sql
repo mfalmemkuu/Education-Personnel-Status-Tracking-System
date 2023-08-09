@@ -144,9 +144,9 @@ CREATE TABLE Registered_At(
 CREATE TABLE Schedule(
     ScheduleID int NOT NULL AUTO_INCREMENT,
     `Date` date,
-    isCancelled boolean,
-    startTime time,
-    endTime time,
+    IsCancelled boolean,
+    StartTime time,
+    EndTime time,
     PRIMARY KEY (ScheduleID),
 	CONSTRAINT check_time CHECK(startTime<endTime)
 );
@@ -160,10 +160,10 @@ CREATE TABLE Has_Schedule(
 
 CREATE TABLE Email_Log(
     LogID int NOT NULL AUTO_INCREMENT,
-    subject VARCHAR(255),
-    sender VARCHAR(255),
-    receiver VARCHAR(255),
-    `date` date,
+    Subject VARCHAR(255),
+    Sender VARCHAR(255),
+    Receiver VARCHAR(255),
+    `Date` date,
     body VARCHAR(255),
     PRIMARY KEY(LogID)
 );
