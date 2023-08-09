@@ -14,7 +14,7 @@ $stmt->execute();
 
 ?>
 <!-- search for student input - result makes us focus to the student in the list -->
-<form action="./student-r-one.php">
+<form action="./student-r-one.php" method="get">
   Search Student by MedicareCardNumber: <input type="text" name="MedicareCardNumber">
   <input type="submit">
 </form>
