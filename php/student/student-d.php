@@ -1,8 +1,7 @@
-
 <?php
 require_once '../database.php';
 
-$sql5 = "DELETE FROM Registered_At WHERE MedicareCardNumber =:MedicareCardNumber ;";
+$sql7 = "DELETE FROM Registered_At WHERE MedicareCardNumber =:MedicareCardNumber ;";
 
 $reg_at = $conn->prepare($sql7);
 $reg_at->bindParam(':MedicareCardNumber', $_GET['MedicareCardNumber']);

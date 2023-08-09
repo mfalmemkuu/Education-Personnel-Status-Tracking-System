@@ -1,12 +1,12 @@
 <?php require_once '../database.php';
 
-if (isset($_POST["MedicareCardNumber"]) && isset($_POST["FirstName"]) && isset($_POST["LastName"]) && isset($_POST["MedicareExpiryDate"]) && isset($_POST["DateOfBirth"]) && isset($_POST["TelephoneNumber"]) && isset($_POST["Citizenship"]) && isset($_POST["PostalCode"]) && isset($_POST["EmailAddress"])) {
+if (isset($_POST["MedicareCardNumber"]) && isset($_POST["FirstName"]) && isset($_POST["LastName"]) &&
+    isset($_POST["MedicareExpiryDate"]) && isset($_POST["DateOfBirth"]) && isset($_POST["TelephoneNumber"]) &&
+    isset($_POST["Citizenship"]) && isset($_POST["PostalCode"]) && isset($_POST["EmailAddress"]) && isset($_POST["FacilityID"]) && isset($_POST["StartDate"]) && isset($_POST["Role"])) {
 
     // First, add the person details to the Persons table
-    $person = $conn->prepare("INSERT INTO Persons (MedicareCardNumber, FirstName, LastName, MedicareExpiryDate, 
-        DateOfBirth, TelephoneNumber, Citizenship, PostalCode, EmailAddress)
-        VALUES(:MedicareCardNumber, :FirstName, :LastName, :MedicareExpiryDate, :DateOfBirth, :TelephoneNumber, 
-        :Citizenship, :PostalCode, :EmailAddress);");
+    $person = $conn->prepare("INSERT INTO Persons (MedicareCardNumber, FirstName, LastName, MedicareExpiryDate, DateOfBirth, TelephoneNumber, Citizenship, PostalCode, EmailAddress)
+        VALUES(:MedicareCardNumber, :FirstName, :LastName, :MedicareExpiryDate, :DateOfBirth, :TelephoneNumber, :Citizenship, :PostalCode, :EmailAddress);");
 
     $person->bindParam(':MedicareCardNumber', $_POST["MedicareCardNumber"]);
     $person->bindParam(':FirstName', $_POST["FirstName"]);
@@ -21,13 +21,24 @@ if (isset($_POST["MedicareCardNumber"]) && isset($_POST["FirstName"]) && isset($
     if ($person->execute()) {
         
         $employee = $conn->prepare("INSERT INTO Employees (MedicareCardNumber)
-        VALUES(:MedicareCardNumber);");
+            VALUES(:MedicareCardNumber);");
 
         $employee->bindParam(':MedicareCardNumber', $_POST["MedicareCardNumber"]);
 
-        if ($employee->execute()) {
-            header("Location: ./index.php"); // Redirect after successful insertion
-            exit; // Terminate the script after the redirection
+        if ($employee->execute()) { 
+            $works_at = $conn->prepare("INSERT INTO Works_At(MedicareCardNumber, FacilityID, StartDate, Role)
+                                    VALUES(:MedicareCardNumber, :FacilityID, :StartDate, :Role);");
+            $works_at->bindParam(':MedicareCardNumber',$_POST["MedicareCardNumber"]);
+            $works_at->bindParam(':FacilityID', $_POST["FacilityID"]);
+            $works_at->bindParam(':StartDate', $_POST["StartDate"]);
+            $works_at->bindParam(':Role', $_POST["Role"]);
+            if($works_at->execute()){
+                header("Location: ./index.php"); 
+                exit;   
+            }
+            else{
+                echo "error adding works at";
+            }
         } else {
             echo "Error adding employee.";
         }
@@ -47,12 +58,18 @@ if (isset($_POST["MedicareCardNumber"]) && isset($_POST["FirstName"]) && isset($
 <body>
     <h1>Add an Employee</h1>
     <form action="./create-view.php" method="post">
-        <label for="MedicareCardNumber">Medicare Number: </label>
+        <label for="MedicareCardNumber">Medicare card: </label>
         <input type="text" name="MedicareCardNumber" id="MedicareCardNumber"> <br>
         <label for="FirstName">First Name: </label>
         <input type="text" name="FirstName" id="FirstName"> <br>
         <label for="LastName">Last Name: </label>
         <input type="text" name="LastName" id="LastName"> <br>
+        <label for="FacilityID">FacilityID: </label>
+        <input type="number" name="FacilityID" id="FacilityID"> <br>
+        <label for="Role">Role: </label>
+        <input type="text" name="Role" id="Role"> <br>
+        <label for="StartDate">Start Date: </label>
+        <input type="date" name="StartDate" id="StartDate"> <br>
         <label for="MedicareExpiryDate">Medicare expiry date: </label>
         <input type="date" name="MedicareExpiryDate" id="MedicareExpiryDate"> <br>
         <label for="DateOfBirth">Date of Birth: </label>
