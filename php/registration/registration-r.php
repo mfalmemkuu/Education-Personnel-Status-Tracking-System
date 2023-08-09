@@ -43,5 +43,5 @@ $stmt->execute();
   </tbody>
 </table>
     <br>
-    <a href="../registration/index.php">Back to Registrations</a>
+
 

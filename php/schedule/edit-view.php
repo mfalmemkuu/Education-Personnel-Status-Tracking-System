@@ -4,11 +4,10 @@
 
     <h1>Edit Schedule</h1>
     <form action="schedule-u.php">
-        FOR Schedule ID: <input type="text" value="<?php $_REQUEST['scheduleID']; ?>" name="scheduleID" disabled><br>
+        <!--FOR Schedule ID: <input type="text" value="<?php $_REQUEST['scheduleID']; ?>" name="scheduleID" disabled><br>-->
         <br>
-        Date: <input type="date" name="sDate"><br>
-        Start Time: <input type="date" name="startTime"><br>
-        End Time: <input type="date" name="endTime"><br>
+        FacilityID: <input type="text" name="FacilityID"><br>
+        MedicareCardNumber: <input type="text" name="MedicareCardNumber"><br>
         Is the schedule cancelled? 
         <select name="isCancelled" required>
             <option value="false">No</option>
