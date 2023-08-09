@@ -184,10 +184,10 @@ CREATE TABLE Email_Sent(
 -- Prevents an employee that is not vaccinated in the last 6 months from being assigned a schedule
 delimiter //
 CREATE TRIGGER EmployeeHasVaccineTrigger
-BEFORE insert ON has_schedule 
+BEFORE insert ON Has_Schedule 
 FOR EACH ROW
 begin 
-	if 0 = (select count(*) from Vaccinations v where v.MedicareCardNumber = new.MedicareCardNumber and v.`Date` >= date_sub((select s.`Date` from schedule s where s.ScheduleID = new.ScheduleID), interval  6 month))
+	if 0 = (select count(*) from Vaccinations v where v.MedicareCardNumber = new.MedicareCardNumber and v.`Date` >= date_sub((select s.`Date` from Schedule s where s.ScheduleID = new.ScheduleID), interval  6 month))
 	then 
 		SIGNAL SQLSTATE '45000'
 		SET MESSAGE_TEXT = "Employee has not been vaccinated in the last 6 months.";
@@ -199,30 +199,30 @@ end
 -- When a teacher becomes infected, an email is sent to the principal and its assigned schedules are cancelled.
 delimiter //
 CREATE TRIGGER TeacherInfectionsTrigger
-AFTER insert ON infections 
+AFTER insert ON Infections 
 for each row
 begin 
 	declare facility_id int;
 	declare principal_email varchar(255);
 	declare teacher_name varchar(255);
 	
-	if 0<(select count(*) from teachers t where t.MedicareCardNumber = new.MedicareCardNumber)
+	if 0<(select count(*) from Teachers t where t.MedicareCardNumber = new.MedicareCardNumber)
 	then
-		update schedule 
+		update Schedule 
 		set isCancelled = true 
-		where ScheduleID in (Select s.ScheduleID from Has_schedule hs join schedule s on hs.ScheduleID = s.ScheduleID
+		where ScheduleID in (Select s.ScheduleID from Has_Schedule hs join Schedule s on hs.ScheduleID = s.ScheduleID
 		where hs.MedicareCardNumber = new.MedicareCardNumber and s.`Date` <= date_add(curdate(), interval 2 week)
 		and s.`Date` >= curdate() 
-		and hs.MedicareCardNumber in (select t.MedicareCardNumber from teachers t));
+		and hs.MedicareCardNumber in (select t.MedicareCardNumber from Teachers t));
 
-	set @facility_id := (select wa.FacilityID from works_at wa where wa.MedicareCardNumber = new.MedicareCardNumber and wa.EndDate is null limit 1);
-	set @principal_email := (select p.EmailAddress from educationalfacilities e join persons p on e.PrincipalMedicareNumber = p.MedicareCardNumber where e.FacilityID = (select @facility_id));	
-	set @teacher_name := (select concat(concat(p.FirstName ," "),p.LastName) from persons p where p.MedicareCardNumber=new.MedicareCardNumber);
+	set @facility_id := (select wa.FacilityID from Works_At wa where wa.MedicareCardNumber = new.MedicareCardNumber and wa.EndDate is null limit 1);
+	set @principal_email := (select p.EmailAddress from Educationalfacilities e join Persons p on e.PrincipalMedicareNumber = p.MedicareCardNumber where e.FacilityID = (select @facility_id));	
+	set @teacher_name := (select concat(concat(p.FirstName ," "),p.LastName) from Persons p where p.MedicareCardNumber=new.MedicareCardNumber);
 
 
-	insert into email_log(subject,sender,receiver,`date`,body) values("Warning",(select f.Name from facilities f where f.FacilityID=(select @facility_id)),(select @principal_email),current_date(),LEFT(concat((select @teacher_name), concat(" who teaches in your school has been infected with ",concat(new.`type`,concat(" on ",concat(dayofmonth(new.`Date`) ,concat(", ",concat(monthname(new.`Date`) ,concat(", ",year(new.`Date`))))))))),80));
+	insert into Email_Log(subject,sender,receiver,`date`,body) values("Warning",(select f.Name from Facilities f where f.FacilityID=(select @facility_id)),(select @principal_email),current_date(),LEFT(concat((select @teacher_name), concat(" who teaches in your school has been infected with ",concat(new.`type`,concat(" on ",concat(dayofmonth(new.`Date`) ,concat(", ",concat(monthname(new.`Date`) ,concat(", ",year(new.`Date`))))))))),80));
 	
-	insert into email_sent(LogID, FacilityID, MedicareCardNumber) values((select LAST_INSERT_ID()), (select @facility_id), new.MedicareCardNumber);
+	insert into Email_Sent(LogID, FacilityID, MedicareCardNumber) values((select LAST_INSERT_ID()), (select @facility_id), new.MedicareCardNumber);
 end if;
 end
 //
@@ -230,22 +230,22 @@ end
 -- When an employee is given a schedule that causes a conflict (less than one hour between schedules), it will be denied.
 delimiter //
 CREATE TRIGGER ScheduleConflictTrigger
-BEFORE insert ON has_schedule 
+BEFORE insert ON Has_Schedule 
 FOR EACH row
 begin 
 	declare start_time time;
 	declare end_time time;
 	declare new_date date;	
 
-	set @start_time := (select s.startTime from schedule s where s.ScheduleID = new.ScheduleID);
-	set @end_time := (select s.endTime from schedule s where s.ScheduleID = new.ScheduleID);
-	set @new_date := (select s.`Date`  from schedule s where s.ScheduleID = new.ScheduleID);
+	set @start_time := (select s.startTime from Schedule s where s.ScheduleID = new.ScheduleID);
+	set @end_time := (select s.endTime from Schedule s where s.ScheduleID = new.ScheduleID);
+	set @new_date := (select s.`Date`  from Schedule s where s.ScheduleID = new.ScheduleID);
 	
-	if (select count(*) from schedule s join has_schedule hs on hs.ScheduleID =s.ScheduleID 
+	if (select count(*) from Schedule s join Has_Schedule hs on hs.ScheduleID =s.ScheduleID 
 where hs.MedicareCardNumber = new.MedicareCardNumber
 and s.`Date` = (select @new_date)) 
 <> 
-(select count(*) from schedule s join has_schedule hs on hs.ScheduleID =s.ScheduleID 
+(select count(*) from Schedule s join Has_Schedule hs on hs.ScheduleID =s.ScheduleID 
 where hs.MedicareCardNumber = new.MedicareCardNumber
 and s.`Date` = (select @new_date)
 and ((timediff((select @start_time),s.endTime)>='01:00:00') or (timediff(s.startTime,(select @end_time))>='01:00:00')))
@@ -268,7 +268,7 @@ begin
 	declare medicare_num char(12) default '';
 	
 	-- Get all medicare Numbers for each employee
-	declare cur cursor for select ra.MedicareCardNumber from registered_at ra where ra.EndDate is null group by ra.MedicareCardNumber;
+	declare cur cursor for select ra.MedicareCardNumber from Registered_At ra where ra.EndDate is null group by ra.MedicareCardNumber;
 	DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = 1;
 
 	OPEN cur;
@@ -306,7 +306,7 @@ begin
 	DECLARE done int default 0;
 	declare schedule_id int;
 
-	declare cur cursor for select s.ScheduleID from schedule s natural join has_schedule hs where hs.MedicareCardNumber = medicare_num and s.`Date` >= (select curdate()+interval 1 day) and s.`Date` <= (select curdate()+interval 6 day) order by s.`Date` desc, s.startTime asc;
+	declare cur cursor for select s.ScheduleID from Schedule s natural join Has_Schedule hs where hs.MedicareCardNumber = medicare_num and s.`Date` >= (select curdate()+interval 1 day) and s.`Date` <= (select curdate()+interval 6 day) order by s.`Date` desc, s.startTime asc;
 	DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = 1;
 
 	-- Get dates
@@ -314,23 +314,23 @@ begin
 	set @end_date := (select curdate()+interval 6 day);
 
 	-- Get sender name
-   	set @sender := (select f.Name  from registered_at ra join facilities f on f.FacilityID = ra.FacilityID  where ra.EndDate is null and ra.MedicareCardNumber = medicare_num);
+   	set @sender := (select f.Name  from Registered_At ra join Facilities f on f.FacilityID = ra.FacilityID  where ra.EndDate is null and ra.MedicareCardNumber = medicare_num);
 		
   	-- Get sender id (facilityID)
-   set @sender_id := (select ra.FacilityID  from registered_at ra where ra.EndDate is null and ra.MedicareCardNumber = medicare_num);
+   set @sender_id := (select ra.FacilityID  from Registered_At ra where ra.EndDate is null and ra.MedicareCardNumber = medicare_num);
    
     -- Get receiver email
-   	set @receiver := (select p.EmailAddress  from persons p where p.MedicareCardNumber = medicare_num);
+   	set @receiver := (select p.EmailAddress  from Persons p where p.MedicareCardNumber = medicare_num);
 	
    -- Get Subject
    	set @subject := concat((select @sender)," Schedule for ",dayname((select @start_date))," ",dayofmonth((select @start_date)),"-",monthname((select @start_date)),"-",year((select @start_date)),
    " to ",dayname((select @end_date))," ",dayofmonth((select @end_date)),"-",monthname((select @end_date)),"-",year((select @end_date)));
 		
   
-  	set @body := concat((select concat("Facility: ",f.Name," located at ",af.Address,", ",af.City,", ",af.Province,".") from registered_at ra natural join facilities f natural join addresses_facilities af where ra.MedicareCardNumber = medicare_num),(select concat(" Employee: ",p.FirstName," ",p.LastName," | ",p.EmailAddress,".") from persons p where p.MedicareCardNumber = medicare_num)," Schedule Status: ");
+  	set @body := concat((select concat("Facility: ",f.Name," located at ",af.Address,", ",af.City,", ",af.Province,".") from Registered_At ra natural join Facilities f natural join Addresses_Facilities af where ra.MedicareCardNumber = medicare_num),(select concat(" Employee: ",p.FirstName," ",p.LastName," | ",p.EmailAddress,".") from Persons p where p.MedicareCardNumber = medicare_num)," Schedule Status: ");
   
   	-- Employee is scheduled next week
-  	if  0 < (select count(*) from schedule s natural join has_schedule hs where hs.MedicareCardNumber = medicare_num and s.`Date` >= (select curdate()+interval 1 day) and s.`Date` <= (select curdate()+interval 6 day))
+  	if  0 < (select count(*) from Schedule s natural join Has_Schedule hs where hs.MedicareCardNumber = medicare_num and s.`Date` >= (select curdate()+interval 1 day) and s.`Date` <= (select curdate()+interval 6 day))
   	then
    	OPEN cur;
 
@@ -341,7 +341,7 @@ begin
       LEAVE read_loop;
     END IF;
   
-   		set @body := concat((select @body)," - ",(select concat(dayname(s.`Date`)," from ",s.startTime," to ",s.endTime," ") from schedule s where s.ScheduleID =schedule_id));
+   		set @body := concat((select @body)," - ",(select concat(dayname(s.`Date`)," from ",s.startTime," to ",s.endTime," ") from Schedule s where s.ScheduleID =schedule_id));
    
    	END LOOP;
 
@@ -355,10 +355,10 @@ begin
   	set @body := left((select @body),80);
   
   	-- Create Email Log Record
- 	insert into email_log (subject,sender,receiver,`date`,body) values ((select @subject),(select @sender),(select @receiver),curdate(),(select @body));
+ 	insert into Email_Log (subject,sender,receiver,`date`,body) values ((select @subject),(select @sender),(select @receiver),curdate(),(select @body));
 
  	-- Create Email Sent Record
- 	insert into email_sent (LogID,FacilityID,MedicareCardNumber) values (LAST_INSERT_ID(),(select @sender_id),medicare_num);
+ 	insert into Email_Sent (LogID,FacilityID,MedicareCardNumber) values (LAST_INSERT_ID(),(select @sender_id),medicare_num);
 end
 //
 
@@ -369,7 +369,7 @@ SET GLOBAL event_scheduler = ON;
 -- Create the event so that schedules are sent by email on every sunday
 delimiter //
 create event if not exists ScheduleEmailsEvent
-on schedule
+on Schedule
 EVERY 1 WEEK
   STARTS CURRENT_DATE + INTERVAL (6 - WEEKDAY(CURRENT_DATE)) day
   do call send_schedules_proc();
