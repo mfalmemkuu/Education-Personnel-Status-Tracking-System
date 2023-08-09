@@ -2,7 +2,8 @@
 require_once '../database.php';
 
 
-$sql = 'SELECT v.MedicareCardNumber, v.Date, v.Type, v.DoseNumber  FROM Vaccinations v;';
+$sql = 'SELECT v.MedicareCardNumber, v.Date, v.Type, v.DoseNumber  
+FROM Vaccinations v;';
 
 $stmt = $conn->prepare($sql);  
     

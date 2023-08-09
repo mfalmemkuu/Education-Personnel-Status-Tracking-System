@@ -5,17 +5,16 @@ $sql = "SELECT s.MedicareCardNumber,CONCAT(p.FirstName, ' ', p.LastName) AS Stud
 FROM Persons p, Facilities f, Registered_At ra, Students s 
 WHERE p.MedicareCardNumber = s.MedicareCardNumber 
 AND s.MedicareCardNumber = ra.MedicareCardNumber 
-AND ra.FacilityID = f.FacilityID ;";
+AND ra.FacilityID = f.FacilityID 
+AND ra.MedicareCardNumber = :MedicareCardNumber;";
 
-$stmt = $conn->prepare($sql);      
+$stmt = $conn->prepare($sql);   
+$stmt->bindParam(":MedicareCardNumber", $_GET["MedicareCardNumber"]);   
 
 $stmt->execute();
 
 ?>
-<form action="./registration-r-one.php" method="post">
-  Search Registration by Student MedicareCardNumber: <input type="text" name="MedicareCardNumber">
-  <input type="submit">
-</form>
+<h1>Displaying One Student Registration</h1>
 <br>
 <table>
   <thead>

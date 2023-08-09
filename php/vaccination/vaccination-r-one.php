@@ -1,7 +1,9 @@
 <?php
 require_once '../database.php';
 
-$sql = 'SELECT v.MedicareCardNumber, v.Date, v.Type, v.DoseNumber  FROM Vaccinations v WHERE v.MedicareCardNumber = :MedicareCardNumber;';
+$sql = 'SELECT v.MedicareCardNumber, v.Date, v.Type, v.DoseNumber  
+FROM Vaccinations v 
+WHERE v.MedicareCardNumber = :MedicareCardNumber;';
 
 $stmt = $conn->prepare($sql);  
 $stmt->bindParam(":MedicareCardNumber", $_GET["MedicareCardNumber"]);

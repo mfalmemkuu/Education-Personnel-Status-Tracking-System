@@ -1,9 +1,9 @@
-
-
 <?php
 require_once '../database.php';
 
-$sql = "DELETE FROM Vaccinations WHERE MedicareCardNumber =:MedicareCardNumber ; ";
+$sql = "DELETE 
+FROM Vaccinations 
+WHERE MedicareCardNumber =:MedicareCardNumber ; ";
 
 $vaccination = $conn->prepare($sql);
 $vaccination->bindParam(':MedicareCardNumber', $_GET['MedicareCardNumber']);

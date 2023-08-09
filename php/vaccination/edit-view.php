@@ -1,8 +1,8 @@
 <?php
 require_once '../database.php';
 
-$statement = $conn->prepare('SELECT v.MedicareCardNumber, v.Date, v.Type, v.DoseNumber  FROM Vaccinations v
-WHERE v.MedicareCardNumber = :MedicareCardNumber;');
+$statement = $conn->prepare("SELECT v.MedicareCardNumber, v.`Date`, v.`Type`, v.DoseNumber  FROM Vaccinations v
+WHERE v.MedicareCardNumber = ':MedicareCardNumber;'");
 $statement->bindParam(":MedicareCardNumber", $_GET["MedicareCardNumber"]);
 $statement->execute();
 $vaccination = $statement->fetch(PDO::FETCH_ASSOC);
@@ -12,8 +12,8 @@ if (isset($_POST["MedicareCardNumber"]) && isset($_POST["Date"]) && isset($_POST
     // First, add the person details to the Persons table
     try {
         $vaccination = $conn->prepare("UPDATE Vaccinations v
-        SET v.`Date` = :Date, v.`Type` = :Type, v.DoseNumber =:DoseNumber
-        WHERE v.MedicareCardNumber = :MedicareCardNumber; ");
+        SET v.`Date` = :Date, v.`Type` = ':Type', v.DoseNumber =':DoseNumber'
+        WHERE v.MedicareCardNumber = ':MedicareCardNumber'; ");
     
         $vaccination->bindParam(':MedicareCardNumber',$_POST["MedicareCardNumber"]);
         $vaccination->bindParam(':Date',$_POST["Date"]);

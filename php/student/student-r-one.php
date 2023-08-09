@@ -6,7 +6,8 @@ require_once '../database.php';
 $sql = 'SELECT p.MedicareCardNumber, p.FirstName, p.LastName, s.CurrentLevel, p.MedicareExpiryDate
 , p.DateOfBirth, p.TelephoneNumber, p.Citizenship, p.PostalCode, p.EmailAddress
 FROM Students s, Persons p
-WHERE s.MedicareCardNumber = p.MedicareCardNumber AND s.MedicareCardNumber = :MedicareCardNumber;';
+WHERE s.MedicareCardNumber = p.MedicareCardNumber 
+AND s.MedicareCardNumber = :MedicareCardNumber;';
 
 $stmt = $conn->prepare($sql);  
 $stmt->bindParam(":MedicareCardNumber", $_GET["MedicareCardNumber"]);

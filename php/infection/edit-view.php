@@ -1,8 +1,8 @@
 <?php
 require_once '../database.php';
 
-$statement = $conn->prepare('SELECT i.MedicareCardNumber, i.Date, i.Type  FROM Infections i
-WHERE i.MedicareCardNumber = :MedicareCardNumber;');
+$statement = $conn->prepare("SELECT i.MedicareCardNumber, i.Date, i.Type  FROM Infections i
+WHERE i.MedicareCardNumber = ':MedicareCardNumber;'");
 $statement->bindParam(":MedicareCardNumber", $_GET["MedicareCardNumber"]);
 $statement->execute();
 $infection = $statement->fetch(PDO::FETCH_ASSOC);

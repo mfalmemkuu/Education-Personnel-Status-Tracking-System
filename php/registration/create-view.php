@@ -1,7 +1,6 @@
 <?php require_once '../database.php';
 
-if (isset($_POST["MedicareCardNumber"]) && isset($_POST["FacilityID"]) && isset($_POST["StartDate"]) &&
-    isset($_POST["EndDate"])) {
+if (isset($_POST["MedicareCardNumber"]) && isset($_POST["FacilityID"]) && isset($_POST["StartDate"]) && isset($_POST["EndDate"])) {
 
     // First, add the person details to the Persons table
     $reg = $conn->prepare("INSERT INTO Registered_at (MedicareCardNumber, FacilityID, StartDate, EndDate)
@@ -15,6 +14,9 @@ if (isset($_POST["MedicareCardNumber"]) && isset($_POST["FacilityID"]) && isset(
     if($reg->execute()) {
         header("Location: ../registration/index.php"); 
     }
+    else {
+        echo "Error registering student.";
+    }
 }
 
 ?>
@@ -24,7 +26,7 @@ if (isset($_POST["MedicareCardNumber"]) && isset($_POST["FacilityID"]) && isset(
 <body>
 
     <h1>Add a Student Registration</h1>
-    <form action="create-view.php">
+    <form action="create-view.php" method="post">
         Medicare Number: <input type="text" name="MedicareCardNumber"><br>
         FacilityID: <input type="text" name="FacilityID"><br>
         Start Date: <input type="date" name="StartDate"><br>
