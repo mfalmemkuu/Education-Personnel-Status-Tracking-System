@@ -38,7 +38,7 @@ $stmt->execute();
       <td><?= $row["FacilityID"] ?></td>
       <!-- ADD ANOTHER ACTION FOR ASSIGNING SCHEDULE, WILL GRAB THE SCHEDULE ID FOR HAS_SCHEDULE -->
       <td>
-        <a href="./edit-view.php?MedicareCardNumber=<?= $row["MedicareCardNumber"] ?>">Edit</a> <br>
+        <a href="./edit-view.php?MedicareCardNumber=<?= $row["MedicareCardNumber"] ?>">Edit</a>&nbsp;
         <a href="./registration-d.php?MedicareCardNumber=<?= $row["MedicareCardNumber"] ?>">Delete</a>
       </td>
     </tr>

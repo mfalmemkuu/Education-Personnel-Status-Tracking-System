@@ -1,4 +1,5 @@
 <?php
+/*
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -61,5 +62,5 @@ break_free_of_try:
 //close connection once done
 $conn = null;
 //call main php page
-require_once("index.php");
+require_once("index.php");*/
 ?>

@@ -1,6 +1,67 @@
+<?php require_once '../database.php';
+
+//ministries
+
+//facilities
+
+//education facilities
+$edfacility = $conn->prepare("SELECT e.FacilityID, f.Name, CONCAT(p.FirstName, ' ', p.LastName) AS Principal_name, f.WebAddress, f.Capacity, f.PostalCode, f.PhoneNumber
+FROM facilities f
+JOIN educationalfacilities e ON e.FacilityID = f.FacilityID
+JOIN persons p ON e.PrincipalMedicareNumber = p.MedicareCardNumber
+JOIN works_at wa ON f.FacilityID = wa.FacilityID
+AND e.PrincipalMedicareNumber = wa.MedicareCardNumber;");
+
+$edfacility->execute();
+?>
+<form action="./student-r-one.php">
+  Search Student by MedicareCardNumber: <input type="text" name="MedicareCardNumber">
+  <input type="submit">
+</form>
+
+<br>
+<table>
+  <thead>
+      <tr>
+        <th>FacilityID</th>        
+        <th>Name</th>
+        <th>Lastname</th>
+        <th>CurrentGradeLevel</th>
+        <th>MedicareExpiryDate</th>
+        <th>DateOfBirth</th>
+        <th>TelephoneNumber</th>
+        <th>Citizenship</th>
+        <th>PostalCode</th>
+        <th>Email</th>
+        <th>Actions</th>
+  </thead>
+  <tbody>
+    <?php  while($row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT)) { ?>
+    <tr>
+      <td><?= $row["FacilityID"] ?></td>      
+      <td><?= $row["FirstName"] ?></td>
+      <td><?= $row["Name"] ?></td>
+      <td><?= $row["CurrentLevel"] ?></td>
+      <td><?= $row["MedicareExpiryDate"] ?></td>
+      <td><?= $row["DateOfBirth"] ?></td>
+      <td><?= $row["TelephoneNumber"] ?></td>
+      <td><?= $row["Citizenship"] ?></td>
+      <td><?= $row["PostalCode"] ?></td>
+      <td><?= $row["EmailAddress"] ?></td>
+      <td>
+        <a href="./edit-view.php?MedicareCardNumber=<?= $row["MedicareCardNumber"] ?>">Edit</a>&nbsp;
+        <a href="./student-d.php?MedicareCardNumber=<?= $row["MedicareCardNumber"] ?>">Delete</a>
+      </td>
+    </tr>
+    <?php  } ?>
+  </tbody>
+</table>
+    <br>
+    
+
 <?php
 
-
+/*
 echo "<table style='border: solid 1px black;'>";
 echo "<tr><th>FacilityID</th><th>Name</th><th>WebAddress</th><th>Capacity</th><th>PostalCode</th><th>DateOfBirth</th><th>PhoneNumber</th><th>MinistryName</th></tr>";
 
@@ -68,4 +129,5 @@ try {
 //close connection once done
 $conn = null;
 echo "</table>";
+*/
 ?>

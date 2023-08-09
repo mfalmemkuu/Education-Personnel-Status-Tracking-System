@@ -1,4 +1,5 @@
 <?php
+/*
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -52,4 +53,5 @@ break_free_of_try:
 
 //close connection once done
 $conn = null;
+*/
 ?>

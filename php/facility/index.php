@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <body>
-    <h1>List of Facilities</h1>
+    <h1>List of Facilities and related entities</h1>
     <a href="create-view.php">Create a Facility</a>
     <br><br>
     <?php
