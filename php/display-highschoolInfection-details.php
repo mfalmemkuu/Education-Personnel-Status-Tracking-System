@@ -1,33 +1,29 @@
-
 <br><h2>Highschools Infection Details:</h2>
-
 <?php
 require_once './database.php';
 
 
-$sql = "SELECT 
-af.Province AS HighSchoolProvince,
+$sql = "SELECT af.Province AS HighSchoolProvince,
 f.Name AS HighSchoolName,
 f.Capacity AS HighSchoolCapacity,
-(SELECT COUNT(DISTINCT t.MedicareCardNumber) 
-FROM Teachers t 
-JOIN Infections i ON t.MedicareCardNumber=i.MedicareCardNumber 
-JOIN Works_At wa ON wa.MedicareCardNumber=t.MedicareCardNumber 
-WHERE wa.FacilityID=h.FacilityID 
-AND i.Date>= (SELECT CURDATE()-INTERVAL 14 DAY) 
-AND UPPER(i.Type) = 'COVID-19') AS Number_Of_Teachers_Infected_In_Past_2_Weeks,
-(SELECT COUNT(DISTINCT s.MedicareCardNumber) 
-FROM Students s 
-JOIN Infections i ON s.MedicareCardNumber=i.MedicareCardNumber 
-JOIN Registered_At ra  ON ra.MedicareCardNumber=s.MedicareCardNumber 
-WHERE ra.FacilityID=h.FacilityID 
-AND i.Date>= (SELECT CURDATE()-INTERVAL 14 DAY) 
-AND UPPER(i.Type) = 'COVID-19') AS Number_Of_Students_Infected_In_Past_2_Weeks
-FROM highschools h 
+  (SELECT COUNT(DISTINCT t.MedicareCardNumber) 
+  FROM Teachers t 
+  JOIN Infections i ON t.MedicareCardNumber=i.MedicareCardNumber 
+  JOIN Works_At wa ON wa.MedicareCardNumber=t.MedicareCardNumber 
+  WHERE wa.FacilityID=h.FacilityID 
+  AND i.Date >= (SELECT CURDATE()-INTERVAL 14 DAY) 
+  AND UPPER(i.`Type`) = 'COVID-19') AS NumberOfTeachersInfectedInPast2Weeks,
+  (SELECT COUNT(DISTINCT s.MedicareCardNumber) 
+  FROM Students s 
+  JOIN Infections i ON s.MedicareCardNumber=i.MedicareCardNumber 
+  JOIN Registered_At ra  ON ra.MedicareCardNumber=s.MedicareCardNumber 
+  WHERE ra.FacilityID=h.FacilityID 
+  AND i.Date>= (SELECT CURDATE()-INTERVAL 14 DAY) 
+  AND UPPER(i.`Type`) = 'COVID-19') AS NumberOfStudentsInfectedInPast2Weeks
+FROM HighSchools h 
 JOIN Facilities f ON h.FacilityID =f.FacilityID 
 JOIN Addresses_Facilities af ON af.PostalCode =f.PostalCode 
-ORDER BY af.Province ASC, Number_Of_Teachers_Infected_In_Past_2_Weeks ASC;
-";
+ORDER BY af.Province ASC, NumberOfTeachersInfectedInPast2Weeks ASC;";
 
 
 $stmt = $conn->prepare($sql);  
@@ -44,8 +40,8 @@ $stmt->execute();
         <th>HighSchoolProvince</th>        
         <th>HighSchoolName</th>
         <th>Capacity</th>
-        <th>Number_Of_Teachers_Infected_In_Past_2_Weeks</th>
-        <th>Number_Of_Students_Infected_In_Past_2_Weeks</th>
+        <th>NumberOfTeachersInfectedInPast2Weeks</th>
+        <th>NumberOfStudentsInfectedInPast2Weeks</th>
   </thead>
   <tbody>
     <?php  while($row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT)) { ?>
@@ -53,8 +49,8 @@ $stmt->execute();
       <td><?= $row["HighSchoolProvince"] ?></td>      
       <td><?= $row["HighSchoolName"] ?></td>
       <td><?= $row["HighSchoolCapacity"] ?></td>
-      <td><?= $row["Number_Of_Teachers_Infected_In_Past_2_Weeks"] ?></td>
-      <td><?= $row["Number_Of_Students_Infected_In_Past_2_Weeks"] ?></td>
+      <td><?= $row["NumberOfTeachersInfectedInPast2Weeks"] ?></td>
+      <td><?= $row["NumberOfStudentsInfectedInPast2Weeks"] ?></td>
     </tr>
     <?php  } ?>
   </tbody>

@@ -15,17 +15,20 @@ try {
 
 try {
 
-$sql = "INSERT INTO Infections(MedicareCardNumber, `DATE`, `Type`)
-VALUES (:medicareCardNumber, :infectionDate, :infectionType);";
+$sql = "INSERT INTO Facilities f(f.Name, WebAddress, Capacity, PostalCode, PhoneNumber)
+VALUES(:fname, :webAddress, :capacity, :postalCode, :phoneNumber);";
 
 //echo "SQL Query: <br>" . $sql;
 
     $query = $conn->prepare($sql);
 
     // Bind parameters to statement
-    $query->bindParam(':medicareCardNumber', $_REQUEST['medicareCardNumber']);
-    $query->bindParam(':infectionDate', $_REQUEST['infectionDate']);
-    $query->bindParam(':infectionType', $_REQUEST['infectionType']);
+    $query->bindParam(':fname', $_REQUEST['fname']);
+    $query->bindParam(':capacity', $_REQUEST['capacity']);
+    $query->bindParam(':PostalCode', $_REQUEST['PostalCode']);
+    $query->bindParam(':phoneNumber', $_REQUEST['phoneNumber']);
+    $query->bindParam(':webaddress', $_REQUEST['webaddress']);
+    
 
 
   // Execute the prepared statement
@@ -37,14 +40,13 @@ VALUES (:medicareCardNumber, :infectionDate, :infectionType);";
     goto break_free_of_try;
   } 
 
-  echo "New infection record created successfully";
+  echo "New facility record created successfully";
 
 
 } catch(PDOException $e) {
   echo "ERROR: Could not execute " . $sql . "<br>" . $e->getMessage();
   goto break_free_of_try;
 }
-
 
 break_free_of_try:
 

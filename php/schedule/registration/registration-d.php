@@ -15,19 +15,19 @@ try {
 
 try {
   
-    $sql = "UPDATE Infections
-    SET `DATE` = :infectionDate, `Type` = :infectionType 
-    WHERE MedicareCardNumber = :medicareCardNumber;    ";
+    $sql = "DELETE FROM Registered_at
+    WHERE MedicareCardNumber = :medicareCardNumber AND FacilityID = :facilityID ; ";
     
     echo "SQL Query: <br>" . $sql;
-
+    
     // Prepare statement
     $query = $conn->prepare($sql);
 
     // Bind parameters to statement
     $query->bindParam(':medicareCardNumber', $_REQUEST['medicareCardNumber']);
-    $query->bindParam(':infectionDate', $_REQUEST['infectionDate']);
-    $query->bindParam(':infectionType', $_REQUEST['infectionType']);
+    $query->bindParam(':facilityID', $_REQUEST['facilityID']);
+    $query->bindParam(':startDate', $_REQUEST['startDate']);
+    $query->bindParam(':endDate', $_REQUEST['endDate']);
     $id = $_REQUEST['medicareCardNumber'];
 
     if($id == null) {
@@ -40,12 +40,11 @@ try {
     //echo $query->rowCount();
             
     if($query->rowCount() == 0 ) {
-        echo "Could not update data for: " . $id . "<br>";
-        //TODO: LIST CONSTRAINTS AND DATA TYPES HERE
+        echo "Could not delete data for: " . $id . "<br>";
         goto break_free_of_try;
     }
   
-    echo "Infections Record UPDATED successfully"; 
+    echo "Registration Record DELETED successfully"; 
 
 
 } catch(PDOException $e) {
@@ -54,29 +53,15 @@ try {
 
 try {
   
-    $sql = "UPDATE Persons p
-    SET p.FirstName =:FirstName,
-    p.LastName =:LastName , p.DateOfBirth =:DateOfBirth,
-    p.TelephoneNumber =:TelephoneNumber, p.Citizenship =:Citizenship, p.PostalCode =:PostalCode,
-    p.EmailAddress =:EmailAddress
-    WHERE p.MedicareCardNumber = :medicareCardNumber;";
+    $sql = "DELETE FROM Persons WHERE MedicareCardNumber =:medicareCardNumber;";
     
     echo "SQL Query: <br>" . $sql;
-
+    
     // Prepare statement
     $query = $conn->prepare($sql);
 
     // Bind parameters to statement
     $query->bindParam(':medicareCardNumber', $_REQUEST['medicareCardNumber']);
-    $query->bindParam(':firstname', $_REQUEST['firstname']);
-    $query->bindParam(':lastname', $_REQUEST['lastname']);
-    $query->bindParam(':medicareExpiryDate', $_REQUEST['medicareExpiryDate']);
-    $query->bindParam(':dateOfBirth', $_REQUEST['dateOfBirth']);
-    $query->bindParam(':telephoneNumber', $_REQUEST['telephoneNumber']);
-    $query->bindParam(':citizenship', $_REQUEST['citizenship']);
-    $query->bindParam(':postalCode', $_REQUEST['postalCode']);
-    $query->bindParam(':email', $_REQUEST['email']);
-
     $id = $_REQUEST['medicareCardNumber'];
 
     if($id == null) {
@@ -89,12 +74,11 @@ try {
     //echo $query->rowCount();
             
     if($query->rowCount() == 0 ) {
-        echo "Could not update data for: " . $id . "<br>";
-        //TODO: LIST CONSTRAINTS AND DATA TYPES HERE
+        echo "Could not delete data for: " . $id . "<br>";
         goto break_free_of_try;
     }
   
-    echo "Person Record UPDATED successfully"; 
+    echo "Person Record DELETED successfully"; 
 
 
 } catch(PDOException $e) {

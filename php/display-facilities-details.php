@@ -1,5 +1,4 @@
 <h2>Facility Details:</h2>
-
 <?php
 require_once './database.php';
 

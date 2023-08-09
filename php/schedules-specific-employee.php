@@ -3,16 +3,27 @@
 <?php
 require_once './database.php';
 
-$sql = "SELECT s.ScheduleID, f.Name, s.Date, s.StartTime, s.EndTime
-FROM Employees e, Has_Schedule hs, Facilities f, Schedule s
-WHERE s.Date >= ':StartTime' 
-AND s.Date <= ':EndTime' 
-AND s.IsCancelled = false
-AND e.MedicareCardNumber = ':MedicareCardNumber'
-AND hs.FacilityID = f.FacilityID
-AND s.ScheduleID = hs.ScheduleID
-AND hs.MedicareCardNumber = e.MedicareCardNumber
-ORDER BY f.Name ASC, s.Date ASC, s.StartTime ASC;";
+$sql = "SELECT s.ScheduleID, f.Name, s.`Date`, s.StartTime, s.EndTime
+FROM Has_Schedule hs, Facilities f, Schedule s, Employees e
+WHERE s.`Date` >= ':StartTime' 
+AND s.`Date` <= ':EndTime' 
+AND s.ScheduleID = hs.ScheduleID 
+AND f.FacilityID = hs.FacilityID 
+AND hs.MedicareCardNumber = ':MedicareCardNumber'
+AND hs.MedicareCardNumber = e.MedicareCardNumber 
+ORDER BY f.Name ASC, s.`Date` ASC, s.StartTime ASC;";
+
+/*
+SELECT s.ScheduleID, f.Name, s.`Date`, s.StartTime, s.EndTime
+FROM Has_Schedule hs, Facilities f, Schedule s, Employees e
+WHERE s.`Date` >= '2020-01-01' 
+AND s.`Date` <= '2024-01-01' 
+AND s.ScheduleID = hs.ScheduleID 
+AND f.FacilityID = hs.FacilityID 
+AND hs.MedicareCardNumber = 'chnb68073100'
+AND hs.MedicareCardNumber = e.MedicareCardNumber 
+ORDER BY f.Name ASC, s.`Date` ASC, s.StartTime ASC;
+*/
 
 $stmt = $conn->prepare($sql);  
 
