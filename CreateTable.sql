@@ -378,7 +378,7 @@ EVERY 1 WEEK
 -- Trigger that prevents a teacher from being scheduled 2 weeks after being infected
 delimiter //
 create trigger TeacherInfectionScheduleTrigger
-before insert on Has_schedule
+before insert on Has_Schedule
 for each row 
 begin 
 	if 0<(select count(*)
