@@ -1,18 +1,17 @@
 <?php
 require_once '../database.php';
 
-$sql = "SELECT s.ScheduleID, s.Date, s.StartTime, s.EndTime, hs.MedicareCardNumber, hs.FacilityID
+$sql = "SELECT s.ScheduleID, s.Date, s.StartTime, s.EndTime, IF(s.IsCancelled,'Yes', 'No') AS IsCancelled, IF(s.IsCancelled,'Yes', 'No') AS IsCancelled, IF(hs.MedicareCardNumber IS NULL, 'Unassigned', hs.MedicareCardNumber) AS MedicareCardNumber, IF(hs.FacilityID IS NULL, 'Unassigned', hs.FacilityID) AS FacilityID
 FROM Schedule s
-LEFT JOIN Has_Schedule hs ON s.ScheduleID = hs.ScheduleID
-WHERE s.IsCancelled = false;";
+LEFT JOIN Has_Schedule hs ON s.ScheduleID = hs.ScheduleID;";
 
 $stmt = $conn->prepare($sql);      
 
 $stmt->execute();
 
 ?>
-<form action="./schedule-r-one.php" method="post">
-  Search Schedule by Employee MedicareCardNumber: <input type="text" name="MedicareCardNumber">
+<form action="./schedule-r-one.php" method="get">
+  Search Schedule by ID: <input type="text" name="ScheduleID">
   <input type="submit">
 </form>
 <br>
@@ -23,6 +22,7 @@ $stmt->execute();
         <th>Date</th>
         <th>StartTime</th>
         <th>EndTime</th>
+        <th>IsCancelled?</th>
         <th>MedicareCardNumber</th>
         <th>FacilityID</th>
         <th>Actions</th>
@@ -34,12 +34,13 @@ $stmt->execute();
       <td><?= $row["Date"] ?></td>
       <td><?= $row["StartTime"] ?></td>
       <td><?= $row["EndTime"] ?></td>
+      <td><?= $row["IsCancelled"] ?></td>
       <td><?= $row["MedicareCardNumber"] ?></td>
       <td><?= $row["FacilityID"] ?></td>
-      <!-- ADD ANOTHER ACTION FOR ASSIGNING SCHEDULE, WILL GRAB THE SCHEDULE ID FOR HAS_SCHEDULE -->
       <td>
-        <a href="./edit-view.php?MedicareCardNumber=<?= $row["MedicareCardNumber"] ?>">Edit</a>&nbsp;
-        <a href="./registration-d.php?MedicareCardNumber=<?= $row["MedicareCardNumber"] ?>">Delete</a>
+        <a href="./create-view.php?ScheduleID=<?= $row["ScheduleID"] ?>">Assign</a>&nbsp;
+        <a href="./edit-view.php?ScheduleID=<?= $row["ScheduleID"] ?>">Edit</a>&nbsp;
+        <a href="./schedule-d.php?ScheduleID=<?= $row["ScheduleID"] ?>">Delete</a>
       </td>
     </tr>
     <?php  } ?>
