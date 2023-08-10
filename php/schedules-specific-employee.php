@@ -3,34 +3,22 @@
 <?php
 require_once './database.php';
 
+
 $sql = "SELECT s.ScheduleID, f.Name, s.`Date`, s.StartTime, s.EndTime
 FROM Has_Schedule hs, Facilities f, Schedule s, Employees e
-WHERE s.`Date` >= ':StartTime' 
-AND s.`Date` <= ':EndTime' 
+WHERE s.`Date` >= :StartTime
+AND s.`Date` <= :EndTime 
 AND s.ScheduleID = hs.ScheduleID 
 AND f.FacilityID = hs.FacilityID 
-AND hs.MedicareCardNumber = ':MedicareCardNumber'
+AND hs.MedicareCardNumber = :MedicareCardNumber
 AND hs.MedicareCardNumber = e.MedicareCardNumber 
 ORDER BY f.Name ASC, s.`Date` ASC, s.StartTime ASC;";
 
-/*
-SELECT s.ScheduleID, f.Name, s.`Date`, s.StartTime, s.EndTime
-FROM Has_Schedule hs, Facilities f, Schedule s, Employees e
-WHERE s.`Date` >= '2020-01-01' 
-AND s.`Date` <= '2024-01-01' 
-AND s.ScheduleID = hs.ScheduleID 
-AND f.FacilityID = hs.FacilityID 
-AND hs.MedicareCardNumber = 'chnb68073100'
-AND hs.MedicareCardNumber = e.MedicareCardNumber 
-ORDER BY f.Name ASC, s.`Date` ASC, s.StartTime ASC;
-*/
-
 $stmt = $conn->prepare($sql);  
 
-$stmt->bindParam(':MedicareCardNumber', $_REQUEST['MedicareCardNumber']);
-$stmt->bindParam(':StartTime', $_REQUEST['StartTime']);
-$stmt->bindParam(':EndTime', $_REQUEST['EndTime']);
-    
+$stmt->bindParam(':MedicareCardNumber', $_POST['MedicareCardNumber']);
+$stmt->bindParam(':StartTime', $_POST['StartTime']);
+$stmt->bindParam(':EndTime', $_POST['EndTime']);
 
 $stmt->execute();
 
