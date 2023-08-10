@@ -2,7 +2,7 @@
 require_once '../database.php';
 if (isset($_POST["FacilityID"]) && isset($_POST["Name"]) && isset($_POST["PrincipalMedicareNumber"]) &&
     isset($_POST["WebAddress"]) && isset($_POST["Capacity"]) && isset($_POST["PostalCode"]) &&
-    isset($_POST["PhoneNumber"])) {
+    isset($_POST["PhoneNumber"]) && isset($_POST["StartDate"])) {
         try {
     $facility = $conn->prepare("INSERT INTO Facilities(FacilityID, Name, WebAddress, Capacity, PostalCode, PhoneNumber)
                                 VALUES(:FacilityID, :Name, :WebAddress, :Capacity, :PostalCode, :PhoneNumber);");
@@ -19,19 +19,35 @@ $facility->bindParam(':PhoneNumber',$_POST["PhoneNumber"]);
 
         $educationalfacility->bindParam(':FacilityID', $_POST["FacilityID"]);
         $educationalfacility->bindParam(':PrincipalMedicareNumber', $_POST["PrincipalMedicareNumber"]);
-        $works_at = $conn->prepare("INSERT INTO Works_at(MedicareCardNumber, FacilityID, StartDate, Role)
+                if ($educationalfacility->execute()) {
+            //header("Location: showeducationalfacility.php"); 
+            //exit; 
+            $works_at = $conn->prepare("INSERT INTO Works_At(MedicareCardNumber, FacilityID, StartDate, Role)
                                     VALUES(:PrincipalMedicareNumber, :FacilityID, :StartDate, 'Principal');");
-        $works_at->bindParam(':PrincipalMedicareNumber',$_POST["PrincipalMedicareNumber"]);
-        $works_at->bindParam(':FacilityID', $_POST["FacilityID"]);
-        $works_at->bindParam(':StartDate', $_POST["StartDate"]);
-        $works_at->execute();
-        if ($educationalfacility->execute()) {
-            header("Location: showeducationalfacility.php"); // Redirect to showstudents.php after successful insertion
-            exit; // Terminate the script after the redirection
-        } else {
+            $works_at->bindParam(':PrincipalMedicareNumber',$_POST["PrincipalMedicareNumber"]);
+            $works_at->bindParam(':FacilityID', $_POST["FacilityID"]);
+            $works_at->bindParam(':StartDate', $_POST["StartDate"]);
+            if($works_at->execute()){
+              $primaryschool = $conn->prepare("INSERT INTO PrimarySchools(FacilityID) 
+              VALUES(:FacilityID);");
+              $primaryschool->bindParam(':FacilityID', $_POST["FacilityID"]);
+              if($primaryschool->execute()){
+                    header("Location: ../facility/index.php"); 
+                    exit; 
+              }
+              else{
+                echo "error adding highschool";
+              }
+            }
+            else{
+                echo "error adding works at";
+            }
+        } 
+        else {
             echo "Error adding educational facility.";
         }
-    } else {
+    } 
+    else {
         echo "Error adding facility.";
     }
 } catch (PDOException $e) {
@@ -40,33 +56,34 @@ $facility->bindParam(':PhoneNumber',$_POST["PhoneNumber"]);
 }
 ?>
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<html>
+    <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>insert educational facility</title>
 </head>
 <body>
-    <h1>Add an educational facility</h1>
-    <form action="./inserteducationalfacility.php" method="post">
-        <label for="FacilityID">FacilityID</label><br>
+
+    <h1>Add a Primary School</h1>
+    <form action="psfacility-create.php" method="post">
+        <label for="Name">FacilityID: </label>
         <input type="number" name="FacilityID" id="FacilityID"> <br>
-        <label for="Name">Name</label><br>
+        <label for="Name">Name: </label>
         <input type="text" name="Name" id="Name"> <br>
-        <label for="PrincipalMedicareNumber">Principal Medicare Number</label><br>
+        <label for="PrincipalMedicareNumber">Principal Medicare Number: </label>
         <input type="text" name="PrincipalMedicareNumber" id="PrincipalMedicareNumber"> <br>
-        <label for="WebAddress">WebAddress</label><br>
+        <label for="WebAddress">Web Address: </label>
         <input type="text" name="WebAddress" id="WebAddress"> <br>
-        <label for="Capacity">Capacity</label><br>
+        <label for="Capacity">Capacity: </label>
         <input type="number" name="Capacity" id="Capacity"> <br>
-        <label for="PostalCode">Postal Code</label><br>
+        <label for="PostalCode">PostalCode: </label>
         <input type="text" name="PostalCode" id="PostalCode"> <br>
-        <label for="PhoneNumber">telephone number</label><br>
+        <label for="PhoneNumber">Phone Number:</label>
         <input type="text" name="PhoneNumber" id="PhoneNumber"> <br>
-        <label for="StartDate">Start Date</label><br>
-        <input type="date" name="StartDate" id="StartDate"> <br>
-        <button type="submit">add</button>
-    </form>
-    <a href="./showeducationalfacility.php">back to educational facilities</a>
+        <label for="StartDate">Principal Start Date: </label>
+        <input type="date" name="StartDate" id="StartDate"> <br><br>
+        <input type="submit">
+    </form><br>
+    <a href="../facility/index.php">Back to Facilities</a>
+
 </body>
 </html>

@@ -1,14 +1,13 @@
 <?php
 require_once '../database.php';
-$edfacility = $conn->prepare("SELECT e.FacilityID, f.Name, CONCAT(p.FirstName, ' ', p.LastName) AS PrincipalName, f.WebAddress, f.Capacity, f.PostalCode, f.PhoneNumber
-FROM facilities f
-JOIN EducationalFacilities e ON e.FacilityID = f.FacilityID
-JOIN Persons p ON e.PrincipalMedicareNumber = p.MedicareCardNumber
-JOIN Works_At wa ON f.FacilityID = wa.FacilityID
-AND e.PrincipalMedicareNumber = wa.MedicareCardNumber
-WHERE f.FacilityID = :FacilityID;");
-$edfacility->bindParam(":FacilityID", $_GET["FacilityID"]);
-$edfacility->execute();
+$stmt = $conn->prepare("SELECT m.FacilityID, f.Name, CONCAT(p.FirstName, ' ', p.LastName) AS PresidentName, f.WebAddress, f.Capacity, f.PostalCode, f.PhoneNumber
+FROM facilities f, managementfacilities m, persons p 
+WHERE m.FacilityID = f.FacilityID 
+AND m.PresidentMedicareNumber = p.MedicareCardNumber 
+AND f.FacilityID = :FacilityID;");
+$stmt->bindParam(":FacilityID", $_GET["FacilityID"]);
+echo "" . $stmt->fetch();
+$stmt->execute();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -17,7 +16,7 @@ $edfacility->execute();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-<h1>Displaying One Educational Facility</h1> <br>
+<h1>Displaying One Management Facility</h1> <br>
 
 
 <table>
@@ -25,7 +24,7 @@ $edfacility->execute();
             <tr>
                 <th>FacilityID</th>
                 <th>Name</th>
-                <th>PrincipalName</th>
+                <th>PresidentName</th>
                 <th>WebAddress</th>
                 <th>Capacity</th>
                 <th>PostalCode</th>
@@ -34,18 +33,18 @@ $edfacility->execute();
             </tr>
         </thead>
         <tbody>
-        <?php while($row = $edfacility->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT)) { ?>
+        <?php while($row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT)) { ?>
             <tr>
                 <td><?= $row["FacilityID"] ?></td>
                 <td><?= $row["Name"] ?></td>
-                <td><?= $row["PrincipalName"] ?></td>
+                <td><?= $row["PresidentName"] ?></td>
                 <td><?= $row["WebAddress"] ?></td>
                 <td><?= $row["Capacity"] ?></td>
                 <td><?= $row["PostalCode"] ?></td>
                 <td><?= $row["PhoneNumber"] ?></td>
                 <td>
-                    <a href="./edfacility-edit.php?FacilityID=<?=$row["FacilityID"] ?>">Edit</a>&nbsp;
-                    <a href="./edfacility-d.php?FacilityID=<?=$row["FacilityID"] ?>">Delete</a>
+                    <a href="./mafacility-edit.php?FacilityID=<?=$row["FacilityID"] ?>">Edit</a>&nbsp;
+                    <a href="./mafacility-d.php?FacilityID=<?=$row["FacilityID"] ?>">Delete</a>
                 </td>
             </tr>
        <?php } ?>

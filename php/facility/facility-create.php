@@ -47,7 +47,3 @@ if( isset($_POST["Name"]) && isset($_POST["WebAddress"])
 
 </body>
 </html>
-
-<?php
-
-?>
