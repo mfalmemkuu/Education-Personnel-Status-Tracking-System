@@ -1131,10 +1131,21 @@ insert into Persons (MedicareCardNumber, FirstName, LastName, MedicareExpiryDate
 ('cwmx16384400', 'Janaya', 'Favelle', '2031-03-02', '2002-10-19', '711-254-0760', 'Canadian', 'i1m-8t5', 'jfavelle7@linkedin.com'),
 ('zeqg99658500', 'Jenelle', 'Beinke', '2028-05-08', '1980-11-29', '418-700-1920', 'Canadian', 'c1y-1q6', 'jbeinke8@xrea.com'),
 ('atks99812100', 'Gonzalo', 'Swin', '2032-02-27', '1987-12-27', '557-729-9702', 'Canadian', 'h2y-4t4', 'gswin9@time.com'),
-('atks99812111', 'Gondalo', 'Swoon', '2032-02-27', '1988-12-27', '547-729-9702', 'Canadian', 'h2y-4t4', 'gswoon9@time.com');
+('btks99812100', 'Gonzala', 'Swin', '2032-02-27', '1987-12-27', '557-729-9702', 'Canadian', 'h2y-4t4', 'gswin9@time.com'),
+('atks99812111', 'Gondalo', 'Swoon', '2032-02-27', '1988-12-27', '547-729-9702', 'Canadian', 'h2y-4t4', 'gswoon9@time.com'),
+('aabb68073100', 'Elitar', 'Jefford', '2033-03-23', '2006-02-16', '477-682-5353', 'Canadian', 'b3o-7w7', 'ejefford0@prweb.com'),
+('aabh96552400', 'Vernono', 'Osbaldstone', '2027-08-31', '1979-04-28', '687-859-9983', 'Canadian', 'k3x-5f4', 'vosbaldstone1@examiner.com'),
+('aabr94506600', 'Elnai', 'Woollaston', '2030-02-14', '1980-11-30', '456-743-8458', 'Canadian', 'p6w-2h6', 'ewoollaston2@constantcontact.com'),
+('aabq52922600', 'Herveyev', 'Kohrt', '2025-01-18', '2001-04-03', '658-328-0141', 'Canadian', 'g7r-6f9', 'hkohrt3@e-recht24.de'),
+('aabn83047400', 'Alexandrosa', 'Meatcher', '2032-09-25', '1980-11-26', '357-675-0317', 'Canadian', 'c0t-4s0', 'ameatcher4@hibu.com');
 
 
 insert into Employees (MedicareCardNumber) values 
+('aabb68073100'),
+('aabh96552400'),
+('aabr94506600'),
+('aabq52922600'),
+('aabn83047400'),
 ('chnb68073100'),
 ('ddrh96552400'),
 ('sonr94506600'),
@@ -1145,6 +1156,7 @@ insert into Employees (MedicareCardNumber) values
 ('cwmx16384400'),
 ('zeqg99658500'),
 ('atks99812100'),
+('btks99812100'),
 ('atks99812111');
 
 
@@ -1159,7 +1171,13 @@ insert into Teachers (MedicareCardNumber, Level, Specialisation) values
 ('cwmx16384400','highschool', 'counselor'),
 ('zeqg99658500','highschool', 'counselor'),
 ('atks99812100','highschool', 'counselor'),
-('atks99812111','highschool', 'counselor');
+('atks99812111','highschool', 'counselor'),
+('btks99812100','highschool', 'counselor'),
+('aabb68073100','highschool', 'math'),
+('aabh96552400','highschool', 'math'),
+('aabr94506600','highschool', 'math'),
+('aabq52922600','highschool', 'math'),
+('aabn83047400','highschool', 'math');
 
 
 
@@ -1174,7 +1192,13 @@ insert into Works_At (MedicareCardNumber, FacilityID, StartDate, EndDate, Role) 
 ('cwmx16384400',1, '2020-10-04', null, 'secondary'),
 ('zeqg99658500',1, '2020-10-04', null, 'secondary'),
 ('atks99812100',1, '2020-10-04', null, 'secondary'),
-('atks99812111',1, '2020-10-04', null, 'secondary');
+('btks99812100',1, '2020-10-04', null, 'secondary'),
+('atks99812111',1, '2020-10-04', null, 'secondary'),
+('aabb68073100',1, '2020-10-04', null, 'secondary'),
+('aabh96552400',1, '2020-10-04', null, 'secondary'),
+('aabr94506600',1, '2020-10-04', null, 'secondary'),
+('aabq52922600',1, '2020-10-04', null, 'secondary'),
+('aabn83047400',1, '2020-10-04', null, 'secondary');
 
 INSERT INTO `Infections` (`MedicareCardNumber`, `Date`, `Type`) VALUES
 ('chnb68073100', '2023-07-02', 'covid-19'),
@@ -1209,6 +1233,8 @@ INSERT INTO `Infections` (`MedicareCardNumber`, `Date`, `Type`) VALUES
 ('udzr21294300', '2021-08-02', 'covid-19'),
 ('cwmx16384400', '2021-08-02', 'covid-19'),
 ('zeqg99658500', '2021-08-02', 'covid-19'),
+('zeqg99658500', '2021-08-02', 'covid-19'),
+('btks99812100', '2023-08-08', 'covid-19'),
 ('atks99812100', '2021-08-02', 'covid-19');
 
 
@@ -1226,7 +1252,12 @@ insert into Vaccinations (MedicareCardNumber,`Date`,`Type`,DoseNumber) values
 ('cwmx16384400','2023-06-01','Pfizer',1),
 ('zeqg99658500','2023-06-01','Pfizer',1),
 ('atks99812100','2023-06-01','Pfizer',1),
-('atks99812111','2023-06-01','Pfizer',1);
+('atks99812111','2023-06-01','Pfizer',1),
+('aabb68073100','2023-06-01','Pfizer',1),
+('aabh96552400','2023-06-01','Pfizer',1),
+('aabr94506600','2023-06-01','Pfizer',1),
+('aabq52922600','2023-06-01','Pfizer',1),
+('aabn83047400','2023-06-01','Pfizer',1);
 
 insert into Schedule (`Date`,isCancelled,startTime,endTime) values
 ('2023-08-08',true,'08:00:00','12:00:00'),
@@ -1238,20 +1269,31 @@ insert into Schedule (`Date`,isCancelled,startTime,endTime) values
 ('2023-08-08',true,'08:00:00','12:00:00'),
 ('2023-08-09',true,'08:00:00','12:00:00'),
 ('2023-08-08',true,'08:00:00','12:00:00'),
+('2023-08-09',true,'08:00:00','12:00:00'),
+('2023-08-09',true,'08:00:00','12:00:00'),
+('2023-08-08',true,'08:00:00','12:00:00'),
+('2023-08-09',true,'08:00:00','12:00:00'),
+('2023-08-08',true,'08:00:00','12:00:00'),
 ('2023-08-09',true,'08:00:00','12:00:00');
 
+insert into Has_Schedule (ScheduleID, FacilityID,MedicareCardNumber) values
+((Select ScheduleID  From Schedule s Order By ScheduleID desc Limit 1)-10,1,'aabb68073100'),
+((Select ScheduleID  From Schedule s Order By ScheduleID desc Limit 1)-11,1,'aabh96552400'),
+((Select ScheduleID  From Schedule s Order By ScheduleID desc Limit 1)-11,1,'aabr94506600'),
+((Select ScheduleID  From Schedule s Order By ScheduleID desc Limit 1)-12,1,'aabq52922600'),
+((Select ScheduleID  From Schedule s Order By ScheduleID desc Limit 1)-13,1,'aabn83047400');
 
 insert into Has_Schedule (ScheduleID, FacilityID,MedicareCardNumber) values
-(10,1,'chnb68073100'),
-(10-1,1,'ddrh96552400'),
-(10-2,1,'sonr94506600'),
-(10-3,1,'socq52922600'),
-(10-4,1,'tscn83047400'),
-(10-5,1,'pzih79804600'),
-(10-6,1,'udzr21294300'),
-(10-7,1,'cwmx16384400'),
-(10-8,1,'zeqg99658500'),
-(10-9,1,'atks99812100');
+((Select ScheduleID  From Schedule s Order By ScheduleID desc Limit 1),1,'chnb68073100'),
+((Select ScheduleID  From Schedule s Order By ScheduleID desc Limit 1)-1,1,'ddrh96552400'),
+((Select ScheduleID  From Schedule s Order By ScheduleID desc Limit 1)-2,1,'sonr94506600'),
+((Select ScheduleID  From Schedule s Order By ScheduleID desc Limit 1)-3,1,'socq52922600'),
+((Select ScheduleID  From Schedule s Order By ScheduleID desc Limit 1)-4,1,'tscn83047400'),
+((Select ScheduleID  From Schedule s Order By ScheduleID desc Limit 1)-5,1,'pzih79804600'),
+((Select ScheduleID  From Schedule s Order By ScheduleID desc Limit 1)-6,1,'udzr21294300'),
+((Select ScheduleID  From Schedule s Order By ScheduleID desc Limit 1)-7,1,'cwmx16384400'),
+((Select ScheduleID  From Schedule s Order By ScheduleID desc Limit 1)-8,1,'zeqg99658500'),
+((Select ScheduleID  From Schedule s Order By ScheduleID desc Limit 1)-9,1,'atks99812100');
 
 
 
@@ -1270,16 +1312,22 @@ insert into Schedule (`Date`,isCancelled,startTime,endTime) values
 
 
 insert into Has_Schedule (ScheduleID, FacilityID,MedicareCardNumber) values
-(20,1,'chnb68073100'),
-(20-1,1,'chnb68073100'),
-(20-2,1,'chnb68073100'),
-(20-3,1,'chnb68073100'),
-(20-4,1,'chnb68073100'),
-(20-5,1,'chnb68073100'),
-(20-6,1,'chnb68073100'),
-(20-7,1,'chnb68073100'),
-(20-8,1,'chnb68073100'),
-(20-9,1,'chnb68073100');
+((Select ScheduleID  From Schedule s Order By ScheduleID desc Limit 1),1,'chnb68073100'),
+((Select ScheduleID  From Schedule s Order By ScheduleID desc Limit 1)-1,1,'chnb68073100'),
+((Select ScheduleID  From Schedule s Order By ScheduleID desc Limit 1)-2,1,'chnb68073100'),
+((Select ScheduleID  From Schedule s Order By ScheduleID desc Limit 1)-3,1,'chnb68073100'),
+((Select ScheduleID  From Schedule s Order By ScheduleID desc Limit 1)-4,1,'chnb68073100'),
+((Select ScheduleID  From Schedule s Order By ScheduleID desc Limit 1)-5,1,'chnb68073100'),
+((Select ScheduleID  From Schedule s Order By ScheduleID desc Limit 1)-6,1,'chnb68073100'),
+((Select ScheduleID  From Schedule s Order By ScheduleID desc Limit 1)-7,1,'chnb68073100'),
+((Select ScheduleID  From Schedule s Order By ScheduleID desc Limit 1)-8,1,'chnb68073100'),
+((Select ScheduleID  From Schedule s Order By ScheduleID desc Limit 1)-9,1,'chnb68073100');
+
+
+
+
+call send_schedules_proc(); 
+
 
 
 
